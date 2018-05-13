@@ -1,1 +1,3 @@
-# Bad-Algorithms-Made-Worse
+# :b:ad Algorithms Made Worse
+
+
