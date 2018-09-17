@@ -10,26 +10,78 @@
 
 using namespace std;
 
+const char DELIMITER = ',';
+
 struct State {
 
+  int solutionAttempts;
   int blkCount;
   int blkPlane;
+  float gofn;
   string currState;
   string goalState;
 
+  //bool matches( State other ) //?
+  bool goalTest() {
+
+    if( currState == goalState ) return( true );
+
+    else return( false );
+
+  }
+
+  //void print()
+
 };
+
+struct Node {
+
+  State state;
+  Node* parent;
+  int depth;
+  float fofn;
+  //vector<Node*> successors()
+  //bool goalTest( State &state )
+  //void print()
+  //void printSolution()
+  //void traceback()
+
+};
+
+float heuristic( State &state, Node &node ) {
+
+  float hofn = 0.0;
+  regex blkOrderRE( "([A-Z])+|([A-Z])+" + DELIMITER );
+
+  smatch matches;
+  string currState = state.currState;
+
+  while( regex_search( currState, matches, blkOrderRE ) ) {
+
+    currState = matches.suffix().str();
+
+  }
+
+  //generate successors
+
+  //calc hofn based on:
+  //>> blks out of order
+  //>> stack on blks out of order
+
+  return hofn;
+
+}
 
 void readFile( string inputInputFile, State &state ) {
 
   ifstream inputFile( inputInputFile );
   string fileString;
 
+  // whole input file to string
   inputFile.seekg( 0, ios::end );
   fileString.reserve( inputFile.tellg() );
   inputFile.seekg( 0, ios::beg );
-
-  fileString.assign( istreambuf_iterator<char>(inputFile), 
-                     istreambuf_iterator<char>() );
+  fileString.assign( istreambuf_iterator<char>(inputFile), istreambuf_iterator<char>() );
 
   regex blkInfoRE( "(\\d+)\\s(\\d+)" );
   regex blkStatesRE( "([A-Z]+\\b)" );
@@ -53,11 +105,11 @@ void readFile( string inputInputFile, State &state ) {
     if ( currState ) {
 
       i += matches.str().size();
-      if( i < state.blkCount ) state.currState += matches.str() + ",";
+      if( i < state.blkCount ) state.currState += matches.str() + DELIMITER;
 
       else if( i == state.blkCount ) {
 
-       state.currState += matches.str() + ",";
+        state.currState += matches.str() + DELIMITER;
         currState = false;
 
       }
@@ -68,7 +120,6 @@ void readFile( string inputInputFile, State &state ) {
 
     else {
 
-      //if( i <= state.blkCount ) 
       state.goalState += matches.str() + ",";
 
     }
@@ -96,6 +147,11 @@ int main( void ) {
   cout << "currState: " << state.currState << "\n";
   cout << "goalState: " << state.goalState << "\n";
   #endif
+
+  //char A => 65, B => 66 ... Z => 90
+  //comma , => 44
+  cout << state.currState.at(0) << "\n";
+  cout << (int)( state.currState.at(0) ) << "\n";
 
   return 420;
 
