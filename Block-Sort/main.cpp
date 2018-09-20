@@ -4,13 +4,14 @@
 #include <utility>
 #include <regex>
 #include <streambuf>
+#include <vector>
 
 #define VERBOSE true
 #define SUPERVERBOSE true
 
 using namespace std;
 
-const char DELIMITER = ',';
+const string DELIMITER = ",";
 
 struct State {
 
@@ -72,6 +73,13 @@ float heuristic( State &state, Node &node ) {
 
 }
 
+// MEGA YIKES TODO: This kind of state will break everything
+// ABC
+// 
+// DEF
+//
+// Will be interperated as: ABC,DEF,
+// >> which is 100% wrong
 void readFile( string inputInputFile, State &state ) {
 
   ifstream inputFile( inputInputFile );
@@ -89,6 +97,9 @@ void readFile( string inputInputFile, State &state ) {
   smatch matches;
 
   regex_search( fileString, matches, blkInfoRE );
+
+  if( matches.size() != 3 ) cout << "I/O YEETED\n";
+
   state.blkPlane = stoi( matches[1] );
   state.blkCount = stoi( matches[2] );
 
@@ -98,6 +109,7 @@ void readFile( string inputInputFile, State &state ) {
   }
   #endif
 
+  // Parses for start & end state
   int i = 0;
   bool currState = true;
   while( regex_search( fileString, matches, blkStatesRE ) ) {
@@ -120,17 +132,25 @@ void readFile( string inputInputFile, State &state ) {
 
     else {
 
-      state.goalState += matches.str() + ",";
+      state.goalState += matches.str() + DELIMITER;
 
     }
 
     #if SUPERVERBOSE
-    cout << "Match: " << matches[1] << "\n";
+    cout << "Match: " << matches[1] << ", Matches size: " << matches.size() << "\n";
     #endif
 
     fileString = matches.suffix().str();
 
   }
+
+  regex delimiterCheckRE( "(" + DELIMITER + ")" );
+
+  regex_search( state.currState, matches, delimiterCheckRE );
+  cout << "Delimiter Check currState: " << matches.size() << "\n";
+
+  regex_search( state.goalState, matches, delimiterCheckRE );
+  cout << "Delimiter Check goalState: " << matches.size() << "\n";
 
   return;
 
@@ -153,6 +173,6 @@ int main( void ) {
   cout << state.currState.at(0) << "\n";
   cout << (int)( state.currState.at(0) ) << "\n";
 
-  return 420;
+  return( 420 );
 
 }
