@@ -8,6 +8,7 @@
 
 #define VERBOSE true
 #define SUPERVERBOSE true
+#define ULTRAVERBOSE true
 
 using namespace std;
 
@@ -15,10 +16,10 @@ const string DELIMITER = "|";
 
 struct State {
 
-  int solutionAttempts;
+  int solutionAttempts = 0;
   int blkCount;
   int blkPlane;
-  float gofn;
+  float gofn = 0.0;
   string currState = DELIMITER;
   string goalState = DELIMITER;
   vector<string> vCurrState;
@@ -44,31 +45,13 @@ struct Node {
   int depth = 0;
   float fofn;
   //vector< vector<string> > successors;
-  vector<Node*> successors
+  vector<Node*> successors;
   //bool goalTest( State &state )
   //void print()
   //void printSolution()
   //void traceback()
 
 };
-
-
-void graphSearch( State &state, Node &node ) {
-
-  vector< vector<string> > successors = generateSuccessors( state );
-
-  // loop thru successors
-  // --> Calculate heuristic per successor
-  // --> ** Keep graph search sorted by f(n) = g(n) + h(n) **
-  //     Meaning explore the succ that costs the least f(n) 
-
-  // When we find our candidate
-  // --> Update current state
-  // --> Make link new node with parent
-  // --> update depth of new node
-  // Then do it again, ThAt's GoOd
-
-}
 
 vector< vector<string> > generateSuccessors( State &state ) {
 
@@ -136,27 +119,81 @@ vector< vector<string> > generateSuccessors( State &state ) {
 
 }
 
-float heuristic( State &state, Node &node ) {
+float heuristic( vector<string> currState, State &state ) {
 
   float hofn = 0.0;
-  regex blkOrderRE( DELIMITER + "(.+)" + DELIMITER );
+  int score = 0;
+  vector<string> goalState = state.vGoalState;
 
-  smatch matches;
-  string currState = state.currState;
+  // Counts blocks out of place & flag them
+  for( int i = 0; i < currState.size(); ++i ) {
 
-  while( regex_search( currState, matches, blkOrderRE ) ) {
+    for( int j = 0; j < currState.at(i).size(); ++j ) {
 
-    currState = matches.suffix().str();
+      #if ULTRAVERBOSE
+      cout << "U- Current Block: " << currState.at(i).at(j);
+      cout << " Goal Block: " << goalState.at(i).at(j) << endl;
+      #endif
+
+      if( currState.at(i).at(j) == ' ' ) { //&& goalState.at(i).at(j) == ' ' ) {
+
+        score += 0;
+
+      }
+
+      else if( currState.at(i).at(j) != goalState.at(i).at(j) ) {
+
+        score += 1;
+        // Flag here via pair
+
+      }
+
+    }
 
   }
 
-  //generate successors
+  // for the flagged blocks, count how many blocks are on top of them
 
-  //calc hofn based on:
-  //>> blks out of order
-  //>> stack on blks out of order
+  hofn = (float)(score);
 
   return hofn;
+
+}
+
+// A* implementation
+void graphSearch( State &state, Node &node ) {
+
+  vector< vector<string> > successors = generateSuccessors( state );
+
+  // loop thru successors
+  // --> Calculate heuristic per successor
+  // --> ** Keep graph search sorted by f(n) = g(n) + h(n) **
+  //     Meaning explore the succ that costs the least f(n) 
+
+  // When we find our candidate
+  // --> Update current state
+  // --> Make link new node with parent
+  // --> update depth of new node
+  // Then do it again, ThAt's GoOd
+
+  vector< pair<int, float> > openList;
+  pair<int, float> p;
+  
+  // Calculate herustics for openList
+  for( int i = 0; i < successors.size(); ++i ) {
+
+    int succIndex = i;
+    float fofn = heuristic( successors.at(i), state ) + state.gofn;
+    p = make_pair( succIndex, fofn );
+    openList.push_back(p);
+
+  }
+
+  #if SUPERVERBOSE
+  for( auto s : openList ) {
+    cout << "Successor: " << s.first << ", hofn: " << s.second << endl;
+  }
+  #endif
 
 }
 
