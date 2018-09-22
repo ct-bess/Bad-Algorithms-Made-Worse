@@ -23,8 +23,8 @@ struct State {
   string goalState = DELIMITER;
   vector<string> vCurrState;
   vector<string> vGoalState;
-
   //bool matches( State other ) //?
+  /*
   bool goalTest() {
 
     if( currState == goalState ) return( true );
@@ -32,18 +32,19 @@ struct State {
     else return( false );
 
   }
-
+  */
   //void print()
 
 };
 
 struct Node {
 
-  State state;
+  vector<string> state;
   Node* parent;
-  int depth;
+  int depth = 0;
   float fofn;
-  //vector<Node*> successors()
+  //vector< vector<string> > successors;
+  vector<Node*> successors
   //bool goalTest( State &state )
   //void print()
   //void printSolution()
@@ -51,8 +52,25 @@ struct Node {
 
 };
 
-// will return vector of strings in Node --> then give succs to heuristic
-void generateSuccessors( State &state ) {
+
+void graphSearch( State &state, Node &node ) {
+
+  vector< vector<string> > successors = generateSuccessors( state );
+
+  // loop thru successors
+  // --> Calculate heuristic per successor
+  // --> ** Keep graph search sorted by f(n) = g(n) + h(n) **
+  //     Meaning explore the succ that costs the least f(n) 
+
+  // When we find our candidate
+  // --> Update current state
+  // --> Make link new node with parent
+  // --> update depth of new node
+  // Then do it again, ThAt's GoOd
+
+}
+
+vector< vector<string> > generateSuccessors( State &state ) {
 
   #if SUPERVERBOSE
   for( auto s : state.vCurrState ) {
@@ -113,6 +131,8 @@ void generateSuccessors( State &state ) {
     successors.push_back( nextState );
 
   }
+
+  return successors;
 
 }
 
@@ -214,8 +234,10 @@ void readFile( string inputInputFile, State &state ) {
 int main( void ) {
 
   State state;
+  Node node;
 
   readFile( "blkchp/blkchp01", state );
+  node.state = state.vCurrState;
 
   #if VERBOSE
   cout << "blkCount: " << state.blkCount << "\nblkPlane: " << state.blkPlane << "\n";
@@ -228,7 +250,7 @@ int main( void ) {
   //cout << state.currState.at(0) << "\n";
   //cout << (int)( state.currState.at(0) ) << "\n";
 
-  generateSuccessors( state );
+  graphSearch( state, node );
 
   return( 420 );
 
