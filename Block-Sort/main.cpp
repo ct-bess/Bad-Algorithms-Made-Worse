@@ -21,8 +21,8 @@ struct State {
   float gofn;
   string currState = DELIMITER;
   string goalState = DELIMITER;
-  //vector<char> vCurrState;
-  //vector<char> vGoalState;
+  vector<string> vCurrState;
+  vector<string> vGoalState;
 
   //bool matches( State other ) //?
   bool goalTest() {
@@ -51,10 +51,75 @@ struct Node {
 
 };
 
+// will return vector of strings in Node --> then give succs to heuristic
+void generateSuccessors( State &state ) {
+
+  #if SUPERVERBOSE
+  for( auto s : state.vCurrState ) {
+    cout << "S: " << s << "\n";
+  }
+  #endif
+
+  vector< pair<int, char> > candidates;
+  pair<int, char> p;
+
+  for( int i = 0; i < state.vCurrState.size(); ++i ) {
+
+    if( state.vCurrState.at(i).front() != ' ' && state.vCurrState.at(i).back() != ' ' ) {
+
+      p = make_pair( i, state.vCurrState.at(i).back() );
+      candidates.push_back( p );
+
+    }
+
+  }
+
+  for( int i = 0; i < candidates.size(); ++i ) {
+
+    cout << "Candidate: " << candidates.at(i).first << ", " << candidates.at(i).second;
+    cout << endl;
+
+  }
+
+  vector< vector<string> > successors;
+  vector<string> nextState;
+
+  // Possible permutations of candidates
+  int succNo = -1;
+  int candidateNo = 0;
+  int candidatePermutations = candidates.size() * (state.blkPlane - 1);
+  for( int i = 0; i < candidatePermutations; ++i ) {
+
+    int cIndex = candidates.at( candidateNo ).first;
+    char cChar = candidates.at( candidateNo ).second;
+
+    nextState = state.vCurrState;
+    nextState.at( cIndex ).back() = ' ';
+    if( i % state.blkPlane == 0 ) ++succNo;
+
+    cout << "Iteration: " << i << ", candidateNo: " << candidateNo << endl;
+    cout << "succNo: " << succNo << endl;
+
+    int succIndex = ((cIndex + 1) + i) % state.blkPlane;
+    size_t pos = nextState.at( succIndex ).find(' ');
+    nextState.at( succIndex ).at( pos ) = cChar;
+
+    #if SUPERVERBOSE
+    for( auto s : nextState ) {
+      cout << "S: " << s << "\n";
+    }
+    #endif
+
+    successors.push_back( nextState );
+
+  }
+
+}
+
 float heuristic( State &state, Node &node ) {
 
   float hofn = 0.0;
-  regex blkOrderRE( "([A-Z])+|([A-Z])+" + DELIMITER );
+  regex blkOrderRE( DELIMITER + "(.+)" + DELIMITER );
 
   smatch matches;
   string currState = state.currState;
@@ -87,7 +152,6 @@ void readFile( string inputInputFile, State &state ) {
   fileString.assign( istreambuf_iterator<char>(inputFile), istreambuf_iterator<char>() );
 
   regex blkInfoRE( "(\\d+)\\s(\\d+)" );
-  //regex blkStatesRE( "([A-Z]+\\b)" );
 
   smatch matches;
 
@@ -126,8 +190,18 @@ void readFile( string inputInputFile, State &state ) {
     #endif
     fileString.erase( 0, pos + stateDelimiter.length() );
 
-    if( i >= state.blkPlane ) state.goalState += token + DELIMITER;
-    else state.currState += token + DELIMITER;
+    if( i >= state.blkPlane ) { 
+
+      state.vGoalState.push_back( token );
+      state.goalState += token + DELIMITER;
+
+    }
+    else { 
+
+      state.vCurrState.push_back( token );
+      state.currState += token + DELIMITER;
+
+    }
 
     ++i;
 
@@ -153,6 +227,8 @@ int main( void ) {
   //comma , => 44
   //cout << state.currState.at(0) << "\n";
   //cout << (int)( state.currState.at(0) ) << "\n";
+
+  generateSuccessors( state );
 
   return( 420 );
 
