@@ -5,6 +5,7 @@
 #include <regex>
 #include <streambuf>
 #include <vector>
+#include <algorithm>
 
 #define VERBOSE true
 #define SUPERVERBOSE true
@@ -13,6 +14,21 @@
 using namespace std;
 
 const string DELIMITER = "|";
+
+struct Node {
+
+  vector<string> state;
+  Node* parent;
+  int depth = 0;
+  float fofn;
+  //vector< vector<string> > successors;
+  //vector<Node*> successors;
+  //bool goalTest( State &state )
+  //void print()
+  //void printSolution()
+  //void traceback()
+
+};
 
 struct State {
 
@@ -24,6 +40,7 @@ struct State {
   string goalState = DELIMITER;
   vector<string> vCurrState;
   vector<string> vGoalState;
+  vector<Node> succTree;
   //bool matches( State other ) //?
   /*
   bool goalTest() {
@@ -38,24 +55,13 @@ struct State {
 
 };
 
-struct Node {
-
-  vector<string> state;
-  Node* parent;
-  int depth = 0;
-  float fofn;
-  //vector< vector<string> > successors;
-  vector<Node*> successors;
-  //bool goalTest( State &state )
-  //void print()
-  //void printSolution()
-  //void traceback()
-
-};
-
 vector< vector<string> > generateSuccessors( State &state ) {
 
   #if SUPERVERBOSE
+  cout << "S: size = " << state.vCurrState.size() << "\n";
+  cout << "S: size[0-2] " << state.vCurrState.at(0).size() << " " <<
+          state.vCurrState.at(1).size() << " " <<
+          state.vCurrState.at(2).size() << endl;
   for( auto s : state.vCurrState ) {
     cout << "S: " << s << "\n";
   }
@@ -66,12 +72,40 @@ vector< vector<string> > generateSuccessors( State &state ) {
 
   for( int i = 0; i < state.vCurrState.size(); ++i ) {
 
+    //           or   < state.blkPlane
+    for( int j = 0; j < state.vCurrState.at(i).size() - 1; ++j ) {
+
+      if( state.vCurrState.at(i).at(j) != ' ' && state.vCurrState.at(i).at(j+1) == ' ' ){
+
+        p = make_pair( i, state.vCurrState.at(i).at(j) );
+        candidates.push_back( p );
+
+      }
+
+      else if( state.vCurrState.at(i).front() != ' ' && state.vCurrState.at(i).back() != ' ' ) {
+
+        p = make_pair( i, state.vCurrState.at(i).back() );
+        candidates.push_back( p );
+
+      }
+
+    }
+
+/*
     if( state.vCurrState.at(i).front() != ' ' && state.vCurrState.at(i).back() != ' ' ) {
 
       p = make_pair( i, state.vCurrState.at(i).back() );
       candidates.push_back( p );
 
     }
+*/
+
+  }
+
+  if( candidates.size() <= 0 ) {
+
+    cout << "Candidates for successors are 0, consider fixing your program.\n";
+    exit(-1);
 
   }
 
@@ -95,14 +129,16 @@ vector< vector<string> > generateSuccessors( State &state ) {
     char cChar = candidates.at( candidateNo ).second;
 
     nextState = state.vCurrState;
-    nextState.at( cIndex ).back() = ' ';
-    if( i % state.blkPlane == 0 ) ++succNo;
+    size_t pos = nextState.at( cIndex ).find( cChar );
+    nextState.at( cIndex ).at( pos ) = ' ';
+    //nextState.at( cIndex ).back() = ' ';  // WRONG
+    if( i % state.blkPlane - 1 == 0 ) ++succNo;
 
     cout << "Iteration: " << i << ", candidateNo: " << candidateNo << endl;
-    cout << "succNo: " << succNo << endl;
+    cout << "Candidate: " << cChar << endl;
 
     int succIndex = ((cIndex + 1) + i) % state.blkPlane;
-    size_t pos = nextState.at( succIndex ).find(' ');
+    pos = nextState.at( succIndex ).find(' ');
     nextState.at( succIndex ).at( pos ) = cChar;
 
     #if SUPERVERBOSE
@@ -112,6 +148,9 @@ vector< vector<string> > generateSuccessors( State &state ) {
     #endif
 
     successors.push_back( nextState );
+
+    // TODO: CHECK THIS, FRRRRRAGILE
+    if( i % state.blkPlane - 1 == 0 ) ++candidateNo;
 
   }
 
@@ -160,6 +199,10 @@ float heuristic( vector<string> currState, State &state ) {
 
 }
 
+bool secondPairSort( const pair<int, float> &p1, const pair<int, float> &p2 ) {
+  return( p1.second < p2.second );
+}
+
 // A* implementation
 void graphSearch( State &state, Node &node ) {
 
@@ -194,6 +237,30 @@ void graphSearch( State &state, Node &node ) {
     cout << "Successor: " << s.first << ", hofn: " << s.second << endl;
   }
   #endif
+
+  // Sort openList --> Finds our *best* move based on our heuristic
+  sort( openList.begin(), openList.end(), secondPairSort );
+
+  // 1st element of sorted openList is what we shall explore
+  node.state = successors.at( openList.at(0).first );
+  node.depth = state.succTree.size();
+  node.fofn = openList.at(0).second;
+
+  state.succTree.push_back( node );
+  state.solutionAttempts += 1;
+
+  // Print chosen node if flagged:
+  #if VERBOSE
+  cout << "Depth: " << node.depth << " f(n) = " << node.fofn << "\n";
+  for( auto chosenPath : node.state ) {
+    cout << "| " << chosenPath << "\n";
+  }
+  #endif
+
+  // AND dont forget to update the board state!
+  state.vCurrState = node.state;
+
+  return;
 
 }
 
@@ -288,7 +355,8 @@ int main( void ) {
   //cout << (int)( state.currState.at(0) ) << "\n";
 
   graphSearch( state, node );
+  graphSearch( state, node );
 
-  return( 420 );
+  return( /*CSCE*/420 );
 
 }
