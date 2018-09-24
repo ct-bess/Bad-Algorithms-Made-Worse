@@ -1,3 +1,13 @@
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ *
+ * file: main.cpp
+ * author: Connor Bessell
+ * comments: It's all one file... Needs house keeping and grooming
+ *
+ * compile: g++ -std=c++11 -o main main.cpp
+ * run: ./main
+ *
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -9,7 +19,7 @@
 
 #define VERBOSE true
 #define SUPERVERBOSE true
-#define ULTRAVERBOSE true
+#define ULTRAVERBOSE false
 
 using namespace std;
 
@@ -58,10 +68,6 @@ struct State {
 vector< vector<string> > generateSuccessors( State &state ) {
 
   #if SUPERVERBOSE
-  cout << "S: size = " << state.vCurrState.size() << "\n";
-  cout << "S: size[0-2] " << state.vCurrState.at(0).size() << " " <<
-          state.vCurrState.at(1).size() << " " <<
-          state.vCurrState.at(2).size() << endl;
   for( auto s : state.vCurrState ) {
     cout << "S: " << s << "\n";
   }
@@ -119,6 +125,13 @@ vector< vector<string> > generateSuccessors( State &state ) {
   vector< vector<string> > successors;
   vector<string> nextState;
 
+  // BIG TODO HERE: Middle stack will add (permutate) from whens it came
+  // A
+  // EDC
+  // B
+  // A permutation of that starting state will be added, which is wrong
+  // Also B only got 1 permutation... Check the bounds, it should have 2
+
   // Possible permutations of candidates
   int succNo = -1;
   int candidateNo = 0;
@@ -134,8 +147,10 @@ vector< vector<string> > generateSuccessors( State &state ) {
     //nextState.at( cIndex ).back() = ' ';  // WRONG
     if( i % state.blkPlane - 1 == 0 ) ++succNo;
 
-    cout << "Iteration: " << i << ", candidateNo: " << candidateNo << endl;
-    cout << "Candidate: " << cChar << endl;
+    #if SUPERVERBOSE
+    cout << "S: Iteration: " << i << ", candidateNo: " << candidateNo << endl;
+    cout << "S: Candidate: " << cChar << endl;
+    #endif
 
     int succIndex = ((cIndex + 1) + i) % state.blkPlane;
     pos = nextState.at( succIndex ).find(' ');
@@ -170,7 +185,7 @@ float heuristic( vector<string> currState, State &state ) {
     for( int j = 0; j < currState.at(i).size(); ++j ) {
 
       #if ULTRAVERBOSE
-      cout << "U- Current Block: " << currState.at(i).at(j);
+      cout << "U: Current Block: " << currState.at(i).at(j);
       cout << " Goal Block: " << goalState.at(i).at(j) << endl;
       #endif
 
@@ -234,7 +249,7 @@ void graphSearch( State &state, Node &node ) {
 
   #if SUPERVERBOSE
   for( auto s : openList ) {
-    cout << "Successor: " << s.first << ", hofn: " << s.second << endl;
+    cout << "S: Successor: " << s.first << ", hofn: " << s.second << endl;
   }
   #endif
 
@@ -288,7 +303,7 @@ void readFile( string inputInputFile, State &state ) {
 
   #if SUPERVERBOSE
   for( auto m : matches ) {
-    cout << "Match: " << m << "\n";
+    cout << "S: Match: " << m << "\n";
   }
   #endif
 
@@ -310,7 +325,7 @@ void readFile( string inputInputFile, State &state ) {
     }
 
     #if SUPERVERBOSE
-    cout << "Token: " << token << " -- Size: " << token.size() << endl;
+    cout << "S: Token: " << token << " -- Size: " << token.size() << endl;
     #endif
     fileString.erase( 0, pos + stateDelimiter.length() );
 
@@ -349,11 +364,6 @@ int main( void ) {
   cout << "goalState: " << state.goalState << "\n";
   #endif
 
-  //char A => 65, B => 66 ... Z => 90
-  //comma , => 44
-  //cout << state.currState.at(0) << "\n";
-  //cout << (int)( state.currState.at(0) ) << "\n";
-
   while( state.vCurrState != state.vGoalState ) {
 
     graphSearch( state, node );
@@ -361,10 +371,17 @@ int main( void ) {
     if( state.solutionAttempts > 1000 ) {
 
       cout << "Too many solution attempts, consider a better heuristic...\n";
-      cout << "-- Brian Maxon vs Mark Wolf round 2\n\n";
+      cout << "-- Error Code: Brian Maxon vs Mark Wolf round 2\n\n";
       break;
 
     }
+
+  }
+
+  if( state.vCurrState == state.vGoalState ) {
+
+    cout << "Solution found! Now print it!\n";
+    //state.succTree
 
   }
 
