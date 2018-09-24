@@ -354,8 +354,19 @@ int main( void ) {
   //cout << state.currState.at(0) << "\n";
   //cout << (int)( state.currState.at(0) ) << "\n";
 
-  graphSearch( state, node );
-  graphSearch( state, node );
+  while( state.vCurrState != state.vGoalState ) {
+
+    graphSearch( state, node );
+
+    if( state.solutionAttempts > 1000 ) {
+
+      cout << "Too many solution attempts, consider a better heuristic...\n";
+      cout << "-- Brian Maxon vs Mark Wolf round 2\n\n";
+      break;
+
+    }
+
+  }
 
   return( /*CSCE*/420 );
 
