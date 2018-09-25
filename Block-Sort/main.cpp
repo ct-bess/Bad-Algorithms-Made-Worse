@@ -24,7 +24,7 @@
 using namespace std;
 
 const string DELIMITER = "|";
-const int SOLUTION_CUTOFF = 1000;
+const int SOLUTION_CUTOFF = 500;
 
 struct Node {
 
@@ -155,40 +155,73 @@ vector< vector<string> > generateSuccessors( State &state ) {
     cout << "S: Candidate: " << cChar << endl;
     #endif
 
-    int succIndex = ((cIndex + 1) + i) % state.blkPlane;
-    pos = nextState.at( succIndex ).find(' ');
-    nextState.at( succIndex ).at( pos ) = cChar;
+    //int succIndex = ((cIndex + 1) + i) % state.blkPlane;
+    //pos = nextState.at( succIndex ).find(' ');
+    //nextState.at( succIndex ).at( pos ) = cChar;
 
-/*
+    int succIndex = 0;
+    bool insertedSucc = false;
     if( cIndexMem.empty() == false ) {
 
-      for( int succIndex = 0; succIndex < state.blkPlane - 1; ++succIndex ) {
+      int j = 0;
+      while( j <= state.blkPlane - 1 ) {
+
+        for( int cI : cIndexMem ) {
+
+          if( cI != j && j != cIndex ) {
+
+            cout << "-- what the fuck: cI= " << cI << ", j= " << j << "\n";
+            pos = nextState.at( j ).find(' ');
+            nextState.at( j ).at( pos ) = cChar;
+            succIndex = cI;
+            insertedSucc = true;
+            break;
+
+          }
+
+        }
+
+        if( insertedSucc == true ) break;
+
+        ++j;
+
+      }
+
+
+      /*
+      for( int j = 0; j < state.blkPlane - 1; ++j ) {
+
+        //if( j == cIndex ) continue;
 
         // Find an candidate index that hasent been used yet for our successor
         for( int k = 0; k < cIndexMem.size(); ++k ) {
 
-          if( succIndex != cIndexMem.at(k) ) { 
-            pos = nextState.at( succIndex ).find(' ');
-            nextState.at( succIndex ).at( pos ) = cChar;
+          if( j != cIndexMem.at(k) && j != cIndex ) { 
+            pos = nextState.at( j ).find(' ');
+            nextState.at( j ).at( pos ) = cChar;
+            succIndex = cIndexMem.at(k);
+            insertedSucc = true;
             break;
           }
 
         }
 
-      }
+        if( insertedSucc == true ) break;
+
+      }*/
 
     }
 
     else {
 
-      int succIndex = ((cIndex + 1) + i) % state.blkPlane;
+      //int succIndex = ((cIndex + 1) + i) % state.blkPlane;
+      succIndex = ((cIndex + 1) + 0) % state.blkPlane;
       pos = nextState.at( succIndex ).find(' ');
       nextState.at( succIndex ).at( pos ) = cChar;
 
     }
-*/
 
-    cIndexMem.push_back( cIndex );
+    cIndexMem.push_back( succIndex );
 
     #if SUPERVERBOSE
     for( auto s : nextState ) {
