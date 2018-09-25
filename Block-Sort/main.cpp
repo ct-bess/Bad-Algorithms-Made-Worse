@@ -18,13 +18,13 @@
 #include <algorithm>
 
 #define VERBOSE true
-#define SUPERVERBOSE true
+#define SUPERVERBOSE false
 #define ULTRAVERBOSE false
 
 using namespace std;
 
 const string DELIMITER = "|";
-const int SOLUTION_CUTOFF = 500;
+const int SOLUTION_CUTOFF = 1000;
 
 struct Node {
 
@@ -32,12 +32,6 @@ struct Node {
   Node* parent;
   int depth = 0;
   float fofn;
-  //vector< vector<string> > successors;
-  //vector<Node*> successors;
-  //bool goalTest( State &state )
-  //void print()
-  //void printSolution()
-  //void traceback()
 
 };
 
@@ -52,17 +46,6 @@ struct State {
   vector<string> vCurrState;
   vector<string> vGoalState;
   vector<Node> succTree;
-  //bool matches( State other ) //?
-  /*
-  bool goalTest() {
-
-    if( currState == goalState ) return( true );
-
-    else return( false );
-
-  }
-  */
-  //void print()
 
 };
 
@@ -93,27 +76,6 @@ vector< vector<string> > generateSuccessors( State &state ) {
 
     }
 
-    /*
-    //           or   < state.blkPlane
-    for( int j = 0; j < state.vCurrState.at(i).size() - 1; ++j ) {
-
-      if( state.vCurrState.at(i).at(j) != ' ' && state.vCurrState.at(i).at(j+1) == ' ' ){
-
-        p = make_pair( i, state.vCurrState.at(i).at(j) );
-        candidates.push_back( p );
-
-      }
-
-      else if( state.vCurrState.at(i).front() != ' ' && state.vCurrState.at(i).back() != ' ' ) {
-
-        p = make_pair( i, state.vCurrState.at(i).back() );
-        candidates.push_back( p );
-
-      }
-
-    }
-    */
-
   }
 
   if( candidates.size() <= 0 ) {
@@ -123,12 +85,14 @@ vector< vector<string> > generateSuccessors( State &state ) {
 
   }
 
+  #if SUPERVERBOSE
   for( int i = 0; i < candidates.size(); ++i ) {
 
     cout << "Candidate: " << candidates.at(i).first << ", " << candidates.at(i).second;
     cout << endl;
 
   }
+  #endif
 
   vector< vector<string> > successors;
   vector<string> nextState;
@@ -155,10 +119,12 @@ vector< vector<string> > generateSuccessors( State &state ) {
     cout << "S: Candidate: " << cChar << endl;
     #endif
 
+    // -- Old bad way: only works for stack/plane index 0
     //int succIndex = ((cIndex + 1) + i) % state.blkPlane;
     //pos = nextState.at( succIndex ).find(' ');
     //nextState.at( succIndex ).at( pos ) = cChar;
 
+    // Move successors to an index that has yet to be successored
     int succIndex = 0;
     bool insertedSucc = false;
     if( cIndexMem.empty() == false ) {
@@ -169,14 +135,11 @@ vector< vector<string> > generateSuccessors( State &state ) {
         for( int cI : cIndexMem ) {
 
           if( cI != j && j != cIndex ) {
-
-            cout << "-- what the fuck: cI= " << cI << ", j= " << j << "\n";
             pos = nextState.at( j ).find(' ');
             nextState.at( j ).at( pos ) = cChar;
             succIndex = cI;
             insertedSucc = true;
             break;
-
           }
 
         }
@@ -187,31 +150,9 @@ vector< vector<string> > generateSuccessors( State &state ) {
 
       }
 
-
-      /*
-      for( int j = 0; j < state.blkPlane - 1; ++j ) {
-
-        //if( j == cIndex ) continue;
-
-        // Find an candidate index that hasent been used yet for our successor
-        for( int k = 0; k < cIndexMem.size(); ++k ) {
-
-          if( j != cIndexMem.at(k) && j != cIndex ) { 
-            pos = nextState.at( j ).find(' ');
-            nextState.at( j ).at( pos ) = cChar;
-            succIndex = cIndexMem.at(k);
-            insertedSucc = true;
-            break;
-          }
-
-        }
-
-        if( insertedSucc == true ) break;
-
-      }*/
-
     }
 
+    // Successor has not been added yet, can be added almost anywhere
     else {
 
       //int succIndex = ((cIndex + 1) + i) % state.blkPlane;
@@ -247,6 +188,10 @@ vector< vector<string> > generateSuccessors( State &state ) {
 
 float heuristic( vector<string> currState, State &state ) {
 
+  // The general idea:
+  // +1 to score if the block is out of place
+  // +1 to score for every block on top of out of place block
+
   float hofn = 0.0;
   int score = 0;
   vector<string> goalState = state.vGoalState;
@@ -272,41 +217,53 @@ float heuristic( vector<string> currState, State &state ) {
 
       else if( currState.at(i).at(j) != goalState.at(i).at(j) ) {
 
+        // +1 for block out of place
         score += 1;
-        // Flag here via pair
-        p = make_pair( i, j );
-        misplacedBlks.push_back( p );
+
+        // +1 per block on top of out of place block
+        string stackInQuestion = currState.at(i);
+        char blkInQuestion = currState.at(i).at(j);
+        int blkPos = stackInQuestion.find( blkInQuestion );
+        int spacePos = stackInQuestion.find( ' ' );
+
+        // Empty stack
+        if( stackInQuestion.front() == stackInQuestion.back() ) {
+          score += 0;
+        }
+
+        // Top of full stack
+        else if( blkPos == state.blkCount - 1 ) {
+          score += 0;
+        }
+
+        // Top of non full stack
+        else if( blkPos == spacePos - 1 ) {
+          score += 0;
+        }
+
+        // Full middle stack
+        else if( spacePos < 0 ) {
+          score += (state.blkCount - 1) - blkPos;
+        }
+
+        // Middle of stack
+        else {
+          score += spacePos - blkPos - 1;
+        }
+
+        #if ULTRAVERBOSE
+        cout << "U: -- STACK: " << stackInQuestion << " -- " << score << "\n";
+        cout << "U: -- blk: " << blkInQuestion << ", blkPos: " << blkPos 
+             << ", spacePos: " << spacePos << "\n";
+        #endif
 
       }
 
-    }
-
-  }
-
-  // for the flagged blocks, count how many blocks are on top of them
-  for( int i = 0; i < misplacedBlks.size(); ++i ) {
-
-    int blk = misplacedBlks.at(i).second;
-    int plane = misplacedBlks.at(i).first;
-    //size_t pos = currState.at(plane).find(' ');
-
-    // Loop thru current stack
-    int j = currState.at(plane).size() - 1;
-    for(;;) {
-
-      if( j == -1 ) break;
-
-      // Top of the stack case
-      else if( currState.at(plane).back() == currState.at(plane).at(blk) ) break;
-
-      else if( currState.at(plane).at(j) == currState.at(plane).at(blk) ) break;
-
-
-      --j;
+      #if ULTRAVERBOSE
+      cout << "U: -- current score = " << score << "\n";
+      #endif
 
     }
-
-    score += (state.blkCount - j + 1);
 
   }
 
@@ -323,8 +280,6 @@ bool secondPairSort( const pair<int, float> &p1, const pair<int, float> &p2 ) {
 // A* implementation
 void graphSearch( State &state, Node &node ) {
 
-  vector< vector<string> > successors = generateSuccessors( state );
-
   // loop thru successors
   // --> Calculate heuristic per successor
   // --> ** Keep graph search sorted by f(n) = g(n) + h(n) **
@@ -335,6 +290,8 @@ void graphSearch( State &state, Node &node ) {
   // --> Make link new node with parent
   // --> update depth of new node
   // Then do it again, ThAt's GoOd
+
+  vector< vector<string> > successors = generateSuccessors( state );
 
   vector< pair<int, float> > openList;
   pair<int, float> p;
@@ -358,9 +315,24 @@ void graphSearch( State &state, Node &node ) {
   }
   #endif
 
+/*
+  // DELETE THIS
+  if( openList.at(0).second == openList.at(1).second ) {
+    cout << "-- SHUFFLE --\n";
+    random_shuffle( openList.begin(), openList.end() );
+    sort( openList.begin(), openList.end(), secondPairSort );
+  }
+*/
+
   // 1st element of sorted openList is what we shall explore
   node.state = successors.at( openList.at(0).first );
   node.depth = state.succTree.size();
+
+  if( openList.empty() == true ) {
+    cout << "-- Open list empty\n";
+    exit(-1);
+  }
+
   node.fofn = openList.at(0).second;
 
   state.succTree.push_back( node );
@@ -452,12 +424,16 @@ void readFile( string inputInputFile, State &state ) {
 
 }
 
-int main( void ) {
+int main( int argc, char** argv ) {
+
+  string argName = string( argv[1] );
+
+  string fileName = "blkchp/blkchp" + argName;
 
   State state;
   Node node;
 
-  readFile( "blkchp/blkchp01", state );
+  readFile( fileName, state );
   node.state = state.vCurrState;
 
   #if VERBOSE
@@ -472,7 +448,7 @@ int main( void ) {
 
     if( state.solutionAttempts > SOLUTION_CUTOFF ) {
 
-      cout << "Too many solution attempts, consider a better heuristic...\n";
+      cout << "Too many solution attempts, consider a different heuristic for this one\n";
       cout << "-- Error Code: Brian Maxon vs Mark Wolf round 2\n\n";
       break;
 
@@ -482,8 +458,32 @@ int main( void ) {
 
   if( state.vCurrState == state.vGoalState ) {
 
-    cout << "Solution found! Now print it!\n";
-    //state.succTree
+    cout << "!!-- Solution found --!!\n";
+
+    string myFile = "blkchp-SolutionTraces/blkchp" + argName;
+
+    cout << "-- Solution in: " << myFile << " --\n";
+
+    ofstream outputFile;
+    outputFile.open( myFile );
+
+    outputFile << "START STATE: " + state.currState << "\n";
+    outputFile << "GOAL  STATE: " + state.goalState << "\n";
+
+    for( int i = 0; i < state.succTree.size(); ++i ) {
+
+      vector<string> currState = state.succTree.at(i).state;
+      int depth = state.succTree.at(i).depth;
+      float fofn = state.succTree.at(i).fofn;
+      
+      outputFile << "\nDepth: " << depth << ", f(n) = " << fofn << "\n";
+      for( auto s : currState ) {
+        outputFile << "| " << s << "\n";
+      }
+
+    }
+
+    outputFile << "\n-- End of solution trace --\n";
 
   }
 
