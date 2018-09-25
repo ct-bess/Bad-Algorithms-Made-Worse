@@ -24,6 +24,7 @@
 using namespace std;
 
 const string DELIMITER = "|";
+const int SOLUTION_CUTOFF = 1000;
 
 struct Node {
 
@@ -76,8 +77,23 @@ vector< vector<string> > generateSuccessors( State &state ) {
   vector< pair<int, char> > candidates;
   pair<int, char> p;
 
+  // Find candidate blocks to move
   for( int i = 0; i < state.vCurrState.size(); ++i ) {
 
+    regex blkStackRE( "(\\w)\\b" );
+
+    smatch matches;
+
+    if ( regex_search( state.vCurrState.at(i), matches, blkStackRE ) ) {
+
+      string s = matches[1];
+      char sec = s.front();
+      p = make_pair( i, sec );
+      candidates.push_back( p );
+
+    }
+
+    /*
     //           or   < state.blkPlane
     for( int j = 0; j < state.vCurrState.at(i).size() - 1; ++j ) {
 
@@ -96,15 +112,7 @@ vector< vector<string> > generateSuccessors( State &state ) {
       }
 
     }
-
-/*
-    if( state.vCurrState.at(i).front() != ' ' && state.vCurrState.at(i).back() != ' ' ) {
-
-      p = make_pair( i, state.vCurrState.at(i).back() );
-      candidates.push_back( p );
-
-    }
-*/
+    */
 
   }
 
@@ -125,17 +133,12 @@ vector< vector<string> > generateSuccessors( State &state ) {
   vector< vector<string> > successors;
   vector<string> nextState;
 
-  // BIG TODO HERE: Middle stack will add (permutate) from whens it came
-  // A
-  // EDC
-  // B
-  // A permutation of that starting state will be added, which is wrong
-  // Also B only got 1 permutation... Check the bounds, it should have 2
-
   // Possible permutations of candidates
   int succNo = -1;
   int candidateNo = 0;
   int candidatePermutations = candidates.size() * (state.blkPlane - 1);
+  int permuteMod = state.blkPlane - 1;
+  vector<int> cIndexMem;
   for( int i = 0; i < candidatePermutations; ++i ) {
 
     int cIndex = candidates.at( candidateNo ).first;
@@ -156,6 +159,37 @@ vector< vector<string> > generateSuccessors( State &state ) {
     pos = nextState.at( succIndex ).find(' ');
     nextState.at( succIndex ).at( pos ) = cChar;
 
+/*
+    if( cIndexMem.empty() == false ) {
+
+      for( int succIndex = 0; succIndex < state.blkPlane - 1; ++succIndex ) {
+
+        // Find an candidate index that hasent been used yet for our successor
+        for( int k = 0; k < cIndexMem.size(); ++k ) {
+
+          if( succIndex != cIndexMem.at(k) ) { 
+            pos = nextState.at( succIndex ).find(' ');
+            nextState.at( succIndex ).at( pos ) = cChar;
+            break;
+          }
+
+        }
+
+      }
+
+    }
+
+    else {
+
+      int succIndex = ((cIndex + 1) + i) % state.blkPlane;
+      pos = nextState.at( succIndex ).find(' ');
+      nextState.at( succIndex ).at( pos ) = cChar;
+
+    }
+*/
+
+    cIndexMem.push_back( cIndex );
+
     #if SUPERVERBOSE
     for( auto s : nextState ) {
       cout << "S: " << s << "\n";
@@ -164,8 +198,13 @@ vector< vector<string> > generateSuccessors( State &state ) {
 
     successors.push_back( nextState );
 
-    // TODO: CHECK THIS, FRRRRRAGILE
-    if( i % state.blkPlane - 1 == 0 ) ++candidateNo;
+    // why
+    if( i % permuteMod == 1 ) { 
+
+      ++candidateNo;
+      cIndexMem.clear();
+
+    }
 
   }
 
@@ -178,6 +217,9 @@ float heuristic( vector<string> currState, State &state ) {
   float hofn = 0.0;
   int score = 0;
   vector<string> goalState = state.vGoalState;
+
+  pair<int, int> p;
+  vector< pair<int, int> > misplacedBlks;
 
   // Counts blocks out of place & flag them
   for( int i = 0; i < currState.size(); ++i ) {
@@ -199,6 +241,8 @@ float heuristic( vector<string> currState, State &state ) {
 
         score += 1;
         // Flag here via pair
+        p = make_pair( i, j );
+        misplacedBlks.push_back( p );
 
       }
 
@@ -207,6 +251,31 @@ float heuristic( vector<string> currState, State &state ) {
   }
 
   // for the flagged blocks, count how many blocks are on top of them
+  for( int i = 0; i < misplacedBlks.size(); ++i ) {
+
+    int blk = misplacedBlks.at(i).second;
+    int plane = misplacedBlks.at(i).first;
+    //size_t pos = currState.at(plane).find(' ');
+
+    // Loop thru current stack
+    int j = currState.at(plane).size() - 1;
+    for(;;) {
+
+      if( j == -1 ) break;
+
+      // Top of the stack case
+      else if( currState.at(plane).back() == currState.at(plane).at(blk) ) break;
+
+      else if( currState.at(plane).at(j) == currState.at(plane).at(blk) ) break;
+
+
+      --j;
+
+    }
+
+    score += (state.blkCount - j + 1);
+
+  }
 
   hofn = (float)(score);
 
@@ -247,14 +316,14 @@ void graphSearch( State &state, Node &node ) {
 
   }
 
+  // Sort openList --> Finds our *best* move based on our heuristic
+  sort( openList.begin(), openList.end(), secondPairSort );
+
   #if SUPERVERBOSE
   for( auto s : openList ) {
     cout << "S: Successor: " << s.first << ", hofn: " << s.second << endl;
   }
   #endif
-
-  // Sort openList --> Finds our *best* move based on our heuristic
-  sort( openList.begin(), openList.end(), secondPairSort );
 
   // 1st element of sorted openList is what we shall explore
   node.state = successors.at( openList.at(0).first );
@@ -368,7 +437,7 @@ int main( void ) {
 
     graphSearch( state, node );
 
-    if( state.solutionAttempts > 1000 ) {
+    if( state.solutionAttempts > SOLUTION_CUTOFF ) {
 
       cout << "Too many solution attempts, consider a better heuristic...\n";
       cout << "-- Error Code: Brian Maxon vs Mark Wolf round 2\n\n";
