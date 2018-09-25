@@ -1,0 +1,79 @@
+START STATE: |ABCDEFGHIJKLMNOPQRSTUVWXYZ|                          |                          |
+GOAL  STATE: |ABCDEFGHIJKLMNOPQRSTU     |Z                         |XYVW                      |
+
+Depth: 0, f(n) = 10
+| ABCDEFGHIJKLMNOPQRSTUVWXY 
+| Z                         
+|                           
+
+Depth: 1, f(n) = 7
+| ABCDEFGHIJKLMNOPQRSTUVWX  
+| ZY                        
+|                           
+
+Depth: 2, f(n) = 4
+| ABCDEFGHIJKLMNOPQRSTUVW   
+| ZY                        
+| X                         
+
+Depth: 3, f(n) = 3
+| ABCDEFGHIJKLMNOPQRSTUV    
+| ZY                        
+| XW                        
+
+Depth: 4, f(n) = 3
+| ABCDEFGHIJKLMNOPQRSTU     
+| ZY                        
+| XWV                       
+
+Depth: 5, f(n) = 3
+| ABCDEFGHIJKLMNOPQRSTUY    
+| Z                         
+| XWV                       
+
+Depth: 6, f(n) = 3
+| ABCDEFGHIJKLMNOPQRSTUY    
+| ZV                        
+| XW                        
+
+Depth: 7, f(n) = 4
+| ABCDEFGHIJKLMNOPQRSTU     
+| ZVY                       
+| XW                        
+
+Depth: 8, f(n) = 4
+| ABCDEFGHIJKLMNOPQRSTU     
+| ZV                        
+| XWY                       
+
+Depth: 9, f(n) = 4
+| ABCDEFGHIJKLMNOPQRSTUV    
+| Z                         
+| XWY                       
+
+Depth: 10, f(n) = 4
+| ABCDEFGHIJKLMNOPQRSTUVY   
+| Z                         
+| XW                        
+
+Depth: 11, f(n) = 4
+| ABCDEFGHIJKLMNOPQRSTUVY   
+| ZW                        
+| X                         
+
+Depth: 12, f(n) = 2
+| ABCDEFGHIJKLMNOPQRSTUV    
+| ZW                        
+| XY                        
+
+Depth: 13, f(n) = 1
+| ABCDEFGHIJKLMNOPQRSTU     
+| ZW                        
+| XYV                       
+
+Depth: 14, f(n) = 0
+| ABCDEFGHIJKLMNOPQRSTU     
+| Z                         
+| XYVW                      
+
+-- End of solution trace --

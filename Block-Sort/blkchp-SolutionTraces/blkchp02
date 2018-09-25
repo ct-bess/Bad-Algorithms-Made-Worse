@@ -1,7 +1,5 @@
-START STATE: 
-|A    |CB   |ED   |
-GOAL  STATE: 
-|ABCDE|     |     |
+START STATE: |A    |CB   |ED   |
+GOAL  STATE: |ABCDE|     |     |
 
 Depth: 0, f(n) = 4
 | AB   
@@ -22,3 +20,5 @@ Depth: 3, f(n) = 0
 | ABCDE
 |      
 |      
+
+-- End of solution trace --

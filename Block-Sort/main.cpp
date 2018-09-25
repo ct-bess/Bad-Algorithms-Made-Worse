@@ -17,6 +17,7 @@
 #include <vector>
 #include <algorithm>
 
+// Because I'm bad at GDB
 #define VERBOSE true
 #define SUPERVERBOSE false
 #define ULTRAVERBOSE false
@@ -24,7 +25,7 @@
 using namespace std;
 
 const string DELIMITER = "|";
-const int SOLUTION_CUTOFF = 1000;
+const int SOLUTION_CUTOFF = 2 * 5000;
 
 struct Node {
 
@@ -315,25 +316,36 @@ void graphSearch( State &state, Node &node ) {
   }
   #endif
 
-/*
-  // DELETE THIS
-  if( openList.at(0).second == openList.at(1).second ) {
-    cout << "-- SHUFFLE --\n";
-    random_shuffle( openList.begin(), openList.end() );
-    sort( openList.begin(), openList.end(), secondPairSort );
-  }
-*/
-
-  // 1st element of sorted openList is what we shall explore
-  node.state = successors.at( openList.at(0).first );
-  node.depth = state.succTree.size();
-
   if( openList.empty() == true ) {
     cout << "-- Open list empty\n";
     exit(-1);
   }
 
-  node.fofn = openList.at(0).second;
+  // Check previous states so that we don't traverse the same state
+  int j = 0;
+  for( int i = 0; i < state.succTree.size(); ++i ) {
+
+    //vector<string> pathInQuestion = state.succTree.at(j).state;
+    vector<string> pathInQuestion = successors.at( openList.at(j).first );
+    vector<string> previousPaths = state.succTree.at(i).state;
+
+    if( pathInQuestion == previousPaths ) { 
+      ++j;
+      // NO BREAK: we need to count ALL THE WAY DOWN!
+      //break;
+    }
+
+  }
+
+  // Safety net
+  j = j % openList.size();
+
+  // jth element of sorted openList is what we shall explore
+  // -- typically the 1st element but not always
+  node.state = successors.at( openList.at(j).first );
+  node.depth = state.succTree.size();
+
+  node.fofn = openList.at(j).second;
 
   state.succTree.push_back( node );
   state.solutionAttempts += 1;
@@ -370,7 +382,7 @@ void readFile( string inputInputFile, State &state ) {
 
   regex_search( fileString, matches, blkInfoRE );
 
-  if( matches.size() != 3 ) cout << "-- I/O YEETED\n";
+  if( matches.size() != 3 ) cout << "-- FILE YEETED\n";
 
   state.blkPlane = stoi( matches[1] );
   state.blkCount = stoi( matches[2] );

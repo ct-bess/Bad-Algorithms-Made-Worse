@@ -1,0 +1,69 @@
+START STATE: |ABCDEFGH    |KLIJ        |            |
+GOAL  STATE: |ABCDEFGHIJKL|            |            |
+
+Depth: 0, f(n) = 7
+| ABCDEFGH    
+| KLI         
+| J           
+
+Depth: 1, f(n) = 4
+| ABCDEFGHI   
+| KL          
+| J           
+
+Depth: 2, f(n) = 3
+| ABCDEFGHIL  
+| K           
+| J           
+
+Depth: 3, f(n) = 3
+| ABCDEFGHILK 
+|             
+| J           
+
+Depth: 4, f(n) = 3
+| ABCDEFGHILK 
+| J           
+|             
+
+Depth: 5, f(n) = 3
+| ABCDEFGHIL  
+| J           
+| K           
+
+Depth: 6, f(n) = 4
+| ABCDEFGHI   
+| JL          
+| K           
+
+Depth: 7, f(n) = 4
+| ABCDEFGHI   
+| J           
+| KL          
+
+Depth: 8, f(n) = 3
+| ABCDEFGHIJ  
+|             
+| KL          
+
+Depth: 9, f(n) = 2
+| ABCDEFGHIJL 
+|             
+| K           
+
+Depth: 10, f(n) = 2
+| ABCDEFGHIJ  
+| L           
+| K           
+
+Depth: 11, f(n) = 1
+| ABCDEFGHIJK 
+| L           
+|             
+
+Depth: 12, f(n) = 0
+| ABCDEFGHIJKL
+|             
+|             
+
+-- End of solution trace --

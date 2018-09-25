@@ -1,0 +1,204 @@
+START STATE: |     |BAEDC|     |
+GOAL  STATE: |ABCDE|     |     |
+
+Depth: 0, f(n) = 11
+|      
+| BAED 
+| C    
+
+Depth: 1, f(n) = 8
+| D    
+| BAE  
+| C    
+
+Depth: 2, f(n) = 7
+| D    
+| BA   
+| CE   
+
+Depth: 3, f(n) = 7
+| DA   
+| B    
+| CE   
+
+Depth: 4, f(n) = 7
+| DA   
+| BE   
+| C    
+
+Depth: 5, f(n) = 7
+| D    
+| BE   
+| CA   
+
+Depth: 6, f(n) = 7
+| DE   
+| B    
+| CA   
+
+Depth: 7, f(n) = 7
+| DE   
+| BA   
+| C    
+
+Depth: 8, f(n) = 8
+| D    
+| BAE  
+| C    
+
+Depth: 9, f(n) = 9
+|      
+| BAE  
+| CD   
+
+Depth: 10, f(n) = 7
+| E    
+| BA   
+| CD   
+
+Depth: 11, f(n) = 7
+| EA   
+| B    
+| CD   
+
+Depth: 12, f(n) = 7
+| EA   
+| BD   
+| C    
+
+Depth: 13, f(n) = 7
+| E    
+| BD   
+| CA   
+
+Depth: 14, f(n) = 7
+| ED   
+| B    
+| CA   
+
+Depth: 15, f(n) = 7
+| ED   
+| BA   
+| C    
+
+Depth: 16, f(n) = 8
+| E    
+| BAD  
+| C    
+
+Depth: 17, f(n) = 9
+|      
+| BAD  
+| CE   
+
+Depth: 18, f(n) = 9
+|      
+| BA   
+| CED  
+
+Depth: 19, f(n) = 7
+| A    
+| B    
+| CED  
+
+Depth: 20, f(n) = 5
+| AD   
+| B    
+| CE   
+
+Depth: 21, f(n) = 5
+| ADE  
+| B    
+| C    
+
+Depth: 22, f(n) = 5
+| AD   
+| BE   
+| C    
+
+Depth: 23, f(n) = 5
+| ADC  
+| BE   
+|      
+
+Depth: 24, f(n) = 4
+| ADC  
+| B    
+| E    
+
+Depth: 25, f(n) = 5
+| AD   
+| BC   
+| E    
+
+Depth: 26, f(n) = 5
+| AD   
+| B    
+| EC   
+
+Depth: 27, f(n) = 6
+| A    
+| BD   
+| EC   
+
+Depth: 28, f(n) = 5
+| AC   
+| BD   
+| E    
+
+Depth: 29, f(n) = 5
+| AC   
+| B    
+| ED   
+
+Depth: 30, f(n) = 5
+| ACD  
+| B    
+| E    
+
+Depth: 31, f(n) = 6
+| ACD  
+|      
+| EB   
+
+Depth: 32, f(n) = 5
+| AC   
+| D    
+| EB   
+
+Depth: 33, f(n) = 5
+| ACB  
+| D    
+| E    
+
+Depth: 34, f(n) = 5
+| AC   
+| DB   
+| E    
+
+Depth: 35, f(n) = 6
+| A    
+| DB   
+| EC   
+
+Depth: 36, f(n) = 4
+| AB   
+| D    
+| EC   
+
+Depth: 37, f(n) = 2
+| ABC  
+| D    
+| E    
+
+Depth: 38, f(n) = 1
+| ABCD 
+|      
+| E    
+
+Depth: 39, f(n) = 0
+| ABCDE
+|      
+|      
+
+-- End of solution trace --

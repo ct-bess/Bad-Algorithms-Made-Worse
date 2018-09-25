@@ -1,0 +1,324 @@
+START STATE: |ABCDEFGHIJKL|            |            |
+GOAL  STATE: |ABECDI      |LKJG        |HF          |
+
+Depth: 0, f(n) = 45
+| ABCDEFGHIJK 
+| L           
+|             
+
+Depth: 1, f(n) = 36
+| ABCDEFGHIJ  
+| LK          
+|             
+
+Depth: 2, f(n) = 28
+| ABCDEFGHI   
+| LKJ         
+|             
+
+Depth: 3, f(n) = 22
+| ABCDEFGH    
+| LKJI        
+|             
+
+Depth: 4, f(n) = 16
+| ABCDEFG     
+| LKJI        
+| H           
+
+Depth: 5, f(n) = 12
+| ABCDEF      
+| LKJI        
+| HG          
+
+Depth: 6, f(n) = 10
+| ABCDE       
+| LKJIF       
+| HG          
+
+Depth: 7, f(n) = 9
+| ABCD        
+| LKJIF       
+| HGE         
+
+Depth: 8, f(n) = 10
+| ABC         
+| LKJIFD      
+| HGE         
+
+Depth: 9, f(n) = 10
+| ABC         
+| LKJIF       
+| HGED        
+
+Depth: 10, f(n) = 10
+| ABCF        
+| LKJI        
+| HGED        
+
+Depth: 11, f(n) = 9
+| ABCFD       
+| LKJI        
+| HGE         
+
+Depth: 12, f(n) = 9
+| ABCF        
+| LKJID       
+| HGE         
+
+Depth: 13, f(n) = 10
+| ABC         
+| LKJIDF      
+| HGE         
+
+Depth: 14, f(n) = 10
+| ABC         
+| LKJID       
+| HGEF        
+
+Depth: 15, f(n) = 10
+| ABCD        
+| LKJI        
+| HGEF        
+
+Depth: 16, f(n) = 10
+| ABCDF       
+| LKJI        
+| HGE         
+
+Depth: 17, f(n) = 10
+| ABCDF       
+| LKJIE       
+| HG          
+
+Depth: 18, f(n) = 9
+| ABCD        
+| LKJIE       
+| HGF         
+
+Depth: 19, f(n) = 10
+| ABC         
+| LKJIED      
+| HGF         
+
+Depth: 20, f(n) = 10
+| ABC         
+| LKJIE       
+| HGFD        
+
+Depth: 21, f(n) = 10
+| ABCE        
+| LKJI        
+| HGFD        
+
+Depth: 22, f(n) = 9
+| ABCED       
+| LKJI        
+| HGF         
+
+Depth: 23, f(n) = 9
+| ABCE        
+| LKJID       
+| HGF         
+
+Depth: 24, f(n) = 10
+| ABC         
+| LKJIDE      
+| HGF         
+
+Depth: 25, f(n) = 10
+| ABC         
+| LKJID       
+| HGFE        
+
+Depth: 26, f(n) = 10
+| ABCD        
+| LKJI        
+| HGFE        
+
+Depth: 27, f(n) = 10
+| ABCDE       
+| LKJI        
+| HGF         
+
+Depth: 28, f(n) = 10
+| ABCDE       
+| LKJIF       
+| HG          
+
+Depth: 29, f(n) = 10
+| ABCD        
+| LKJIFE      
+| HG          
+
+Depth: 30, f(n) = 10
+| ABC         
+| LKJIFE      
+| HGD         
+
+Depth: 31, f(n) = 9
+| ABCE        
+| LKJIF       
+| HGD         
+
+Depth: 32, f(n) = 9
+| ABCED       
+| LKJIF       
+| HG          
+
+Depth: 33, f(n) = 9
+| ABCED       
+| LKJI        
+| HGF         
+
+Depth: 34, f(n) = 10
+| ABCE        
+| LKJI        
+| HGFD        
+
+Depth: 35, f(n) = 10
+| ABC         
+| LKJIE       
+| HGFD        
+
+Depth: 36, f(n) = 10
+| ABC         
+| LKJIED      
+| HGF         
+
+Depth: 37, f(n) = 10
+| ABCF        
+| LKJIED      
+| HG          
+
+Depth: 38, f(n) = 9
+| ABCF        
+| LKJIE       
+| HGD         
+
+Depth: 39, f(n) = 9
+| ABCFD       
+| LKJIE       
+| HG          
+
+Depth: 40, f(n) = 9
+| ABCFD       
+| LKJI        
+| HGE         
+
+Depth: 41, f(n) = 10
+| ABCF        
+| LKJI        
+| HGED        
+
+Depth: 42, f(n) = 10
+| ABC         
+| LKJIF       
+| HGED        
+
+Depth: 43, f(n) = 10
+| ABC         
+| LKJIFD      
+| HGE         
+
+Depth: 44, f(n) = 10
+| ABCE        
+| LKJIFD      
+| HG          
+
+Depth: 45, f(n) = 12
+| ABC         
+| LKJIFDE     
+| HG          
+
+Depth: 46, f(n) = 13
+| AB          
+| LKJIFDE     
+| HGC         
+
+Depth: 47, f(n) = 9
+| ABE         
+| LKJIFD      
+| HGC         
+
+Depth: 48, f(n) = 7
+| ABED        
+| LKJIF       
+| HGC         
+
+Depth: 49, f(n) = 7
+| ABEDF       
+| LKJI        
+| HGC         
+
+Depth: 50, f(n) = 7
+| ABEDF       
+| LKJIC       
+| HG          
+
+Depth: 51, f(n) = 7
+| ABED        
+| LKJIC       
+| HGF         
+
+Depth: 52, f(n) = 7
+| ABEDC       
+| LKJI        
+| HGF         
+
+Depth: 53, f(n) = 7
+| ABEDC       
+| LKJIF       
+| HG          
+
+Depth: 54, f(n) = 8
+| ABED        
+| LKJIFC      
+| HG          
+
+Depth: 55, f(n) = 9
+| ABE         
+| LKJIFC      
+| HGD         
+
+Depth: 56, f(n) = 6
+| ABEC        
+| LKJIF       
+| HGD         
+
+Depth: 57, f(n) = 4
+| ABECD       
+| LKJIF       
+| HG          
+
+Depth: 58, f(n) = 3
+| ABECDF      
+| LKJI        
+| HG          
+
+Depth: 59, f(n) = 4
+| ABECD       
+| LKJI        
+| HGF         
+
+Depth: 60, f(n) = 3
+| ABECDI      
+| LKJ         
+| HGF         
+
+Depth: 61, f(n) = 2
+| ABECDIF     
+| LKJ         
+| HG          
+
+Depth: 62, f(n) = 1
+| ABECDIF     
+| LKJG        
+| H           
+
+Depth: 63, f(n) = 0
+| ABECDI      
+| LKJG        
+| HF          
+
+-- End of solution trace --

@@ -1,0 +1,154 @@
+START STATE: |ABCDEFGHL   |JK          |I           |
+GOAL  STATE: |ABCDEFGHIJKL|            |            |
+
+Depth: 0, f(n) = 5
+| ABCDEFGHL   
+| J           
+| IK          
+
+Depth: 1, f(n) = 5
+| ABCDEFGHLJ  
+|             
+| IK          
+
+Depth: 2, f(n) = 4
+| ABCDEFGHLJK 
+|             
+| I           
+
+Depth: 3, f(n) = 4
+| ABCDEFGHLJ  
+| K           
+| I           
+
+Depth: 4, f(n) = 5
+| ABCDEFGHL   
+| KJ          
+| I           
+
+Depth: 5, f(n) = 5
+| ABCDEFGHL   
+| K           
+| IJ          
+
+Depth: 6, f(n) = 6
+| ABCDEFGH    
+| KL          
+| IJ          
+
+Depth: 7, f(n) = 5
+| ABCDEFGHJ   
+| KL          
+| I           
+
+Depth: 8, f(n) = 5
+| ABCDEFGHJ   
+| K           
+| IL          
+
+Depth: 9, f(n) = 5
+| ABCDEFGHJL  
+| K           
+| I           
+
+Depth: 10, f(n) = 6
+| ABCDEFGHJL  
+|             
+| IK          
+
+Depth: 11, f(n) = 5
+| ABCDEFGHJ   
+| L           
+| IK          
+
+Depth: 12, f(n) = 5
+| ABCDEFGHJK  
+| L           
+| I           
+
+Depth: 13, f(n) = 5
+| ABCDEFGHJ   
+| LK          
+| I           
+
+Depth: 14, f(n) = 6
+| ABCDEFGH    
+| LK          
+| IJ          
+
+Depth: 15, f(n) = 5
+| ABCDEFGHK   
+| L           
+| IJ          
+
+Depth: 16, f(n) = 4
+| ABCDEFGHKJ  
+| L           
+| I           
+
+Depth: 17, f(n) = 5
+| ABCDEFGHK   
+| LJ          
+| I           
+
+Depth: 18, f(n) = 5
+| ABCDEFGHK   
+| L           
+| IJ          
+
+Depth: 19, f(n) = 6
+| ABCDEFGH    
+| LK          
+| IJ          
+
+Depth: 20, f(n) = 5
+| ABCDEFGHJ   
+| LK          
+| I           
+
+Depth: 21, f(n) = 6
+| ABCDEFGHJI  
+| LK          
+|             
+
+Depth: 22, f(n) = 5
+| ABCDEFGHJI  
+| L           
+| K           
+
+Depth: 23, f(n) = 5
+| ABCDEFGHJ   
+| LI          
+| K           
+
+Depth: 24, f(n) = 5
+| ABCDEFGHJ   
+| L           
+| KI          
+
+Depth: 25, f(n) = 6
+| ABCDEFGH    
+| LJ          
+| KI          
+
+Depth: 26, f(n) = 4
+| ABCDEFGHI   
+| LJ          
+| K           
+
+Depth: 27, f(n) = 2
+| ABCDEFGHIJ  
+| L           
+| K           
+
+Depth: 28, f(n) = 1
+| ABCDEFGHIJK 
+| L           
+|             
+
+Depth: 29, f(n) = 0
+| ABCDEFGHIJKL
+|             
+|             
+
+-- End of solution trace --
