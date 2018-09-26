@@ -1,0 +1,1654 @@
+START STATE: |ABCDE|     |     |
+GOAL  STATE: |     |ACEBD|     |
+
+Depth: 0, f(n) = 11
+| ABCD 
+| E    
+|      
+
+Depth: 1, f(n) = 8
+| ABC  
+| E    
+| D    
+
+Depth: 2, f(n) = 6
+| AB   
+| EC   
+| D    
+
+Depth: 3, f(n) = 6
+| A    
+| ECB  
+| D    
+
+Depth: 4, f(n) = 6
+| A    
+| EC   
+| DB   
+
+Depth: 5, f(n) = 7
+|      
+| ECA  
+| DB   
+
+Depth: 6, f(n) = 6
+| B    
+| ECA  
+| D    
+
+Depth: 7, f(n) = 6
+| B    
+| EC   
+| DA   
+
+Depth: 8, f(n) = 6
+| BA   
+| EC   
+| D    
+
+Depth: 9, f(n) = 7
+| BA   
+| E    
+| DC   
+
+Depth: 10, f(n) = 7
+| B    
+| EA   
+| DC   
+
+Depth: 11, f(n) = 7
+| BC   
+| EA   
+| D    
+
+Depth: 12, f(n) = 7
+| BC   
+| E    
+| DA   
+
+Depth: 13, f(n) = 8
+| B    
+| E    
+| DAC  
+
+Depth: 14, f(n) = 9
+|      
+| EB   
+| DAC  
+
+Depth: 15, f(n) = 7
+| C    
+| EB   
+| DA   
+
+Depth: 16, f(n) = 7
+| CB   
+| E    
+| DA   
+
+Depth: 17, f(n) = 7
+| CB   
+| EA   
+| D    
+
+Depth: 18, f(n) = 7
+| C    
+| EA   
+| DB   
+
+Depth: 19, f(n) = 7
+| CA   
+| E    
+| DB   
+
+Depth: 20, f(n) = 7
+| CA   
+| EB   
+| D    
+
+Depth: 21, f(n) = 8
+| C    
+| EBA  
+| D    
+
+Depth: 22, f(n) = 9
+|      
+| EBA  
+| DC   
+
+Depth: 23, f(n) = 7
+| A    
+| EB   
+| DC   
+
+Depth: 24, f(n) = 7
+| AB   
+| E    
+| DC   
+
+Depth: 25, f(n) = 8
+| A    
+| E    
+| DCB  
+
+Depth: 26, f(n) = 7
+| A    
+| EB   
+| DC   
+
+Depth: 27, f(n) = 7
+| AC   
+| EB   
+| D    
+
+Depth: 28, f(n) = 7
+| AC   
+| E    
+| DB   
+
+Depth: 29, f(n) = 8
+| A    
+| E    
+| DBC  
+
+Depth: 30, f(n) = 9
+|      
+| EA   
+| DBC  
+
+Depth: 31, f(n) = 9
+|      
+| EAC  
+| DB   
+
+Depth: 32, f(n) = 8
+| B    
+| EAC  
+| D    
+
+Depth: 33, f(n) = 9
+| BD   
+| EAC  
+|      
+
+Depth: 34, f(n) = 7
+| BD   
+| EA   
+| C    
+
+Depth: 35, f(n) = 7
+| B    
+| EA   
+| CD   
+
+Depth: 36, f(n) = 7
+| BA   
+| E    
+| CD   
+
+Depth: 37, f(n) = 7
+| BA   
+| ED   
+| C    
+
+Depth: 38, f(n) = 7
+| B    
+| ED   
+| CA   
+
+Depth: 39, f(n) = 7
+| BD   
+| E    
+| CA   
+
+Depth: 40, f(n) = 7
+| BD   
+| EA   
+| C    
+
+Depth: 41, f(n) = 8
+| B    
+| EAD  
+| C    
+
+Depth: 42, f(n) = 9
+|      
+| EAD  
+| CB   
+
+Depth: 43, f(n) = 7
+| D    
+| EA   
+| CB   
+
+Depth: 44, f(n) = 7
+| DA   
+| E    
+| CB   
+
+Depth: 45, f(n) = 7
+| DA   
+| EB   
+| C    
+
+Depth: 46, f(n) = 7
+| D    
+| EB   
+| CA   
+
+Depth: 47, f(n) = 7
+| DB   
+| E    
+| CA   
+
+Depth: 48, f(n) = 7
+| DB   
+| EA   
+| C    
+
+Depth: 49, f(n) = 8
+| D    
+| EAB  
+| C    
+
+Depth: 50, f(n) = 9
+|      
+| EAB  
+| CD   
+
+Depth: 51, f(n) = 9
+|      
+| EA   
+| CDB  
+
+Depth: 52, f(n) = 8
+| A    
+| E    
+| CDB  
+
+Depth: 53, f(n) = 7
+| AB   
+| E    
+| CD   
+
+Depth: 54, f(n) = 7
+| A    
+| EB   
+| CD   
+
+Depth: 55, f(n) = 7
+| AD   
+| EB   
+| C    
+
+Depth: 56, f(n) = 7
+| AD   
+| E    
+| CB   
+
+Depth: 57, f(n) = 7
+| A    
+| ED   
+| CB   
+
+Depth: 58, f(n) = 7
+| AB   
+| ED   
+| C    
+
+Depth: 59, f(n) = 7
+| AB   
+| E    
+| CD   
+
+Depth: 60, f(n) = 8
+| A    
+| E    
+| CDB  
+
+Depth: 61, f(n) = 9
+|      
+| EA   
+| CDB  
+
+Depth: 62, f(n) = 9
+|      
+| EAB  
+| CD   
+
+Depth: 63, f(n) = 11
+|      
+| EABD 
+| C    
+
+Depth: 64, f(n) = 11
+| C    
+| EABD 
+|      
+
+Depth: 65, f(n) = 8
+| C    
+| EAB  
+| D    
+
+Depth: 66, f(n) = 7
+| CB   
+| EA   
+| D    
+
+Depth: 67, f(n) = 7
+| CB   
+| E    
+| DA   
+
+Depth: 68, f(n) = 8
+| C    
+| E    
+| DAB  
+
+Depth: 69, f(n) = 7
+| C    
+| EB   
+| DA   
+
+Depth: 70, f(n) = 8
+| C    
+| EBA  
+| D    
+
+Depth: 71, f(n) = 9
+| CD   
+| EBA  
+|      
+
+Depth: 72, f(n) = 7
+| CD   
+| EB   
+| A    
+
+Depth: 73, f(n) = 7
+| C    
+| EB   
+| AD   
+
+Depth: 74, f(n) = 7
+| CB   
+| E    
+| AD   
+
+Depth: 75, f(n) = 7
+| CB   
+| ED   
+| A    
+
+Depth: 76, f(n) = 7
+| C    
+| ED   
+| AB   
+
+Depth: 77, f(n) = 7
+| CD   
+| E    
+| AB   
+
+Depth: 78, f(n) = 7
+| CD   
+| EB   
+| A    
+
+Depth: 79, f(n) = 8
+| C    
+| EBD  
+| A    
+
+Depth: 80, f(n) = 9
+|      
+| EBD  
+| AC   
+
+Depth: 81, f(n) = 7
+| D    
+| EB   
+| AC   
+
+Depth: 82, f(n) = 7
+| DB   
+| E    
+| AC   
+
+Depth: 83, f(n) = 6
+| DB   
+| EC   
+| A    
+
+Depth: 84, f(n) = 6
+| D    
+| ECB  
+| A    
+
+Depth: 85, f(n) = 6
+| D    
+| EC   
+| AB   
+
+Depth: 86, f(n) = 7
+|      
+| ECD  
+| AB   
+
+Depth: 87, f(n) = 6
+| B    
+| ECD  
+| A    
+
+Depth: 88, f(n) = 6
+| B    
+| EC   
+| AD   
+
+Depth: 89, f(n) = 6
+| BD   
+| EC   
+| A    
+
+Depth: 90, f(n) = 7
+| BD   
+| E    
+| AC   
+
+Depth: 91, f(n) = 7
+| B    
+| ED   
+| AC   
+
+Depth: 92, f(n) = 7
+| BC   
+| ED   
+| A    
+
+Depth: 93, f(n) = 7
+| BC   
+| E    
+| AD   
+
+Depth: 94, f(n) = 8
+| B    
+| E    
+| ADC  
+
+Depth: 95, f(n) = 9
+|      
+| EB   
+| ADC  
+
+Depth: 96, f(n) = 9
+|      
+| EBC  
+| AD   
+
+Depth: 97, f(n) = 8
+| D    
+| EBC  
+| A    
+
+Depth: 98, f(n) = 7
+| DC   
+| EB   
+| A    
+
+Depth: 99, f(n) = 7
+| DC   
+| E    
+| AB   
+
+Depth: 100, f(n) = 8
+| D    
+| E    
+| ABC  
+
+Depth: 101, f(n) = 9
+|      
+| ED   
+| ABC  
+
+Depth: 102, f(n) = 9
+|      
+| EDC  
+| AB   
+
+Depth: 103, f(n) = 8
+| B    
+| EDC  
+| A    
+
+Depth: 104, f(n) = 9
+| BA   
+| EDC  
+|      
+
+Depth: 105, f(n) = 9
+| BAC  
+| ED   
+|      
+
+Depth: 106, f(n) = 8
+| BAC  
+| E    
+| D    
+
+Depth: 107, f(n) = 9
+| BAC  
+|      
+| DE   
+
+Depth: 108, f(n) = 7
+| BA   
+| C    
+| DE   
+
+Depth: 109, f(n) = 7
+| B    
+| CA   
+| DE   
+
+Depth: 110, f(n) = 7
+| BE   
+| CA   
+| D    
+
+Depth: 111, f(n) = 7
+| B    
+| CAE  
+| D    
+
+Depth: 112, f(n) = 8
+|      
+| CAEB 
+| D    
+
+Depth: 113, f(n) = 8
+|      
+| CAE  
+| DB   
+
+Depth: 114, f(n) = 7
+| E    
+| CA   
+| DB   
+
+Depth: 115, f(n) = 7
+| EA   
+| C    
+| DB   
+
+Depth: 116, f(n) = 7
+| EA   
+| CB   
+| D    
+
+Depth: 117, f(n) = 7
+| E    
+| CB   
+| DA   
+
+Depth: 118, f(n) = 7
+| EB   
+| C    
+| DA   
+
+Depth: 119, f(n) = 7
+| EB   
+| CA   
+| D    
+
+Depth: 120, f(n) = 8
+| E    
+| CAB  
+| D    
+
+Depth: 121, f(n) = 9
+|      
+| CAB  
+| DE   
+
+Depth: 122, f(n) = 9
+|      
+| CA   
+| DEB  
+
+Depth: 123, f(n) = 8
+| A    
+| C    
+| DEB  
+
+Depth: 124, f(n) = 7
+| AB   
+| C    
+| DE   
+
+Depth: 125, f(n) = 7
+| A    
+| CB   
+| DE   
+
+Depth: 126, f(n) = 7
+| AE   
+| CB   
+| D    
+
+Depth: 127, f(n) = 7
+| A    
+| CBE  
+| D    
+
+Depth: 128, f(n) = 8
+|      
+| CBE  
+| DA   
+
+Depth: 129, f(n) = 9
+|      
+| CB   
+| DAE  
+
+Depth: 130, f(n) = 8
+| B    
+| C    
+| DAE  
+
+Depth: 131, f(n) = 7
+| BE   
+| C    
+| DA   
+
+Depth: 132, f(n) = 7
+| B    
+| CE   
+| DA   
+
+Depth: 133, f(n) = 7
+| BA   
+| CE   
+| D    
+
+Depth: 134, f(n) = 7
+| BA   
+| C    
+| DE   
+
+Depth: 135, f(n) = 8
+| B    
+| C    
+| DEA  
+
+Depth: 136, f(n) = 9
+|      
+| CB   
+| DEA  
+
+Depth: 137, f(n) = 9
+|      
+| CBA  
+| DE   
+
+Depth: 138, f(n) = 8
+| E    
+| CBA  
+| D    
+
+Depth: 139, f(n) = 7
+| EA   
+| CB   
+| D    
+
+Depth: 140, f(n) = 7
+| EA   
+| C    
+| DB   
+
+Depth: 141, f(n) = 8
+| E    
+| C    
+| DBA  
+
+Depth: 142, f(n) = 7
+| E    
+| CA   
+| DB   
+
+Depth: 143, f(n) = 8
+|      
+| CAE  
+| DB   
+
+Depth: 144, f(n) = 7
+| B    
+| CAE  
+| D    
+
+Depth: 145, f(n) = 8
+| BD   
+| CAE  
+|      
+
+Depth: 146, f(n) = 7
+| BD   
+| CA   
+| E    
+
+Depth: 147, f(n) = 7
+| B    
+| CA   
+| ED   
+
+Depth: 148, f(n) = 7
+| BA   
+| C    
+| ED   
+
+Depth: 149, f(n) = 7
+| BA   
+| CD   
+| E    
+
+Depth: 150, f(n) = 7
+| B    
+| CD   
+| EA   
+
+Depth: 151, f(n) = 7
+| BD   
+| C    
+| EA   
+
+Depth: 152, f(n) = 7
+| BD   
+| CA   
+| E    
+
+Depth: 153, f(n) = 8
+| B    
+| CAD  
+| E    
+
+Depth: 154, f(n) = 9
+|      
+| CAD  
+| EB   
+
+Depth: 155, f(n) = 7
+| D    
+| CA   
+| EB   
+
+Depth: 156, f(n) = 7
+| DA   
+| C    
+| EB   
+
+Depth: 157, f(n) = 7
+| DA   
+| CB   
+| E    
+
+Depth: 158, f(n) = 7
+| D    
+| CB   
+| EA   
+
+Depth: 159, f(n) = 7
+| DB   
+| C    
+| EA   
+
+Depth: 160, f(n) = 7
+| DB   
+| CA   
+| E    
+
+Depth: 161, f(n) = 8
+| D    
+| CAB  
+| E    
+
+Depth: 162, f(n) = 9
+|      
+| CAB  
+| ED   
+
+Depth: 163, f(n) = 9
+|      
+| CA   
+| EDB  
+
+Depth: 164, f(n) = 8
+| A    
+| C    
+| EDB  
+
+Depth: 165, f(n) = 7
+| AB   
+| C    
+| ED   
+
+Depth: 166, f(n) = 7
+| A    
+| CB   
+| ED   
+
+Depth: 167, f(n) = 7
+| AD   
+| CB   
+| E    
+
+Depth: 168, f(n) = 7
+| AD   
+| C    
+| EB   
+
+Depth: 169, f(n) = 7
+| A    
+| CD   
+| EB   
+
+Depth: 170, f(n) = 7
+| AB   
+| CD   
+| E    
+
+Depth: 171, f(n) = 7
+| AB   
+| C    
+| ED   
+
+Depth: 172, f(n) = 8
+| A    
+| C    
+| EDB  
+
+Depth: 173, f(n) = 9
+|      
+| CA   
+| EDB  
+
+Depth: 174, f(n) = 9
+|      
+| CAB  
+| ED   
+
+Depth: 175, f(n) = 11
+|      
+| CABD 
+| E    
+
+Depth: 176, f(n) = 11
+| E    
+| CABD 
+|      
+
+Depth: 177, f(n) = 9
+| ED   
+| CAB  
+|      
+
+Depth: 178, f(n) = 7
+| ED   
+| CA   
+| B    
+
+Depth: 179, f(n) = 7
+| E    
+| CA   
+| BD   
+
+Depth: 180, f(n) = 7
+| EA   
+| C    
+| BD   
+
+Depth: 181, f(n) = 7
+| EA   
+| CD   
+| B    
+
+Depth: 182, f(n) = 7
+| E    
+| CD   
+| BA   
+
+Depth: 183, f(n) = 7
+| ED   
+| C    
+| BA   
+
+Depth: 184, f(n) = 7
+| ED   
+| CA   
+| B    
+
+Depth: 185, f(n) = 8
+| E    
+| CAD  
+| B    
+
+Depth: 186, f(n) = 9
+|      
+| CAD  
+| BE   
+
+Depth: 187, f(n) = 7
+| D    
+| CA   
+| BE   
+
+Depth: 188, f(n) = 7
+| DA   
+| C    
+| BE   
+
+Depth: 189, f(n) = 7
+| DA   
+| CE   
+| B    
+
+Depth: 190, f(n) = 7
+| D    
+| CE   
+| BA   
+
+Depth: 191, f(n) = 7
+| DE   
+| C    
+| BA   
+
+Depth: 192, f(n) = 7
+| DE   
+| CA   
+| B    
+
+Depth: 193, f(n) = 7
+| D    
+| CAE  
+| B    
+
+Depth: 194, f(n) = 8
+|      
+| CAE  
+| BD   
+
+Depth: 195, f(n) = 9
+|      
+| CA   
+| BDE  
+
+Depth: 196, f(n) = 8
+| A    
+| C    
+| BDE  
+
+Depth: 197, f(n) = 7
+| AE   
+| C    
+| BD   
+
+Depth: 198, f(n) = 7
+| A    
+| CE   
+| BD   
+
+Depth: 199, f(n) = 7
+| AD   
+| CE   
+| B    
+
+Depth: 200, f(n) = 7
+| AD   
+| C    
+| BE   
+
+Depth: 201, f(n) = 7
+| A    
+| CD   
+| BE   
+
+Depth: 202, f(n) = 7
+| AE   
+| CD   
+| B    
+
+Depth: 203, f(n) = 7
+| A    
+| CDE  
+| B    
+
+Depth: 204, f(n) = 8
+|      
+| CDE  
+| BA   
+
+Depth: 205, f(n) = 9
+|      
+| CD   
+| BAE  
+
+Depth: 206, f(n) = 8
+| D    
+| C    
+| BAE  
+
+Depth: 207, f(n) = 7
+| D    
+| CE   
+| BA   
+
+Depth: 208, f(n) = 7
+| DA   
+| CE   
+| B    
+
+Depth: 209, f(n) = 7
+| DA   
+| C    
+| BE   
+
+Depth: 210, f(n) = 8
+| D    
+| C    
+| BEA  
+
+Depth: 211, f(n) = 7
+| D    
+| CA   
+| BE   
+
+Depth: 212, f(n) = 9
+|      
+| CAD  
+| BE   
+
+Depth: 213, f(n) = 8
+| E    
+| CAD  
+| B    
+
+Depth: 214, f(n) = 9
+| EB   
+| CAD  
+|      
+
+Depth: 215, f(n) = 9
+| EBD  
+| CA   
+|      
+
+Depth: 216, f(n) = 8
+| EBD  
+| C    
+| A    
+
+Depth: 217, f(n) = 7
+| EB   
+| CD   
+| A    
+
+Depth: 218, f(n) = 7
+| E    
+| CD   
+| AB   
+
+Depth: 219, f(n) = 7
+| ED   
+| C    
+| AB   
+
+Depth: 220, f(n) = 7
+| ED   
+| CB   
+| A    
+
+Depth: 221, f(n) = 7
+| E    
+| CB   
+| AD   
+
+Depth: 222, f(n) = 7
+| EB   
+| C    
+| AD   
+
+Depth: 223, f(n) = 7
+| EB   
+| CD   
+| A    
+
+Depth: 224, f(n) = 8
+| E    
+| CDB  
+| A    
+
+Depth: 225, f(n) = 9
+|      
+| CDB  
+| AE   
+
+Depth: 226, f(n) = 7
+| B    
+| CD   
+| AE   
+
+Depth: 227, f(n) = 7
+| BD   
+| C    
+| AE   
+
+Depth: 228, f(n) = 7
+| BD   
+| CE   
+| A    
+
+Depth: 229, f(n) = 7
+| B    
+| CE   
+| AD   
+
+Depth: 230, f(n) = 7
+| BE   
+| C    
+| AD   
+
+Depth: 231, f(n) = 7
+| BE   
+| CD   
+| A    
+
+Depth: 232, f(n) = 7
+| B    
+| CDE  
+| A    
+
+Depth: 233, f(n) = 8
+|      
+| CDEB 
+| A    
+
+Depth: 234, f(n) = 8
+|      
+| CDE  
+| AB   
+
+Depth: 235, f(n) = 9
+|      
+| CD   
+| ABE  
+
+Depth: 236, f(n) = 8
+| D    
+| C    
+| ABE  
+
+Depth: 237, f(n) = 7
+| DE   
+| C    
+| AB   
+
+Depth: 238, f(n) = 7
+| D    
+| CE   
+| AB   
+
+Depth: 239, f(n) = 7
+| DB   
+| CE   
+| A    
+
+Depth: 240, f(n) = 7
+| DB   
+| C    
+| AE   
+
+Depth: 241, f(n) = 7
+| D    
+| CB   
+| AE   
+
+Depth: 242, f(n) = 7
+| DE   
+| CB   
+| A    
+
+Depth: 243, f(n) = 7
+| D    
+| CBE  
+| A    
+
+Depth: 244, f(n) = 8
+|      
+| CBE  
+| AD   
+
+Depth: 245, f(n) = 9
+|      
+| CB   
+| ADE  
+
+Depth: 246, f(n) = 8
+| B    
+| C    
+| ADE  
+
+Depth: 247, f(n) = 7
+| B    
+| CE   
+| AD   
+
+Depth: 248, f(n) = 7
+| BD   
+| CE   
+| A    
+
+Depth: 249, f(n) = 7
+| BD   
+| C    
+| AE   
+
+Depth: 250, f(n) = 8
+| B    
+| C    
+| AED  
+
+Depth: 251, f(n) = 7
+| B    
+| CD   
+| AE   
+
+Depth: 252, f(n) = 9
+|      
+| CDB  
+| AE   
+
+Depth: 253, f(n) = 8
+| E    
+| CDB  
+| A    
+
+Depth: 254, f(n) = 9
+| EA   
+| CDB  
+|      
+
+Depth: 255, f(n) = 9
+| EAB  
+| CD   
+|      
+
+Depth: 256, f(n) = 8
+| EAB  
+| C    
+| D    
+
+Depth: 257, f(n) = 9
+| EAB  
+|      
+| DC   
+
+Depth: 258, f(n) = 7
+| EA   
+| B    
+| DC   
+
+Depth: 259, f(n) = 6
+| EA   
+| BC   
+| D    
+
+Depth: 260, f(n) = 6
+| E    
+| BCA  
+| D    
+
+Depth: 261, f(n) = 6
+| E    
+| BC   
+| DA   
+
+Depth: 262, f(n) = 6
+|      
+| BCE  
+| DA   
+
+Depth: 263, f(n) = 5
+| A    
+| BCE  
+| D    
+
+Depth: 264, f(n) = 6
+|      
+| BCEA 
+| D    
+
+Depth: 265, f(n) = 6
+|      
+| BCE  
+| DA   
+
+Depth: 266, f(n) = 6
+| E    
+| BC   
+| DA   
+
+Depth: 267, f(n) = 6
+| EA   
+| BC   
+| D    
+
+Depth: 268, f(n) = 7
+| EA   
+| B    
+| DC   
+
+Depth: 269, f(n) = 7
+| E    
+| BA   
+| DC   
+
+Depth: 270, f(n) = 7
+| EC   
+| BA   
+| D    
+
+Depth: 271, f(n) = 7
+| EC   
+| B    
+| DA   
+
+Depth: 272, f(n) = 8
+| E    
+| B    
+| DAC  
+
+Depth: 273, f(n) = 9
+|      
+| BE   
+| DAC  
+
+Depth: 274, f(n) = 7
+| C    
+| BE   
+| DA   
+
+Depth: 275, f(n) = 7
+| CE   
+| B    
+| DA   
+
+Depth: 276, f(n) = 7
+| CE   
+| BA   
+| D    
+
+Depth: 277, f(n) = 7
+| C    
+| BAE  
+| D    
+
+Depth: 278, f(n) = 7
+| C    
+| BA   
+| DE   
+
+Depth: 279, f(n) = 7
+| CA   
+| B    
+| DE   
+
+Depth: 280, f(n) = 7
+| CA   
+| BE   
+| D    
+
+Depth: 281, f(n) = 8
+| C    
+| BEA  
+| D    
+
+Depth: 282, f(n) = 9
+|      
+| BEA  
+| DC   
+
+Depth: 283, f(n) = 7
+| A    
+| BE   
+| DC   
+
+Depth: 284, f(n) = 7
+| AE   
+| B    
+| DC   
+
+Depth: 285, f(n) = 6
+| AE   
+| BC   
+| D    
+
+Depth: 286, f(n) = 6
+| A    
+| BC   
+| DE   
+
+Depth: 287, f(n) = 7
+|      
+| BCA  
+| DE   
+
+Depth: 288, f(n) = 6
+| E    
+| BCA  
+| D    
+
+Depth: 289, f(n) = 7
+| ED   
+| BCA  
+|      
+
+Depth: 290, f(n) = 6
+| ED   
+| BC   
+| A    
+
+Depth: 291, f(n) = 6
+| E    
+| BCD  
+| A    
+
+Depth: 292, f(n) = 6
+| E    
+| BC   
+| AD   
+
+Depth: 293, f(n) = 6
+|      
+| BCE  
+| AD   
+
+Depth: 294, f(n) = 5
+| D    
+| BCE  
+| A    
+
+Depth: 295, f(n) = 6
+|      
+| BCED 
+| A    
+
+Depth: 296, f(n) = 6
+|      
+| BCE  
+| AD   
+
+Depth: 297, f(n) = 6
+| E    
+| BC   
+| AD   
+
+Depth: 298, f(n) = 6
+| ED   
+| BC   
+| A    
+
+Depth: 299, f(n) = 7
+| ED   
+| B    
+| AC   
+
+Depth: 300, f(n) = 7
+| E    
+| BD   
+| AC   
+
+Depth: 301, f(n) = 7
+| EC   
+| BD   
+| A    
+
+Depth: 302, f(n) = 7
+| EC   
+| B    
+| AD   
+
+Depth: 303, f(n) = 8
+| E    
+| B    
+| ADC  
+
+Depth: 304, f(n) = 9
+|      
+| BE   
+| ADC  
+
+Depth: 305, f(n) = 7
+| C    
+| BE   
+| AD   
+
+Depth: 306, f(n) = 7
+| CE   
+| B    
+| AD   
+
+Depth: 307, f(n) = 7
+| CE   
+| BD   
+| A    
+
+Depth: 308, f(n) = 7
+| C    
+| BDE  
+| A    
+
+Depth: 309, f(n) = 7
+| C    
+| BD   
+| AE   
+
+Depth: 310, f(n) = 7
+| CD   
+| B    
+| AE   
+
+Depth: 311, f(n) = 7
+| CD   
+| BE   
+| A    
+
+Depth: 312, f(n) = 8
+| C    
+| BED  
+| A    
+
+Depth: 313, f(n) = 9
+|      
+| BED  
+| AC   
+
+Depth: 314, f(n) = 7
+| D    
+| BE   
+| AC   
+
+Depth: 315, f(n) = 7
+| DE   
+| B    
+| AC   
+
+Depth: 316, f(n) = 6
+| DE   
+| BC   
+| A    
+
+Depth: 317, f(n) = 6
+| D    
+| BC   
+| AE   
+
+Depth: 318, f(n) = 7
+|      
+| BCD  
+| AE   
+
+Depth: 319, f(n) = 6
+| E    
+| BCD  
+| A    
+
+Depth: 320, f(n) = 7
+| EA   
+| BCD  
+|      
+
+Depth: 321, f(n) = 6
+| EA   
+| BC   
+| D    
+
+Depth: 322, f(n) = 8
+| EAC  
+| B    
+| D    
+
+Depth: 323, f(n) = 9
+| EAC  
+|      
+| DB   
+
+Depth: 324, f(n) = 9
+| EA   
+|      
+| DBC  
+
+Depth: 325, f(n) = 7
+| E    
+| A    
+| DBC  
+
+Depth: 326, f(n) = 4
+| E    
+| AC   
+| DB   
+
+Depth: 327, f(n) = 3
+|      
+| ACE  
+| DB   
+
+Depth: 328, f(n) = 1
+|      
+| ACEB 
+| D    
+
+Depth: 329, f(n) = 0
+|      
+| ACEBD
+|      
+
+-- End of solution trace --

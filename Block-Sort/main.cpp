@@ -117,7 +117,7 @@ vector< vector<string> > generateSuccessors( State &state ) {
 
     #if SUPERVERBOSE
     cout << "S: Iteration: " << i << ", candidateNo: " << candidateNo << endl;
-    cout << "S: Candidate: " << cChar << endl;
+    cout << "S: Candidate: " << cChar << ", totPermutations: " << candidatePermutations << endl;
     #endif
 
     // -- Old bad way: only works for stack/plane index 0
@@ -325,7 +325,6 @@ void graphSearch( State &state, Node &node ) {
   int j = 0;
   for( int i = 0; i < state.succTree.size(); ++i ) {
 
-    //vector<string> pathInQuestion = state.succTree.at(j).state;
     vector<string> pathInQuestion = successors.at( openList.at(j).first );
     vector<string> previousPaths = state.succTree.at(i).state;
 
@@ -438,7 +437,16 @@ void readFile( string inputInputFile, State &state ) {
 
 int main( int argc, char** argv ) {
 
-  string argName = string( argv[1] );
+  string argName; 
+
+  if( argc == 2 ) argName = string( argv[1] );
+
+  else { 
+
+    cout << "No command line argument found.\n Input file 01 to 53: ";
+    cin >> argName;
+
+  }
 
   string fileName = "blkchp/blkchp" + argName;
 

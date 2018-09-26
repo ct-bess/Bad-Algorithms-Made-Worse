@@ -1,0 +1,24 @@
+START STATE: |A    |CB   |ED   |
+GOAL  STATE: |ABCDE|     |     |
+
+Depth: 0, f(n) = 4
+| AB   
+| C    
+| ED   
+
+Depth: 1, f(n) = 3
+| ABC  
+|      
+| ED   
+
+Depth: 2, f(n) = 1
+| ABCD 
+|      
+| E    
+
+Depth: 3, f(n) = 0
+| ABCDE
+|      
+|      
+
+-- End of solution trace --

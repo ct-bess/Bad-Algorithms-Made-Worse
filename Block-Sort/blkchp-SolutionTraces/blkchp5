@@ -1,0 +1,259 @@
+START STATE: |     |DBC  |AE   |
+GOAL  STATE: |ABCDE|     |     |
+
+Depth: 0, f(n) = 7
+| C    
+| DB   
+| AE   
+
+Depth: 1, f(n) = 6
+| CB   
+| D    
+| AE   
+
+Depth: 2, f(n) = 6
+| CBE  
+| D    
+| A    
+
+Depth: 3, f(n) = 6
+| CB   
+| DE   
+| A    
+
+Depth: 4, f(n) = 7
+| C    
+| DE   
+| AB   
+
+Depth: 5, f(n) = 7
+| CE   
+| D    
+| AB   
+
+Depth: 6, f(n) = 7
+| CE   
+| DB   
+| A    
+
+Depth: 7, f(n) = 8
+| C    
+| DBE  
+| A    
+
+Depth: 8, f(n) = 9
+|      
+| DBE  
+| AC   
+
+Depth: 9, f(n) = 7
+| E    
+| DB   
+| AC   
+
+Depth: 10, f(n) = 6
+| EB   
+| D    
+| AC   
+
+Depth: 11, f(n) = 5
+| EBC  
+| D    
+| A    
+
+Depth: 12, f(n) = 5
+| EBCD 
+|      
+| A    
+
+Depth: 13, f(n) = 5
+| EBCD 
+| A    
+|      
+
+Depth: 14, f(n) = 5
+| EBC  
+| A    
+| D    
+
+Depth: 15, f(n) = 6
+| EB   
+| AC   
+| D    
+
+Depth: 16, f(n) = 6
+| EB   
+| A    
+| DC   
+
+Depth: 17, f(n) = 7
+| E    
+| AB   
+| DC   
+
+Depth: 18, f(n) = 7
+| EC   
+| AB   
+| D    
+
+Depth: 19, f(n) = 7
+| EC   
+| A    
+| DB   
+
+Depth: 20, f(n) = 7
+| E    
+| AC   
+| DB   
+
+Depth: 21, f(n) = 8
+| E    
+| A    
+| DBC  
+
+Depth: 22, f(n) = 9
+|      
+| AE   
+| DBC  
+
+Depth: 23, f(n) = 7
+| C    
+| AE   
+| DB   
+
+Depth: 24, f(n) = 6
+| CB   
+| AE   
+| D    
+
+Depth: 25, f(n) = 6
+| CB   
+| A    
+| DE   
+
+Depth: 26, f(n) = 6
+| CBE  
+| A    
+| D    
+
+Depth: 27, f(n) = 7
+| CBE  
+|      
+| DA   
+
+Depth: 28, f(n) = 6
+| CB   
+| E    
+| DA   
+
+Depth: 29, f(n) = 6
+| CBA  
+| E    
+| D    
+
+Depth: 30, f(n) = 6
+| CB   
+| EA   
+| D    
+
+Depth: 31, f(n) = 7
+| C    
+| EA   
+| DB   
+
+Depth: 32, f(n) = 7
+| CA   
+| E    
+| DB   
+
+Depth: 33, f(n) = 7
+| CA   
+| EB   
+| D    
+
+Depth: 34, f(n) = 7
+| C    
+| EB   
+| DA   
+
+Depth: 35, f(n) = 8
+| C    
+| E    
+| DAB  
+
+Depth: 36, f(n) = 9
+|      
+| EC   
+| DAB  
+
+Depth: 37, f(n) = 7
+| B    
+| EC   
+| DA   
+
+Depth: 38, f(n) = 7
+| BC   
+| E    
+| DA   
+
+Depth: 39, f(n) = 7
+| BC   
+| EA   
+| D    
+
+Depth: 40, f(n) = 7
+| B    
+| EA   
+| DC   
+
+Depth: 41, f(n) = 7
+| BA   
+| E    
+| DC   
+
+Depth: 42, f(n) = 7
+| BAC  
+| E    
+| D    
+
+Depth: 43, f(n) = 7
+| BA   
+| EC   
+| D    
+
+Depth: 44, f(n) = 8
+| B    
+| ECA  
+| D    
+
+Depth: 45, f(n) = 9
+|      
+| ECA  
+| DB   
+
+Depth: 46, f(n) = 6
+| A    
+| EC   
+| DB   
+
+Depth: 47, f(n) = 4
+| AB   
+| EC   
+| D    
+
+Depth: 48, f(n) = 2
+| ABC  
+| E    
+| D    
+
+Depth: 49, f(n) = 1
+| ABCD 
+| E    
+|      
+
+Depth: 50, f(n) = 0
+| ABCDE
+|      
+|      
+
+-- End of solution trace --
