@@ -1,0 +1,11 @@
+# this is the simple example from class
+# it should be satisfiable
+-A -B
+A B
+-B D
+-A D
+-B -C
+B C
+-C -A
+-C -B
+A B C
