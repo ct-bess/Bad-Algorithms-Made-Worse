@@ -13,9 +13,9 @@
 
 using namespace std;
 
-typedef vector< vector< pair<bool,char> > > KnowledgeBase;
-typedef vector< pair<bool,char> > Clause;
 typedef pair<bool,char> Literal;
+typedef vector<Literal> Clause;
+typedef vector<Clause> KnowledgeBase;
 
 void printKB( KnowledgeBase &KB ) {
 
@@ -81,9 +81,8 @@ void readFile( string &problemFile, KnowledgeBase &KB ) {
 
       else if( matchedLit.size() == 1 ) { p = make_pair( true, matchedLit[0] ); }
 
-      else { cout << "-- ERROR: Malformed literal\n"; }
+      else { cout << "-- ERROR: Malformed literal\n"; exit(0xF); }
 
-      // This should be in both upper if & else if blocks
       clause.push_back( p );
 
     }
