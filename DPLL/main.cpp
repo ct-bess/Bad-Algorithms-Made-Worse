@@ -18,6 +18,15 @@ typedef pair<bool,char> Literal;
 typedef vector<Literal> Clause;
 typedef vector<Clause> KnowledgeBase;
 
+struct State {
+
+  unsigned int DPLLcalls = 0;
+  unsigned int backtraces = 0;
+  bool satisfiability = false;
+  Clause truthAssignments;
+
+};
+
 void printKB( KnowledgeBase &KB ) {
 
   for( unsigned int i = 0; i < KB.size(); ++i ) {
@@ -44,12 +53,52 @@ bool satCheck( KnowledgeBase &KB ) {
 
 }
 
+bool emptyClauseCheck( KnowledgeBase &KB ) {
+
+  for( unsigned int i = 0; i < KB.size(); ++i ) {
+
+    if( KB.at(i).empty() == true ) return( true );
+
+  }
+
+  return( false );
+
+}
+
+// AKA: resolution
+void unitPropogate( Literal &unitClause, KnowledgeBase &KB ) {
+
+  for( unsigned int i = 0; i < KB.size(); ++i ) {
+
+    for( unsigned int j = 0; j < KB.at(i).size(); ++j ) {
+
+      if( unitClause.second == KB.at(i).at(j).second ) {
+        if( unitCluase.first != KB.at(i).at(j).first ) {
+
+          KB.at(i).erase( KB.begin() + j );
+
+        }
+
+      }
+
+    }
+
+  }
+
+  return;
+
+}
+
 bool DPLL( KnowledgeBase &KB ) {
 
   // if KB is a consistent set of literals return true
   if( satCheck( KB ) == true ) return( true );
 
   // if KB contains an empty clause return false
+  if( emptyClauseCheck( KB ) == true ) return( false );
+
+  // Store unit clauses
+  // Store pure literals
 
   // for each unit clause {uc} in KB
   //   KB = unitPropagate( uc, KB )
