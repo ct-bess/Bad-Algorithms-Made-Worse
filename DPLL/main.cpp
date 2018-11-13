@@ -1,6 +1,7 @@
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  * 
  * TODO: commentRE will not match comments on the last line b/c of newline req
+ * TODO: Need a way to hold truth assignments: tuple or parallel pairs or typedef TRUTHS
  * 
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 #include <iostream>
@@ -33,6 +34,42 @@ void printKB( KnowledgeBase &KB ) {
   cout << endl;
 
   return;
+
+}
+
+bool satCheck( KnowledgeBase &KB ) {
+
+  // -- PLACEHOLDER -- 
+  return( true );
+
+}
+
+bool DPLL( KnowledgeBase &KB ) {
+
+  // if KB is a consistent set of literals return true
+  if( satCheck( KB ) == true ) return( true );
+
+  // if KB contains an empty clause return false
+
+  // for each unit clause {uc} in KB
+  //   KB = unitPropagate( uc, KB )
+  // for each pure literal {l} in KB
+  //   KB = pureLiteralAssign( l, KB )
+  // l = chooseLiteral( KB )
+  // return( DPLL( KB && l ) or DPLL( KB && !l ) )
+
+  // UNITPROP
+  // -- Delets literals from inside a clause, bringing us closer to an empty clause
+  // -- Recall empty clause means unSat
+
+  // PURELIT
+  // -- Observation that a literal occurs with only 1 polarity
+  // -- Only true or only false occurances of the variable in the KB
+  // -- Lets us set the pure variable to true and delete those entire clauses
+  // -- brings us closer to trivially sat
+
+  // -- PLACEHOLDER --
+  return( false );
 
 }
 
