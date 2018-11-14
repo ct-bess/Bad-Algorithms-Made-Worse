@@ -2,6 +2,8 @@
  * 
  * TODO: commentRE will not match comments on the last line b/c of newline req
  * TODO: Need a way to hold truth assignments: tuple or parallel pairs or typedef TRUTHS
+ *     : : Done, used Clause model in State
+ * TODO: Might need a vector of KnowledgeBase to backtrack on
  * 
 \* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 #include <iostream>
@@ -11,6 +13,7 @@
 #include <streambuf>
 #include <fstream>
 #include <regex>
+#include <algorithm>
 
 #define READABLE_PRINT true
 
@@ -26,12 +29,14 @@ struct State {
   unsigned int backtraces = 0;
   bool satisfiability = false;
   Clause model; // our truth assignments
+  //vector<KnowledgeBase> KBtree // for backtracking
   vector<char> modelOptions;
   // Unit clauses
   // Pure literals
 
 };
 
+// TESTED
 void printKB( KnowledgeBase &KB ) {
 
   for( unsigned int i = 0; i < KB.size(); ++i ) {
@@ -44,6 +49,7 @@ void printKB( KnowledgeBase &KB ) {
 
       #if READABLE_PRINT
       if( KB.at(i).at(j).first == false ) cout << "-";
+      else cout << " ";
       cout << KB.at(i).at(j).second;
       if( j < KB.at(i).size() - 1 ) cout << " v ";
       #else
@@ -65,6 +71,7 @@ void printKB( KnowledgeBase &KB ) {
 
 }
 
+// FIXME UNTESTED
 bool satCheck( KnowledgeBase &KB, State &s ) {
 
   // if every clause in KB is true in our model return true
@@ -94,6 +101,7 @@ bool satCheck( KnowledgeBase &KB, State &s ) {
 
 }
 
+// TESTED
 bool emptyClauseCheck( KnowledgeBase &KB ) {
 
   for( unsigned int i = 0; i < KB.size(); ++i ) {
@@ -106,7 +114,7 @@ bool emptyClauseCheck( KnowledgeBase &KB ) {
 
 }
 
-// AKA: resolution
+// AKA: resolution ==> TESTED
 void unitPropogate( Literal &unitClause, KnowledgeBase &KB ) {
 
   for( unsigned int i = 0; i < KB.size(); ++i ) {
@@ -115,7 +123,7 @@ void unitPropogate( Literal &unitClause, KnowledgeBase &KB ) {
 
       if( unitClause.second == KB.at(i).at(j).second ) {
 
-        // Full clause removal
+        // Full clause removal ==> FIXME might not be needed
         if( unitClause.first == KB.at(i).at(j).first ) {
 
           KB.at(i).erase( KB.at(i).begin(), KB.at(i).end() );
@@ -139,26 +147,42 @@ void unitPropogate( Literal &unitClause, KnowledgeBase &KB ) {
 
 }
 
+// FIXME UNTESTED
 bool DPLL( KnowledgeBase &KB, State &s ) {
 
   s.DPLLcalls += 1;
 
-  // In state:
-  // Store unit clauses
-  // Store pure literals
-
-  // if KB is a consistent set of literals return true
+  // 1: if KB is a consistent set of literals return true
   if( satCheck( KB, s ) == true ) return( true );
 
-  // if KB contains an empty clause return false
+  // 2: if KB contains an empty clause return false
   if( emptyClauseCheck( KB ) == true ) return( false );
 
-  // for each unit clause {uc} in KB
-  //   KB = unitPropagate( uc, KB )
-  // for each pure literal {l} in KB
-  //   KB = pureLiteralAssign( l, KB )
-  // l = chooseLiteral( KB )
-  // return( DPLL( KB && l ) or DPLL( KB && !l ) )
+  // 3: for each unit clause {uc} in KB
+  //      KB = unitPropagate( uc, KB )
+
+  // 4: for each pure literal {l} in KB
+  //      KB = pureLiteralAssign( l, KB )
+
+  // 5: l = chooseLiteral( KB )
+
+  if( s.model.empty() ) s.model.push_back( Literal( true, s.modelOptions.front() ) );
+  //                                           this ^^^^ truth doesn't matter
+
+  // FIXME wtf is this doing?
+  else {
+
+    s.model.push_back( Literal( true, s.modelOptions.at( s.model.size() - 1 ) ) );
+
+  }
+
+  const Literal chosenLit = s.model.back();
+
+  // 6: return( DPLL( KB && l ) or DPLL( KB && !l ) )
+  
+  // if no backtrack do true of chosenLit
+
+  // else do false of chosenLit
 
   // UNITPROP
   // -- Delets literals from inside a clause, bringing us closer to an empty clause
@@ -175,6 +199,7 @@ bool DPLL( KnowledgeBase &KB, State &s ) {
 
 }
 
+// TESTED
 void readFile( string &problemFile, KnowledgeBase &KB, State &s ) {
 
   ifstream inputFile( problemFile );
@@ -246,6 +271,8 @@ void readFile( string &problemFile, KnowledgeBase &KB, State &s ) {
 
   }
 
+  sort( s.modelOptions.begin(), s.modelOptions.end() );
+
   return;
 
 }
@@ -266,7 +293,9 @@ int main( int argc, char** argv ) {
   KnowledgeBase KB;
   readFile( problemName, KB, s );
 
-  for( auto w : s.modelOptions ) cout << ": " << w << "\n";
+  cout << "Props: ";
+  for( auto w : s.modelOptions ) cout <<  w << " ";
+  cout << endl;
 
   printKB( KB );
   Literal p = make_pair( true, 'A' );
