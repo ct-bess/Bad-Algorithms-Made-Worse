@@ -79,11 +79,10 @@ bool satCheck( KnowledgeBase &KB, State s ) {
   cout << "satCheck\n";
   Clause unpureModel = s.model;
 
-  cout << "PureCheck\n";
   for( unsigned int n = 0; n < s.pureSymbols.size(); ++n ) {
     for( unsigned int m = 0; m < unpureModel.size(); ++m ) {
       if( unpureModel.at(m).second == s.pureSymbols.at(n).second ) { 
-        cout << "Found Pure\n";
+        //cout << "Found Pure\n";
         unpureModel.erase( unpureModel.begin() + m );
       }
     }
@@ -151,7 +150,10 @@ void unitPropogate( const Literal &unitClause, KnowledgeBase &KB, bool pureSym )
         }
 
         // regular unit clause ==> partial removal
-        else KB.at(i).erase( KB.at(i).begin() + j );
+        else { // FIXME        vv
+          if( unitClause.first == KB.at(i).at(j).first )
+            KB.at(i).erase( KB.at(i).begin() + j );
+        }
 
         /*
         // Full clause removal ==> FIXME might not be needed
@@ -193,7 +195,9 @@ Literal findUnitClause( KnowledgeBase &KB, State &s ) {
   // 1: check for clause size == 1
   for( unsigned int i = 0; i < KB.size(); ++i ) {
 
-    //if( KB.at(i).empty() ) break;
+    if( KB.at(i).empty() ) break;;
+
+    if( KB.at(i).front().second == '*' ) continue;
 
     if( KB.at(i).size() == 1 ) return( KB.at(i).at(0) );
   
@@ -299,10 +303,16 @@ bool DPLL( KnowledgeBase &KB, State &s ) {
   // meaning it found a pure symbol
   if( pureSymbol.second != '!' ) {
 
+    // Remove from model options:
+    for( unsigned int i = 0; i < s.modelOptions.size(); ++i ) {
+      if( s.modelOptions.at(i) == pureSymbol.second ) {
+        s.modelOptions.erase( s.modelOptions.begin() + i );
+      }
+    }
+
     cout << "Pure Symbol: " << pureSymbol.first << " " << pureSymbol.second << "\n";
     s.model.push_back( pureSymbol );
     s.pureSymbols.push_back( pureSymbol );
-    //s.pureSymbols.second.push_back( pureSymbol );
     unitPropogate( pureSymbol, KB, true );
     printKB( KB );
     return( DPLL( KB, s ) );
@@ -316,6 +326,13 @@ bool DPLL( KnowledgeBase &KB, State &s ) {
   const Literal unitClause = findUnitClause( KB, s );
 
   if( unitClause.second != '!' ) {
+
+    // Remove from model options:
+    for( unsigned int i = 0; i < s.modelOptions.size(); ++i ) {
+      if( s.modelOptions.at(i) == unitClause.second ) {
+        s.modelOptions.erase( s.modelOptions.begin() + i );
+      }
+    }
 
     cout << "Unit Clause: " << unitClause.first << " " << unitClause.second << "\n";
     s.model.push_back( unitClause );
@@ -332,12 +349,21 @@ bool DPLL( KnowledgeBase &KB, State &s ) {
 
   else {
 
-    s.model.push_back( Literal( true, s.modelOptions.at( s.model.size() - 1 ) ) );
+    // Use the next unused symbol
+    //s.model.push_back( Literal( true, s.modelOptions.at( s.model.size() - 1 ) ) );
+    s.model.push_back( Literal( true, s.modelOptions.front() ) );
 
   }
 
   const Literal chosenLit = s.model.back();
   //s.model.push_back( chosenLit ); // allready in
+
+  // Remove from model options:
+  for( unsigned int i = 0; i < s.modelOptions.size(); ++i ) {
+    if( s.modelOptions.at(i) == chosenLit.second ) {
+      s.modelOptions.erase( s.modelOptions.begin() + i );
+    }
+  }
 
   // 6: return( DPLL( KB && l ) or DPLL( KB && !l ) )
   //  : : FIXME backtracking
