@@ -1,6 +1,8 @@
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
  * 
  * TODO: commentRE will not match comments on the last line b/c of newline req
+ * TODO: commentRE removes CNF terms that are in between commented lines
+ * TODO: commentRE ignores commented line with no text
  * 
 \* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 #include <iostream>
@@ -527,8 +529,28 @@ void readFile( string &problemFile, KnowledgeBase &KB, State &s ) {
 
       // Negated case = "-{literal}"
       if( matchedLit.size() == 2 ) { p = make_pair( false, matchedLit[1] ); }
+      
+      /*if( matchedLit.find('-') == true ) { 
+
+        char lit = 0;
+        matchedLit.erase( matchedLit.begin() );
+
+        for( unsigned int i = 0; i < matchedLit.size(); ++i ) lit += matchedLit[i];
+
+        p = make_pair( false, lit );
+
+      }*/
 
       else if( matchedLit.size() == 1 ) { p = make_pair( true, matchedLit[0] ); }
+      /*else { 
+
+        char lit = 0;
+
+        for( unsigned int i = 0; i < matchedLit.size(); ++i ) lit += matchedLit[i];
+
+        p = make_pair( true, lit );
+
+      }*/
 
       else { cout << "-- ERROR: Malformed literal\n"; exit(0xF); }
 

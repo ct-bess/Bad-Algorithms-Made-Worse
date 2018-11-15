@@ -1,11 +1,35 @@
-# 1a.cnf Knowledgebase for coloring the map of Australia
-# Colors: R B G
-# Lands: WA, NT, Q, NSW, V, SA, T
+# Ba.cnf Knowledgebase for coloring the map of Australia
+# Colors: r b g
+# Lands: A, B, C, D, E, F, G
+#     =: WA, NT, Q, NSW, V, SA, T
 # Neighboors:
-# WA - NT, SA
-# NT - WA, SA, Q
-# Q - NT, SA, NSW
-# NSW - Q, V, SA
-# V - NSW, SA
-# SA - WA, NT, Q, NSW, V
-# T - 
+# A - B, F
+# B - A, F, C
+# C - B, F, D
+# D - C, E, F
+# E - D, F
+# F - A, B, C, D, E
+# G - 
+# Ar = A Ab = B Ag = C
+# Br = D Bb = E Bg = F
+# Cr = G Cb = G Cg = I
+# Dr = 9 Db = BA Dg = BB
+# Er = BC Eb = BD Eg = BE
+# Fr = P Fb = BG Fg = BG
+# Gr = BI Gb = B9 Gg = CA
+# KB generated with VIM script
+-A -D
+-A -P
+-B -E
+-B -Q
+-C -F
+-C -R
+-D -A
+-D -P
+-D -G
+-E -B
+-E -Q
+-E -G
+-F -C
+-F -R
+-F -I
