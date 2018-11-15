@@ -1,9 +1,6 @@
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
  * 
  * TODO: commentRE will not match comments on the last line b/c of newline req
- * TODO: Need a way to hold truth assignments: tuple or parallel pairs or typedef TRUTHS
- *     : : Done, used Clause model in State
- * TODO: Might need a vector of KnowledgeBase to backtrack on
  * 
 \* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 #include <iostream>
@@ -268,7 +265,6 @@ Literal findPureSymbol( KnowledgeBase &KB, State &s ) {
 
 }
 
-// FIXME UNTESTED
 bool DPLL( KnowledgeBase &KB, State &s ) {
 
   s.DPLLcalls += 1;
@@ -340,7 +336,7 @@ bool DPLL( KnowledgeBase &KB, State &s ) {
 
   // 5: else choose a literal in model options that hasnt been chosen yet
 
-  // Backtracking Case:
+  // Backtracking Case: (im so sorry)
   if( s.model.size() == s.modelOptionsRecovery.size() ) {
 
     if( s.backtracks <= s.possibleBacktracks ) {
@@ -460,6 +456,8 @@ bool DPLL( KnowledgeBase &KB, State &s ) {
 
   }
 
+  // The rest of the function is what happens when no backtracking
+
   if( s.model.empty() ) s.model.push_back( Literal( true, s.modelOptions.front() ) );
 
   else {
@@ -487,7 +485,6 @@ bool DPLL( KnowledgeBase &KB, State &s ) {
 
 }
 
-// TESTED
 void readFile( string &problemFile, KnowledgeBase &KB, State &s ) {
 
   ifstream inputFile( problemFile );
@@ -579,11 +576,11 @@ int main( int argc, char** argv ) {
 
   else cin >> problemName;
 
-  problemName = "problemSet/" + problemName + ".cnf";
+  string fileName = "problemSet/" + problemName + ".cnf";
 
   State s;
   KnowledgeBase KB;
-  readFile( problemName, KB, s );
+  readFile( fileName, KB, s );
 
   cout << "Knowledge Base\nSymbols: ";
   for( auto w : s.modelOptions ) cout << w << " ";
@@ -597,14 +594,22 @@ int main( int argc, char** argv ) {
 
   if( s.satisfiability == true ) {
 
-    cout << "Solution found\n;
-    cout << "Model: { ";
+    string myFile = "problemSet-SolutionTraces/" + problemName;
+    cout << "!!-- Trace in: " << myFile << endl;
+
+    ofstream outputFile;
+    outputFile.open( myFile );
+
+    outputFile << "The logic is satisfiable\n";
+    outputFile << "Model: { ";
     for( unsigned int i = 0; i < s.model.size(); ++i ) {
-      if( s.model.at(i).first == false ) cout << "-";
-      else cout << " ";
-      cout << s.model.at(i).second << " ";
+      if( s.model.at(i).first == false ) outputFile << "-";
+      else outputFile << " ";
+      outputFile << s.model.at(i).second << " ";
     }
-    cout << " }" << endl;
+    outputFile << " }" << endl;
+
+    outputFile.close();
 
   }
 
