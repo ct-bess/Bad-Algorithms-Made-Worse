@@ -26,15 +26,16 @@ typedef vector<Clause> KnowledgeBase;
 struct State {
 
   unsigned int DPLLcalls = 0;
-  unsigned int backtraces = 0;
+  unsigned int backtracks = 0;
+  unsigned int possibleBacktracks;
   bool satisfiability = false;
-  Clause model; // our truth assignments
-  Clause pureSymbols;
-  //pair<vector<unsigned int>,Clause> pureSymbols;
-  vector<KnowledgeBase> KBtree; // for backtracking
   vector<char> modelOptions;
-  // Unit clauses
-  // Pure literals
+  vector<char> modelOptionsRecovery;
+  Clause model; 
+  Clause pureSymbols;
+  vector<KnowledgeBase> KBTree; // for backtracking
+  KnowledgeBase modelTree;
+  KnowledgeBase pureSymbolsTree; // do i really need this?
 
 };
 
@@ -73,39 +74,15 @@ void printKB( KnowledgeBase &KB ) {
 
 }
 
-// FIXME UNTESTED
-bool satCheck( KnowledgeBase &KB, State s ) {
+bool satCheck( KnowledgeBase &KB, State &s ) {
 
-  cout << "satCheck\n";
-  Clause unpureModel = s.model;
+  for( unsigned int i = 0; i < KB.size(); ++i ) {
 
-  for( unsigned int n = 0; n < s.pureSymbols.size(); ++n ) {
-    for( unsigned int m = 0; m < unpureModel.size(); ++m ) {
-      if( unpureModel.at(m).second == s.pureSymbols.at(n).second ) { 
-        //cout << "Found Pure\n";
-        unpureModel.erase( unpureModel.begin() + m );
-      }
-    }
-  }
+    if( KB.at(i).empty() == true ) return( false );
 
-  if( unpureModel.empty() ) return( false );
+    for( unsigned int j = 0; j < KB.at(i).size(); ++j ) {
 
-  // Loop thru model type Clause 
-  for( unsigned int m = 0; m < unpureModel.size(); ++m ) {
-
-    // if every clause in KB is true in our model return true
-    for( unsigned int i = 0; i < KB.size(); ++i ) {
-
-      for( unsigned int j = 0; j < KB.at(i).size(); ++j ) {
-
-        if( unpureModel.at(m).second == KB.at(i).at(j).second ) {
-          if( unpureModel.at(m).first != KB.at(i).at(j).first ) {
-            return( false );
-          }
-
-        }
-
-      }      
+      if( KB.at(i).at(j).second != '*' ) return( false );
 
     }
 
@@ -113,9 +90,48 @@ bool satCheck( KnowledgeBase &KB, State s ) {
 
   return( true );
 
+  /* // Dont need any of this garbage
+  cout << "satCheck\n";
+  if( s.KBTree.empty() || s.model.empty() ) return( false );
+
+  Clause unpureModel = s.model;
+
+  // Pure check
+  for( unsigned int n = 0; n < s.pureSymbols.size(); ++n ) {
+    for( unsigned int m = 0; m < unpureModel.size(); ++m ) {
+      if( unpureModel.at(m).second == s.pureSymbols.at(n).second ) { 
+        unpureModel.erase( unpureModel.begin() + m );
+      }
+    }
+  }
+
+  if( unpureModel.empty() ) return( false );
+
+  const KnowledgeBase startKB = s.KBTree.front();
+
+  for( unsigned int i = 0; i < startKB.size(); ++i ) {
+    for( unsigned int j = 0; j < startKB.at(i).size(); ++j ) {
+
+      const char KBSymbol = startKB.at(i).at(j).second;
+      const bool KBPolarity = startKB.at(i).at(j).first;
+
+      for( unsigned int m = 0; m < unpureModel.size(); ++m ) {
+
+        const char ModelSymbol = unpureModel.at(m).second;
+        const bool ModelPolarity = unpureModel.at(m).first;
+
+        if( ModelSymbol == KBSymbol && ModelPolarity != KBPolarity )
+          return( false );
+
+      }
+    }
+  }
+
+  return( true );
+  */
+
 }
 
-// TESTED
 bool emptyClauseCheck( KnowledgeBase &KB ) {
 
   cout << "emptyClauseCheck\n";
@@ -150,26 +166,16 @@ void unitPropogate( const Literal &unitClause, KnowledgeBase &KB, bool pureSym )
         }
 
         // regular unit clause ==> partial removal
-        else { // FIXME        vv
-          if( unitClause.first == KB.at(i).at(j).first )
+        else { 
+          if( unitClause.first == KB.at(i).at(j).first ) {
+            //KB.at(i).erase( KB.at(i).begin() + j ); // nonononono!
+            KB.at(i).erase( KB.at(i).begin(), KB.at(i).end() );
+            KB.at(i).push_back( Literal( true, '*' ) );
+          }
+
+          else if( unitClause.first != KB.at(i).at(j).first )
             KB.at(i).erase( KB.at(i).begin() + j );
         }
-
-        /*
-        // Full clause removal ==> FIXME might not be needed
-        if( unitClause.first == KB.at(i).at(j).first ) {
-
-          KB.at(i).erase( KB.at(i).begin(), KB.at(i).end() );
-
-        }
-
-        // Partial clause removal
-        else if( unitClause.first != KB.at(i).at(j).first ) {
-
-          KB.at(i).erase( KB.at(i).begin() + j );
-
-        }
-        */
 
       }
 
@@ -204,18 +210,7 @@ Literal findUnitClause( KnowledgeBase &KB, State &s ) {
   }
 
   // 2: use model to identify a unit clause
-  //  : : NOTE this might be done by calling unitPropogate on a temp KB
-  //  : : BUT only using the partial clause removal case
-  /* FIXME OMIT FOR NOW
-  for( unsigned int i = 0; i < KB.size(); ++i ) {
-
-    for( unsigned int j = 0; j < KB.at(i).size(); ++j ) {
-
-
-    }
-  
-  }
-  */
+  //  : : this is done by calling unitPropogate on KB
 
   // on failure
   return( Literal( false, '!' ) );
@@ -277,7 +272,7 @@ Literal findPureSymbol( KnowledgeBase &KB, State &s ) {
 bool DPLL( KnowledgeBase &KB, State &s ) {
 
   s.DPLLcalls += 1;
-  s.KBtree.push_back( KB );
+  s.KBTree.push_back( KB );
 
   cout << "Model: { ";
   for( unsigned int i = 0; i < s.model.size(); ++i ) {
@@ -291,7 +286,8 @@ bool DPLL( KnowledgeBase &KB, State &s ) {
   if( satCheck( KB, s ) == true ) return( true );
 
   // 2: if KB contains an empty clause return false
-  if( emptyClauseCheck( KB ) == true ) return( false );
+  if( emptyClauseCheck( KB ) == true &&
+      s.backtracks > s.possibleBacktracks ) return( false );
 
   // 3: Fine Pure Symbol
   //  : : if we found 1, unitPropogate with pureSymbol BUT only delet the pure symbol
@@ -344,19 +340,136 @@ bool DPLL( KnowledgeBase &KB, State &s ) {
 
   // 5: else choose a literal in model options that hasnt been chosen yet
 
+  // Backtracking Case:
+  if( s.model.size() == s.modelOptionsRecovery.size() ) {
+
+    if( s.backtracks <= s.possibleBacktracks ) {
+
+      cout << "Back-tracking...\n";
+      s.backtracks += 1;
+
+      // Save previous models
+      s.modelTree.push_back( s.model );
+
+      vector<char> exhaustedSymbols;
+
+      for( unsigned int i = 0; i < s.modelTree.size(); ++i ) {
+        for( unsigned int j = 0; j < s.modelTree.at(i).size(); ++j ) {
+    
+          const char modelTreeSymbol = s.modelTree.at(i).at(j).second;
+          const bool modelTreePolarity = s.modelTree.at(i).at(j).first;
+
+          for( unsigned int k = 0; k < s.model.size(); ++k ) {
+
+            const char modelSymbol = s.model.at(k).second;
+            const bool modelPolarity = s.model.at(k).first;
+
+            bool pure = false;
+            for( unsigned int w = 0; w < s.pureSymbols.size(); ++w ) {
+              if( modelSymbol == s.pureSymbols.at(w).second ) pure = true;
+            }
+
+            if( pure == false ) {
+              if( modelSymbol == modelTreeSymbol && modelPolarity != modelTreePolarity ) {
+                exhaustedSymbols.push_back( modelSymbol );
+              }
+
+            }
+
+          }
+        }
+      }
+
+      Literal backtrackLit;
+      unsigned int KBTreeIndex = 0;
+
+      if( exhaustedSymbols.empty() ) {
+
+        for( unsigned int i = 0; i < s.model.size(); ++i ) {
+
+          const char modelSymbol = s.model.at(i).second;
+          const bool modelPolarity = s.model.at(i).first;
+
+          bool pure = false;
+          for( unsigned int w = 0; w < s.pureSymbols.size(); ++w ) {
+            if( modelSymbol == s.pureSymbols.at(w).second ) pure = true;
+          }
+
+          if( pure == false ) { 
+
+            backtrackLit = make_pair( !modelPolarity, modelSymbol );
+            break;
+
+          }
+
+        }
+
+      }
+
+      else {
+
+        // Select the symbole to start backtracking
+        for( unsigned int i = 0; i < s.model.size(); ++i ) {
+          for( unsigned int j = 0; j < exhaustedSymbols.size(); ++j ) {
+
+            const char modelSymbol = s.model.at(i).second;
+            const bool modelPolarity = s.model.at(i).first;
+
+            bool pure = false;
+            for( unsigned int w = 0; w < s.pureSymbols.size(); ++w ) {
+              if( modelSymbol == s.pureSymbols.at(w).second ) pure = true;
+            }
+
+            if( modelSymbol != exhaustedSymbols.at(j) && pure == false ) {
+
+              backtrackLit = make_pair( !modelPolarity, modelSymbol );
+              KBTreeIndex = i;
+
+            }
+            
+          }
+        }
+
+      }
+
+      // clear model for next iterations
+      s.model.clear();
+      s.model.push_back( backtrackLit );
+      s.modelOptions = s.modelOptionsRecovery;
+
+      // FIXME: use .at( KBTreeIndex ) and recover model from that point
+      KB = s.KBTree.front();
+      s.KBTree.clear();
+
+      // Remove from model options:
+      for( unsigned int i = 0; i < s.modelOptions.size(); ++i ) {
+        if( s.modelOptions.at(i) == backtrackLit.second ) {
+          s.modelOptions.erase( s.modelOptions.begin() + i );
+        }
+      }
+
+      cout << "Chose: " << backtrackLit.first << " " << backtrackLit.second << "\n";
+      unitPropogate( backtrackLit, KB, false );
+      printKB( KB );
+
+      return( DPLL( KB, s ) );
+
+    }
+
+    else return( false );
+
+  }
+
   if( s.model.empty() ) s.model.push_back( Literal( true, s.modelOptions.front() ) );
-  //                                           this ^^^^ truth doesn't matter
 
   else {
 
     // Use the next unused symbol
-    //s.model.push_back( Literal( true, s.modelOptions.at( s.model.size() - 1 ) ) );
     s.model.push_back( Literal( true, s.modelOptions.front() ) );
 
   }
 
   const Literal chosenLit = s.model.back();
-  //s.model.push_back( chosenLit ); // allready in
 
   // Remove from model options:
   for( unsigned int i = 0; i < s.modelOptions.size(); ++i ) {
@@ -366,7 +479,6 @@ bool DPLL( KnowledgeBase &KB, State &s ) {
   }
 
   // 6: return( DPLL( KB && l ) or DPLL( KB && !l ) )
-  //  : : FIXME backtracking
 
   cout << "Chose: " << chosenLit.first << " " << chosenLit.second << "\n";
   unitPropogate( chosenLit, KB, false );
@@ -448,6 +560,10 @@ void readFile( string &problemFile, KnowledgeBase &KB, State &s ) {
   }
 
   sort( s.modelOptions.begin(), s.modelOptions.end() );
+  s.modelOptionsRecovery = s.modelOptions;
+
+  const unsigned int modelOptSize = s.modelOptions.size();
+  s.possibleBacktracks = ( modelOptSize * modelOptSize ) - 1;
 
   return;
 
@@ -479,18 +595,18 @@ int main( int argc, char** argv ) {
 
   cout << "Satisfiable? : " << s.satisfiability << endl;
 
-  /*
-  Literal ps = findPureSymbol( KB, s );
-  cout << "PureLit: " << ps.first << " " << ps.second << endl;
+  if( s.satisfiability == true ) {
 
-  Literal p = make_pair( true, 'A' );
-  unitPropogate( p, KB );
-  printKB( KB );
-  p.second = 'B';
-  unitPropogate( p, KB );
-  printKB( KB );
-  cout << "Empty Clause?: " << emptyClauseCheck( KB ) << endl;
-  */
+    cout << "Solution found\n;
+    cout << "Model: { ";
+    for( unsigned int i = 0; i < s.model.size(); ++i ) {
+      if( s.model.at(i).first == false ) cout << "-";
+      else cout << " ";
+      cout << s.model.at(i).second << " ";
+    }
+    cout << " }" << endl;
+
+  }
 
   return( 0x5F3759DF );
 
