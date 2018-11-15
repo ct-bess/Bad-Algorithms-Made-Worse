@@ -1,2 +1,2 @@
 The logic is satisfiable
-Model: { -A  D  B -C  }
+Model: {  D -A  B -C  }
