@@ -1,0 +1,11 @@
+# 1a.cnf Knowledgebase for coloring the map of Australia
+# Colors: R B G
+# Lands: WA, NT, Q, NSW, V, SA, T
+# Neighboors:
+# WA - NT, SA
+# NT - WA, SA, Q
+# Q - NT, SA, NSW
+# NSW - Q, V, SA
+# V - NSW, SA
+# SA - WA, NT, Q, NSW, V
+# T - 
