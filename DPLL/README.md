@@ -46,7 +46,7 @@ When and if a solution is found a corresponding output file is generated in
 For example: `./main test` produces `problemSet-SolutionTraces/test`
 
 > **Note:** The program substitutes satisfied clauses with `( * )`. 
-> Meaning started clauses are true, and empty clauses `( )` are false. 
+> Meaning stared clauses are true, and empty clauses `( )` are false. 
 
 ## 1d. FOL KB of the map of Australia
 
