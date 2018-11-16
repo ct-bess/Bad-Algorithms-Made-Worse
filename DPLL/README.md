@@ -35,7 +35,8 @@ You can run the program in your terminal by typing some of the following example
 ```
 
 > I **highly** recommend running the `test` file, because it is carefully crafted to 
-> work as intended.
+> work as intended. Careful running `falseTest` though, it will generate the empty 
+> clause but will take a long time before it truly decides `falseTest` is unsatisfiable. 
 
 ## Output:
 

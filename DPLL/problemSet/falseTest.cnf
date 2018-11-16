@@ -1,0 +1,12 @@
+# cnf to test if the program will return false for unsatisfiable KBs
+# this will not be satisfiable
+-A -B
+A B
+-B D
+-A D
+-B -C
+B C
+-C -A
+-C -B
+A B C
+-B
