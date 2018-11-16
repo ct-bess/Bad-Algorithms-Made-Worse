@@ -99,10 +99,11 @@ Queen( 3, 6 )
 ...
 Queen( N/2, N )
 
-Queen( 1, 1 )
-Queen( 2, 3 )
-Queen( 4, 5 )
+Queen( N/2 + 1, 1 )
+Queen( N/2 + 2, 3 )
+Queen( N/2 + 3, 5 )
 ...
+Queen( N/2 + N/2 - 1, N - 3 )
 Queen( N, N - 1 )
 
 ```
