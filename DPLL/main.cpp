@@ -38,6 +38,12 @@ struct State {
 
 };
 
+ofstream outputFile;
+
+void openFile( string myFile ) {
+  outputFile.open( myFile );
+}
+
 // TESTED
 void printKB( KnowledgeBase &KB ) {
 
@@ -45,29 +51,44 @@ void printKB( KnowledgeBase &KB ) {
 
     #if READABLE_PRINT
     cout << i << ": (";
+    outputFile << i << ": (";
     #endif
 
     for( unsigned int j = 0; j < KB.at(i).size(); ++j ) {
 
       #if READABLE_PRINT
-      if( KB.at(i).at(j).first == false ) cout << "-";
-      else cout << " ";
+      if( KB.at(i).at(j).first == false ) { 
+        cout << "-";
+        outputFile << "-";
+      }
+      else { 
+        cout << " ";
+        outputFile << " ";
+      }
       cout << KB.at(i).at(j).second;
-      if( j < KB.at(i).size() - 1 ) cout << " v ";
+      outputFile << KB.at(i).at(j).second;
+      if( j < KB.at(i).size() - 1 ) { 
+        cout << " v ";
+        outputFile << " v ";
+      }
       #else
       cout << "KB[ " << i << " ]" << "[ " << j << " ]: ";
+      outputFile << "KB[ " << i << " ]" << "[ " << j << " ]: ";
       cout << KB.at(i).at(j).first << " " << KB.at(i).at(j).second << "\n";
+      outputFile << KB.at(i).at(j).first << " " << KB.at(i).at(j).second << "\n";
       #endif
 
     }
 
     #if READABLE_PRINT
     cout << " )\n";
+    outputFile << " )\n";
     #endif
 
   }
 
   cout << endl;
+  outputFile << "\n";
 
   return;
 
@@ -273,12 +294,21 @@ bool DPLL( KnowledgeBase &KB, State &s ) {
   s.KBTree.push_back( KB );
 
   cout << "Model: { ";
+  outputFile << "Model: { ";
   for( unsigned int i = 0; i < s.model.size(); ++i ) {
-    if( s.model.at(i).first == false ) cout << "-";
-    else cout << " ";
+    if( s.model.at(i).first == false ) { 
+      cout << "-";
+      outputFile << "-";
+    }
+    else { 
+      cout << " ";
+      outputFile << " ";
+    }
     cout << s.model.at(i).second << " ";
+    outputFile << s.model.at(i).second << " ";
   }
   cout << " }" << endl;
+  outputFile << " }\n";
 
   // 1: if KB is a consistent set of literals return true
   if( satCheck( KB, s ) == true ) return( true );
@@ -305,6 +335,7 @@ bool DPLL( KnowledgeBase &KB, State &s ) {
     }
 
     cout << "Pure Symbol: " << pureSymbol.first << " " << pureSymbol.second << "\n";
+    outputFile << "Pure Symbol: " << pureSymbol.first << " " << pureSymbol.second << "\n";
     s.model.push_back( pureSymbol );
     s.pureSymbols.push_back( pureSymbol );
     unitPropogate( pureSymbol, KB, true );
@@ -329,6 +360,7 @@ bool DPLL( KnowledgeBase &KB, State &s ) {
     }
 
     cout << "Unit Clause: " << unitClause.first << " " << unitClause.second << "\n";
+    outputFile << "Unit Clause: " << unitClause.first << " " << unitClause.second << "\n";
     s.model.push_back( unitClause );
     unitPropogate( unitClause, KB, false );
     printKB( KB );
@@ -344,6 +376,7 @@ bool DPLL( KnowledgeBase &KB, State &s ) {
     if( s.backtracks <= s.possibleBacktracks ) {
 
       cout << "Back-tracking...\n";
+      outputFile << "Back-tracking...\n";
       s.backtracks += 1;
 
       // Save previous models
@@ -447,6 +480,7 @@ bool DPLL( KnowledgeBase &KB, State &s ) {
       }
 
       cout << "Chose: " << backtrackLit.first << " " << backtrackLit.second << "\n";
+      outputFile << "Chose: " << backtrackLit.first << " " << backtrackLit.second << "\n";
       unitPropogate( backtrackLit, KB, false );
       printKB( KB );
 
@@ -481,6 +515,7 @@ bool DPLL( KnowledgeBase &KB, State &s ) {
   // 6: return( DPLL( KB && l ) or DPLL( KB && !l ) )
 
   cout << "Chose: " << chosenLit.first << " " << chosenLit.second << "\n";
+  outputFile << "Chose: " << chosenLit.first << " " << chosenLit.second << "\n";
   unitPropogate( chosenLit, KB, false );
   printKB( KB );
   return( DPLL( KB, s ) );
@@ -530,27 +565,7 @@ void readFile( string &problemFile, KnowledgeBase &KB, State &s ) {
       // Negated case = "-{literal}"
       if( matchedLit.size() == 2 ) { p = make_pair( false, matchedLit[1] ); }
       
-      /*if( matchedLit.find('-') == true ) { 
-
-        char lit = 0;
-        matchedLit.erase( matchedLit.begin() );
-
-        for( unsigned int i = 0; i < matchedLit.size(); ++i ) lit += matchedLit[i];
-
-        p = make_pair( false, lit );
-
-      }*/
-
       else if( matchedLit.size() == 1 ) { p = make_pair( true, matchedLit[0] ); }
-      /*else { 
-
-        char lit = 0;
-
-        for( unsigned int i = 0; i < matchedLit.size(); ++i ) lit += matchedLit[i];
-
-        p = make_pair( true, lit );
-
-      }*/
 
       else { cout << "-- ERROR: Malformed literal\n"; exit(0xF); }
 
@@ -599,6 +614,7 @@ int main( int argc, char** argv ) {
   else cin >> problemName;
 
   string fileName = "problemSet/" + problemName + ".cnf";
+  string myFile = "problemSet-SolutionTraces/" + problemName;
 
   State s;
   KnowledgeBase KB;
@@ -608,6 +624,9 @@ int main( int argc, char** argv ) {
   for( auto w : s.modelOptions ) cout << w << " ";
   cout << endl;
 
+  openFile( myFile );
+  outputFile << boolalpha;
+
   printKB( KB );
 
   s.satisfiability = DPLL( KB, s );
@@ -616,11 +635,7 @@ int main( int argc, char** argv ) {
 
   if( s.satisfiability == true ) {
 
-    string myFile = "problemSet-SolutionTraces/" + problemName;
     cout << "!!-- Trace in: " << myFile << endl;
-
-    ofstream outputFile;
-    outputFile.open( myFile );
 
     outputFile << "The logic is satisfiable\n";
     outputFile << "Model: { ";
