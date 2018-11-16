@@ -611,7 +611,12 @@ int main( int argc, char** argv ) {
 
   if( argc == 2 ) problemName = string( argv[1] );
 
-  else cin >> problemName;
+  else { 
+    cout << "Availible problem files:\n";
+    system( "ls -1 problemSet/ | grep -E *.cnf" );
+    cout << "Input a problem to solve (don't include \".cnf\"): ";
+    cin >> problemName;
+  }
 
   string fileName = "problemSet/" + problemName + ".cnf";
   string myFile = "problemSet-SolutionTraces/" + problemName;
