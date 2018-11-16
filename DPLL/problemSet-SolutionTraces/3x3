@@ -1,0 +1,37 @@
+0: (-A v -B v -C )
+1: (-D v  E v -F )
+2: ( D v -E v  F )
+
+Model: {  }
+Pure Symbol: false A
+0: ( * )
+1: (-D v  E v -F )
+2: ( D v -E v  F )
+
+Model: { -A  }
+Pure Symbol: false B
+0: ( * )
+1: (-D v  E v -F )
+2: ( D v -E v  F )
+
+Model: { -A -B  }
+Pure Symbol: false C
+0: ( * )
+1: (-D v  E v -F )
+2: ( D v -E v  F )
+
+Model: { -A -B -C  }
+Chose: true D
+0: ( * )
+1: ( E v -F )
+2: ( * )
+
+Model: { -A -B -C  D  }
+Pure Symbol: true E
+0: ( * )
+1: ( * )
+2: ( * )
+
+Model: { -A -B -C  D  E  }
+The logic is satisfiable
+Model: { -A -B -C  D  E  }

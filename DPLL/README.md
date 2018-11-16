@@ -34,12 +34,18 @@ You can run the program in your terminal by typing some of the following example
 ./main 1a
 ```
 
+> I **highly** recommend running the `test` file, because it is carefully crafted to 
+> work as intended.
+
 ## Output:
 
 When and if a solution is found a corresponding output file is generated in 
 `problemSet-SolutionTraces/`
 
 For example: `./main test` produces `problemSet-SolutionTraces/test`
+
+> **Note:** The program substitutes satisfied clauses with `( * )`. 
+> Meaning started clauses are true, and empty clauses `( )` are false. 
 
 ## 1d. FOL KB of the map of Australia
 
@@ -76,6 +82,28 @@ color( Q, b )
 color( NSW, g )
 color( V, b )
 color( T, r )
+```
+
+## 5. FOL KB for N-Queens Problem
+
+Where `N = even integer`
+
+`Queen( i, j )` means there is a queen in that `( row, col )`. 
+> No queen is implicitly defined by not claiming a queen is in that space. 
+
+```
+Queen( 1, 2 )
+Queen( 2, 4 )
+Queen( 3, 6 )
+...
+Queen( N/2, N )
+
+Queen( 1, 1 )
+Queen( 2, 3 )
+Queen( 4, 5 )
+...
+Queen( N, N - 1 )
+
 ```
 
 ## Example Trace

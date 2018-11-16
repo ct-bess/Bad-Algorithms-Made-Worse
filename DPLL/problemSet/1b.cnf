@@ -1,4 +1,5 @@
-# 1a.cnf Knowledgebase for coloring the map of Australia
+# 1b.cnf Knowledgebase for coloring the map of Australia
+# Additional rule: Make WA red
 # Colors: r b g
 # Lands: WA, NT, Q, NSW, V, SA, T
 # Neighboors:
@@ -31,10 +32,10 @@
 # S = red T
 # T = blue T
 # U = green T
--A B -C
+A -B -C
 -D -E F
--G H -I
+G -H -I
 -J -K L
--M N -O
-P -Q -R
+M -N -O
+-P Q -R
 S -T -U

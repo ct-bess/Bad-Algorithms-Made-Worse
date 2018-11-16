@@ -1,0 +1,271 @@
+0: (-A v -B v  C v -D v -E v -F )
+1: (-G v -H v -I v  J v -K v -L )
+2: (-M v -N v -O v -P v -Q v  R )
+3: ( S v -T v -U v -V v -W v -X )
+4: (-Y v -Z v  0 v -1 v -2 v -3 )
+5: (-4 v -5 v -6 v -7 v  8 v -9 )
+
+Model: {  }
+Pure Symbol: true 0
+0: (-A v -B v  C v -D v -E v -F )
+1: (-G v -H v -I v  J v -K v -L )
+2: (-M v -N v -O v -P v -Q v  R )
+3: ( S v -T v -U v -V v -W v -X )
+4: ( * )
+5: (-4 v -5 v -6 v -7 v  8 v -9 )
+
+Model: {  0  }
+Pure Symbol: false 1
+0: (-A v -B v  C v -D v -E v -F )
+1: (-G v -H v -I v  J v -K v -L )
+2: (-M v -N v -O v -P v -Q v  R )
+3: ( S v -T v -U v -V v -W v -X )
+4: ( * )
+5: (-4 v -5 v -6 v -7 v  8 v -9 )
+
+Model: {  0 -1  }
+Pure Symbol: false 2
+0: (-A v -B v  C v -D v -E v -F )
+1: (-G v -H v -I v  J v -K v -L )
+2: (-M v -N v -O v -P v -Q v  R )
+3: ( S v -T v -U v -V v -W v -X )
+4: ( * )
+5: (-4 v -5 v -6 v -7 v  8 v -9 )
+
+Model: {  0 -1 -2  }
+Pure Symbol: false 3
+0: (-A v -B v  C v -D v -E v -F )
+1: (-G v -H v -I v  J v -K v -L )
+2: (-M v -N v -O v -P v -Q v  R )
+3: ( S v -T v -U v -V v -W v -X )
+4: ( * )
+5: (-4 v -5 v -6 v -7 v  8 v -9 )
+
+Model: {  0 -1 -2 -3  }
+Pure Symbol: false 4
+0: (-A v -B v  C v -D v -E v -F )
+1: (-G v -H v -I v  J v -K v -L )
+2: (-M v -N v -O v -P v -Q v  R )
+3: ( S v -T v -U v -V v -W v -X )
+4: ( * )
+5: ( * )
+
+Model: {  0 -1 -2 -3 -4  }
+Pure Symbol: false 5
+0: (-A v -B v  C v -D v -E v -F )
+1: (-G v -H v -I v  J v -K v -L )
+2: (-M v -N v -O v -P v -Q v  R )
+3: ( S v -T v -U v -V v -W v -X )
+4: ( * )
+5: ( * )
+
+Model: {  0 -1 -2 -3 -4 -5  }
+Pure Symbol: false 6
+0: (-A v -B v  C v -D v -E v -F )
+1: (-G v -H v -I v  J v -K v -L )
+2: (-M v -N v -O v -P v -Q v  R )
+3: ( S v -T v -U v -V v -W v -X )
+4: ( * )
+5: ( * )
+
+Model: {  0 -1 -2 -3 -4 -5 -6  }
+Pure Symbol: false 7
+0: (-A v -B v  C v -D v -E v -F )
+1: (-G v -H v -I v  J v -K v -L )
+2: (-M v -N v -O v -P v -Q v  R )
+3: ( S v -T v -U v -V v -W v -X )
+4: ( * )
+5: ( * )
+
+Model: {  0 -1 -2 -3 -4 -5 -6 -7  }
+Pure Symbol: false 8
+0: (-A v -B v  C v -D v -E v -F )
+1: (-G v -H v -I v  J v -K v -L )
+2: (-M v -N v -O v -P v -Q v  R )
+3: ( S v -T v -U v -V v -W v -X )
+4: ( * )
+5: ( * )
+
+Model: {  0 -1 -2 -3 -4 -5 -6 -7 -8  }
+Pure Symbol: false 9
+0: (-A v -B v  C v -D v -E v -F )
+1: (-G v -H v -I v  J v -K v -L )
+2: (-M v -N v -O v -P v -Q v  R )
+3: ( S v -T v -U v -V v -W v -X )
+4: ( * )
+5: ( * )
+
+Model: {  0 -1 -2 -3 -4 -5 -6 -7 -8 -9  }
+Pure Symbol: false A
+0: ( * )
+1: (-G v -H v -I v  J v -K v -L )
+2: (-M v -N v -O v -P v -Q v  R )
+3: ( S v -T v -U v -V v -W v -X )
+4: ( * )
+5: ( * )
+
+Model: {  0 -1 -2 -3 -4 -5 -6 -7 -8 -9 -A  }
+Pure Symbol: false B
+0: ( * )
+1: (-G v -H v -I v  J v -K v -L )
+2: (-M v -N v -O v -P v -Q v  R )
+3: ( S v -T v -U v -V v -W v -X )
+4: ( * )
+5: ( * )
+
+Model: {  0 -1 -2 -3 -4 -5 -6 -7 -8 -9 -A -B  }
+Pure Symbol: false C
+0: ( * )
+1: (-G v -H v -I v  J v -K v -L )
+2: (-M v -N v -O v -P v -Q v  R )
+3: ( S v -T v -U v -V v -W v -X )
+4: ( * )
+5: ( * )
+
+Model: {  0 -1 -2 -3 -4 -5 -6 -7 -8 -9 -A -B -C  }
+Pure Symbol: false D
+0: ( * )
+1: (-G v -H v -I v  J v -K v -L )
+2: (-M v -N v -O v -P v -Q v  R )
+3: ( S v -T v -U v -V v -W v -X )
+4: ( * )
+5: ( * )
+
+Model: {  0 -1 -2 -3 -4 -5 -6 -7 -8 -9 -A -B -C -D  }
+Pure Symbol: false E
+0: ( * )
+1: (-G v -H v -I v  J v -K v -L )
+2: (-M v -N v -O v -P v -Q v  R )
+3: ( S v -T v -U v -V v -W v -X )
+4: ( * )
+5: ( * )
+
+Model: {  0 -1 -2 -3 -4 -5 -6 -7 -8 -9 -A -B -C -D -E  }
+Pure Symbol: false F
+0: ( * )
+1: (-G v -H v -I v  J v -K v -L )
+2: (-M v -N v -O v -P v -Q v  R )
+3: ( S v -T v -U v -V v -W v -X )
+4: ( * )
+5: ( * )
+
+Model: {  0 -1 -2 -3 -4 -5 -6 -7 -8 -9 -A -B -C -D -E -F  }
+Pure Symbol: false G
+0: ( * )
+1: ( * )
+2: (-M v -N v -O v -P v -Q v  R )
+3: ( S v -T v -U v -V v -W v -X )
+4: ( * )
+5: ( * )
+
+Model: {  0 -1 -2 -3 -4 -5 -6 -7 -8 -9 -A -B -C -D -E -F -G  }
+Pure Symbol: false H
+0: ( * )
+1: ( * )
+2: (-M v -N v -O v -P v -Q v  R )
+3: ( S v -T v -U v -V v -W v -X )
+4: ( * )
+5: ( * )
+
+Model: {  0 -1 -2 -3 -4 -5 -6 -7 -8 -9 -A -B -C -D -E -F -G -H  }
+Pure Symbol: false I
+0: ( * )
+1: ( * )
+2: (-M v -N v -O v -P v -Q v  R )
+3: ( S v -T v -U v -V v -W v -X )
+4: ( * )
+5: ( * )
+
+Model: {  0 -1 -2 -3 -4 -5 -6 -7 -8 -9 -A -B -C -D -E -F -G -H -I  }
+Pure Symbol: false J
+0: ( * )
+1: ( * )
+2: (-M v -N v -O v -P v -Q v  R )
+3: ( S v -T v -U v -V v -W v -X )
+4: ( * )
+5: ( * )
+
+Model: {  0 -1 -2 -3 -4 -5 -6 -7 -8 -9 -A -B -C -D -E -F -G -H -I -J  }
+Pure Symbol: false K
+0: ( * )
+1: ( * )
+2: (-M v -N v -O v -P v -Q v  R )
+3: ( S v -T v -U v -V v -W v -X )
+4: ( * )
+5: ( * )
+
+Model: {  0 -1 -2 -3 -4 -5 -6 -7 -8 -9 -A -B -C -D -E -F -G -H -I -J -K  }
+Pure Symbol: false L
+0: ( * )
+1: ( * )
+2: (-M v -N v -O v -P v -Q v  R )
+3: ( S v -T v -U v -V v -W v -X )
+4: ( * )
+5: ( * )
+
+Model: {  0 -1 -2 -3 -4 -5 -6 -7 -8 -9 -A -B -C -D -E -F -G -H -I -J -K -L  }
+Pure Symbol: false M
+0: ( * )
+1: ( * )
+2: ( * )
+3: ( S v -T v -U v -V v -W v -X )
+4: ( * )
+5: ( * )
+
+Model: {  0 -1 -2 -3 -4 -5 -6 -7 -8 -9 -A -B -C -D -E -F -G -H -I -J -K -L -M  }
+Pure Symbol: false N
+0: ( * )
+1: ( * )
+2: ( * )
+3: ( S v -T v -U v -V v -W v -X )
+4: ( * )
+5: ( * )
+
+Model: {  0 -1 -2 -3 -4 -5 -6 -7 -8 -9 -A -B -C -D -E -F -G -H -I -J -K -L -M -N  }
+Pure Symbol: false O
+0: ( * )
+1: ( * )
+2: ( * )
+3: ( S v -T v -U v -V v -W v -X )
+4: ( * )
+5: ( * )
+
+Model: {  0 -1 -2 -3 -4 -5 -6 -7 -8 -9 -A -B -C -D -E -F -G -H -I -J -K -L -M -N -O  }
+Pure Symbol: false P
+0: ( * )
+1: ( * )
+2: ( * )
+3: ( S v -T v -U v -V v -W v -X )
+4: ( * )
+5: ( * )
+
+Model: {  0 -1 -2 -3 -4 -5 -6 -7 -8 -9 -A -B -C -D -E -F -G -H -I -J -K -L -M -N -O -P  }
+Pure Symbol: false Q
+0: ( * )
+1: ( * )
+2: ( * )
+3: ( S v -T v -U v -V v -W v -X )
+4: ( * )
+5: ( * )
+
+Model: {  0 -1 -2 -3 -4 -5 -6 -7 -8 -9 -A -B -C -D -E -F -G -H -I -J -K -L -M -N -O -P -Q  }
+Pure Symbol: false R
+0: ( * )
+1: ( * )
+2: ( * )
+3: ( S v -T v -U v -V v -W v -X )
+4: ( * )
+5: ( * )
+
+Model: {  0 -1 -2 -3 -4 -5 -6 -7 -8 -9 -A -B -C -D -E -F -G -H -I -J -K -L -M -N -O -P -Q -R  }
+Pure Symbol: true S
+0: ( * )
+1: ( * )
+2: ( * )
+3: ( * )
+4: ( * )
+5: ( * )
+
+Model: {  0 -1 -2 -3 -4 -5 -6 -7 -8 -9 -A -B -C -D -E -F -G -H -I -J -K -L -M -N -O -P -Q -R  S  }
+The logic is satisfiable
+Model: {  0 -1 -2 -3 -4 -5 -6 -7 -8 -9 -A -B -C -D -E -F -G -H -I -J -K -L -M -N -O -P -Q -R  S  }

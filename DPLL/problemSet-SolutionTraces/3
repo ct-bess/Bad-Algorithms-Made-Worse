@@ -1,0 +1,99 @@
+0: (-A v  B v -C v -D )
+1: (-E v -F v -G v  H )
+2: ( I v -J v -K v -L )
+3: (-M v -N v  O v -P )
+
+Model: {  }
+Pure Symbol: false A
+0: ( * )
+1: (-E v -F v -G v  H )
+2: ( I v -J v -K v -L )
+3: (-M v -N v  O v -P )
+
+Model: { -A  }
+Pure Symbol: false B
+0: ( * )
+1: (-E v -F v -G v  H )
+2: ( I v -J v -K v -L )
+3: (-M v -N v  O v -P )
+
+Model: { -A -B  }
+Pure Symbol: false C
+0: ( * )
+1: (-E v -F v -G v  H )
+2: ( I v -J v -K v -L )
+3: (-M v -N v  O v -P )
+
+Model: { -A -B -C  }
+Pure Symbol: false D
+0: ( * )
+1: (-E v -F v -G v  H )
+2: ( I v -J v -K v -L )
+3: (-M v -N v  O v -P )
+
+Model: { -A -B -C -D  }
+Pure Symbol: false E
+0: ( * )
+1: ( * )
+2: ( I v -J v -K v -L )
+3: (-M v -N v  O v -P )
+
+Model: { -A -B -C -D -E  }
+Pure Symbol: false F
+0: ( * )
+1: ( * )
+2: ( I v -J v -K v -L )
+3: (-M v -N v  O v -P )
+
+Model: { -A -B -C -D -E -F  }
+Pure Symbol: false G
+0: ( * )
+1: ( * )
+2: ( I v -J v -K v -L )
+3: (-M v -N v  O v -P )
+
+Model: { -A -B -C -D -E -F -G  }
+Pure Symbol: false H
+0: ( * )
+1: ( * )
+2: ( I v -J v -K v -L )
+3: (-M v -N v  O v -P )
+
+Model: { -A -B -C -D -E -F -G -H  }
+Pure Symbol: true I
+0: ( * )
+1: ( * )
+2: ( * )
+3: (-M v -N v  O v -P )
+
+Model: { -A -B -C -D -E -F -G -H  I  }
+Pure Symbol: false J
+0: ( * )
+1: ( * )
+2: ( * )
+3: (-M v -N v  O v -P )
+
+Model: { -A -B -C -D -E -F -G -H  I -J  }
+Pure Symbol: false K
+0: ( * )
+1: ( * )
+2: ( * )
+3: (-M v -N v  O v -P )
+
+Model: { -A -B -C -D -E -F -G -H  I -J -K  }
+Pure Symbol: false L
+0: ( * )
+1: ( * )
+2: ( * )
+3: (-M v -N v  O v -P )
+
+Model: { -A -B -C -D -E -F -G -H  I -J -K -L  }
+Pure Symbol: false M
+0: ( * )
+1: ( * )
+2: ( * )
+3: ( * )
+
+Model: { -A -B -C -D -E -F -G -H  I -J -K -L -M  }
+The logic is satisfiable
+Model: { -A -B -C -D -E -F -G -H  I -J -K -L -M  }
