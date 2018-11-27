@@ -14,6 +14,10 @@
 
    CNF logic satisfaction
 
+- Back Chaining
+
+   Knowledge based system using BC
+
 - LED blink
 
    Mega garbage
