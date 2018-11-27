@@ -1,9 +1,27 @@
-#include "Expr.hpp"
+//#include "Expr.hpp" // ??????????????????????????????????????????????????????????????
 #include <fstream>
 #include <iostream>
 #include <string>
+#include <vector>
+#include <regex>
+
+#define EOL '\n'
 
 using namespace std;
+
+typedef pair<string, string> Fact;
+typedef vector<Fact> FactBin;
+
+float FastInvSqrt( float x ) {
+
+  float xhalf = 0.5f * x;
+  int i = *(int*) &x;
+  i = 0x5f3759df - ( i >> 1 );
+  x = *(float*) &i;
+  x = x * ( 1.5f - ( xhalf * x * x ) );
+  return x;
+
+}
 
 int main( int argc, char** argv ){
 
@@ -20,6 +38,7 @@ int main( int argc, char** argv ){
 
   }
 
+  // --- Read File --- //
   problemFile = "problemSet/" + problemFile + ".kb";
 
   ifstream inputFile( problemFile );
@@ -31,9 +50,18 @@ int main( int argc, char** argv ){
 
   cout << fileString;
 
-  Expr FFF( problemFile );
+  smatch matches;
 
-  cout << FFF.getSym();
+  regex ruleRE( "\\(.+(?=#)|\\(.+" );
+
+  while( regex_search( fileString, matches, ruleRE ) ) {
+
+    fileString = matches.suffix().str();
+    cout << "Rule match: " << matches[0] << EOL;
+
+  }
+
+  cout << "Final: " << EOL << fileString;
 
   return( 0x5F3759DF );
 
