@@ -1,3 +1,8 @@
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ *
+ * FIXME: ruleRE will pull parenths behind comments
+ *
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 #include "Expr.hpp" // ??????????????????????????????????????????????????????????????
 #include <fstream>
 #include <iostream>
@@ -52,18 +57,41 @@ int main( int argc, char** argv ){
 
   cout << fileString;
 
+  vector<string> symbolV;
+
   smatch matches;
 
-  regex ruleRE( "(\\(.+)(?=#)|(\\(.+)" );
+  regex ruleRE( "\\(.+\\)(?=#)|\\(.+\\)" );
 
+  // Pull each rule or fact w/o the comments
   while( regex_search( fileString, matches, ruleRE ) ) {
 
-    cout << "Rule match: " << matches[0] << EOL;
+    cout << "Match: " << matches[0] << EOL;
+    symbolV.push_back( matches[0] );
+    
     fileString = matches.suffix().str();
 
   }
 
   cout << "Final: " << fileString;
+
+  regex literalRE( "[^() ]+" );
+
+
+  for( unsigned int i = 0; i < symbolV.size(); ++i ) {
+
+    bool ruleFlag = false;
+
+    if( symbolV.at(i).find('?') == true ) ruleFlag = true;
+
+    while( regex_search( symbolV.at(i), matches, literalRE ) ) {
+
+      cout << "Match: " << matches[0] << EOL;
+      symbolV.at(i) = matches.suffix().str();
+
+    }
+
+  }
 
   return( 0x5F3759DF );
 

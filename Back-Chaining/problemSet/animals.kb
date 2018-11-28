@@ -4,5 +4,5 @@
 ((bird penguin))
 ((car ford))
 # rules
-((mammal ?m) (animal ?m)) # forall m mammal(m) --> animal(m)
+((mammal ?m) (animal ?m)) # forall m mammal m  --> animal m
 ((bird ?m) (animal ?m))
