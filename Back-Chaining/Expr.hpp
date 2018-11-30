@@ -20,3 +20,7 @@ struct KnowledgeBase {
 //-----------------------
 
 void readFile( std::string &fileName, KnowledgeBase &KB, bool verbose );
+
+void unify( std::string a, std::string b, KnowledgeBase &KB );
+
+float Q_rsqrt( float number );

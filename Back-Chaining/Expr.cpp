@@ -2,6 +2,27 @@
 
 using namespace std;
 
+void unify( string a, string b, KnowledgeBase &KB ) {
+
+  // Given 2 expressions (a,b), return a substitution or nothing if they dont unify
+  // -- from Figure 9.1 in text book
+  // -- you may want to make a unifier class to store this mapping
+  // -- or just be retarded as usual and dump it into a new KB var
+  // e.g.
+  // a = "author huckleberry_finn ?b"
+  // b = "author ?a mark_twain"
+  // unify(a,b) = "author huckleberry_finn mark_twain
+  // 
+  // TODO use regex
+
+  return;
+
+}
+
+//void BackChain()
+// -- figure 9.6 in text book
+// -- TODO Use regex btw
+
 void readFile( string &fileName, KnowledgeBase &KB, bool verbose ) {
 
   ifstream inputFile( fileName );
@@ -60,6 +81,24 @@ void readFile( string &fileName, KnowledgeBase &KB, bool verbose ) {
   }
 
   return;
+
+}
+
+float Q_rsqrt( float number ) {
+
+  long i;
+  float x2, y;
+  const float threehalfs = 1.5f;
+
+  x2 = number * 0.5f;
+  y = number;
+  i = *( long* ) &y;                          // evil floating point bit level hacking
+  i = 0x5f3759df - ( i >> 1 );                // what the fuck?
+  y = *( float* ) &i;
+  y = y * ( threehalfs - ( x2 * y * y ) );    // 1st iteration
+  //y = y * ( threehalfs - ( x2 * y * y ) );  // 2nd iteration, this can be removed
+
+  return y;
 
 }
 
