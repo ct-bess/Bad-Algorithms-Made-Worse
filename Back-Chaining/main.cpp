@@ -1,21 +1,11 @@
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  *
- * FIXME: ruleRE will pull parenths behind comments
+ * FIXME: expressionRE in Expr will pull parenths behind comments
  *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-#include "Expr.hpp" // ??????????????????????????????????????????????????????????????
-#include <fstream>
-#include <iostream>
-#include <string>
-#include <vector>
-#include <regex>
-
-//#define EOL '\n'
+#include "Expr.hpp" // TYFYS
 
 using namespace std;
-
-typedef pair<string, string> Fact;
-typedef vector<Fact> FactBin;
 
 float FastInvSqrt( float x ) {
 
@@ -39,58 +29,26 @@ int main( int argc, char** argv ){
   else {
 
     cout << "Availible problem files:\n";
-    system( "ls -1 problemSet/ | grep -E *.kb" );
+    system( "ls problemSet/ | grep .kb" );
     cout << "Input a file (don't include \".kb\"): ";
     cin >> problemFile;
 
   }
 
-  // --- Read File --- //
   problemFile = "problemSet/" + problemFile + ".kb";
 
-  ifstream inputFile( problemFile );
-  string fileString;
-  inputFile.seekg( 0, ios::end );
-  fileString.reserve( inputFile.tellg() );
-  inputFile.seekg( 0, ios::beg );
-  fileString.assign( istreambuf_iterator<char>(inputFile), istreambuf_iterator<char>() );
+  KnowledgeBase KB;
 
-  cout << fileString;
+  readFile( problemFile, KB, true );
 
-  vector<string> symbolV;
-
-  smatch matches;
-
-  regex ruleRE( "\\(.+\\)(?=#)|\\(.+\\)" );
-
-  // Pull each rule or fact w/o the comments
-  while( regex_search( fileString, matches, ruleRE ) ) {
-
-    cout << "Match: " << matches[0] << EOL;
-    symbolV.push_back( matches[0] );
-    
-    fileString = matches.suffix().str();
-
+  cout << "Parsed facts:\n";
+  for( auto v : KB.factBinV ) {
+    cout << v << EOL;
   }
 
-  cout << "Final: " << fileString;
-
-  regex literalRE( "[^() ]+" );
-
-
-  for( unsigned int i = 0; i < symbolV.size(); ++i ) {
-
-    bool ruleFlag = false;
-
-    if( symbolV.at(i).find('?') == true ) ruleFlag = true;
-
-    while( regex_search( symbolV.at(i), matches, literalRE ) ) {
-
-      cout << "Match: " << matches[0] << EOL;
-      symbolV.at(i) = matches.suffix().str();
-
-    }
-
+  cout << "Parsed rules:\n";
+  for( auto v :KB.ruleBinV ) {
+    cout << v << EOL;
   }
 
   return( 0x5F3759DF );
