@@ -28,7 +28,7 @@ int main( int argc, char** argv ){
 
   KnowledgeBase KB;
 
-  readFile( problemFile, KB, true );
+  readFile( problemFile, KB, false );
 
   cout << "Parsed facts:\n";
   for( auto v : KB.factBinV ) {
@@ -39,6 +39,11 @@ int main( int argc, char** argv ){
   for( auto v :KB.ruleBinV ) {
     cout << v << EOL;
   }
+
+  // cin >> decision query
+
+  //        ( decision query )
+  inferencer( "animal ?x", KB );
 
   return( 0x5F3759DF );
 

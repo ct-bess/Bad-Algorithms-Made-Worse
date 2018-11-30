@@ -1,5 +1,10 @@
 #include "Expr.hpp"
 
+// TODO: make unify return a string
+//     : make a container to store unified facts and rules
+//
+// TODO: unify is probably not safe and not optimal
+
 using namespace std;
 
 void unify( string a, string b, KnowledgeBase &KB ) {
@@ -12,16 +17,110 @@ void unify( string a, string b, KnowledgeBase &KB ) {
   // a = "author huckleberry_finn ?b"
   // b = "author ?a mark_twain"
   // unify(a,b) = "author huckleberry_finn mark_twain
-  // 
-  // TODO use regex
+
+  cout << "a: " << a << EOL;
+  cout << "b: " << b << EOL;
+
+  regex wordRE( "\\w+ " );
+  smatch matches;
+
+  FactV aTokens;
+  RuleV bTokens;
+
+  while( regex_search( a, matches, wordRE ) ) {
+
+    aTokens.push_back( matches[0] );
+    a = matches.suffix().str();
+
+  }
+  while( regex_search( b, matches, wordRE ) ) {
+
+    bTokens.push_back( matches[0] );
+    b = matches.suffix().str();
+
+  }
+
+  string substitution;
+  int subsInd = -1;
+  char exprVar = '!';
+
+  for( uint_fast16_t i = 0; i < aTokens.size(); ++i ) {
+
+    for( uint_fast16_t j = 0; j < bTokens.size(); ++j ) {
+
+      //cout << "subsInd: " << subsInd << ", exprVar: " << exprVar << EOL;
+      //cout << "LENGTH: " << bTokens.at(j).length() << EOL;
+
+      if( subsInd >= 0 and exprVar != '!' ) break;
+
+      if( aTokens.at(i) == bTokens.at(j) ) {
+
+        // FIXME NOT SAFE
+        subsInd = i + 1;
+
+      }
+
+      // variable
+      else if( bTokens.at(j).length() == 2 ) {
+
+        exprVar = bTokens.at(j).at(0);
+
+      }
+
+    }
+
+  }
+
+  if( subsInd >= 0 and exprVar != '!' ) {
+
+    for( uint_fast16_t j = 0; j < bTokens.size(); ++j ) {
+
+      if( bTokens.at(j) == aTokens.at(subsInd - 1) ) continue;
+
+      else if( bTokens.at(j).length() == 2 ) continue;
+
+      else substitution += bTokens.at(j);
+
+    }
+
+    substitution += aTokens.at(subsInd);
+    cout << "Unification success: " << substitution << EOL;
+
+  }
+
+  else cout << "Unification failed\n";
 
   return;
 
 }
 
-//void BackChain()
-// -- figure 9.6 in text book
-// -- TODO Use regex btw
+// -- Back-Chaining brains: Figure 9.6 in text book
+void inferencer( string decisionQ, KnowledgeBase &KB ) {
+
+  // 1: loop thru factBinV (outer loop)
+  // 2: loop thru ruleBinV (inner loop)
+  //  : : attempt to unify our current fact with the current rule
+  //  : : update map on success, do not map on failure
+  // 3: Output the facts that lead to the decision
+  //  : : this is simply the unifier mappings (in order preferably)
+
+  const RuleV ruleBinV = KB.ruleBinV;
+  const FactV factBinV = KB.factBinV;
+
+  for( uint_fast16_t i = 0; i < factBinV.size(); ++i ) {
+
+    for( uint_fast16_t j = 0; j < ruleBinV.size(); ++j ) {
+
+      cout << ": " << i << " " << j << EOL;
+      unify( factBinV.at(i), ruleBinV.at(j), KB );
+
+    }
+
+  }
+
+  return;
+
+}
 
 void readFile( string &fileName, KnowledgeBase &KB, bool verbose ) {
 
