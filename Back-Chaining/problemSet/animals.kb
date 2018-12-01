@@ -1,8 +1,14 @@
 # facts
 ((mammal dog))
-((mammal dog))
+((mammal cat))
 ((bird penguin))
-((car ford))
+((car Ford))
+((car Tesla))
+((ape gorilla))
+((man Mark_Wolf))
 # rules
 ((mammal ?m) (animal ?m)) # forall m mammal m  --> animal m
+((ape ?m) (animal ?m)) 
 ((bird ?m) (animal ?m))
+((man ?m) (mammal ?m)) 
+((car ?m) (vehicle ?m))

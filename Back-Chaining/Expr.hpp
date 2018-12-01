@@ -15,7 +15,8 @@ struct KnowledgeBase {
 
   FactV factBinV;
   RuleV ruleBinV;
-  //unifier mappings
+  
+  FactV uniMap;
   std::string query;
 
 };

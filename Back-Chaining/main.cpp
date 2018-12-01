@@ -55,12 +55,24 @@ int main( int argc, char** argv ){
   string input;
   while( getline( cin, input ) ) {
 
-    if( input == "q" || input == "YAMETE" ) break;
+    if( input == "q" || input == "YEET" ) break;
 
     inferencer( input, KB );
 
   }
 
+  // TODO once we have our new facts, union-ize them
+  // e.g. 
+  // ((lives_in sam houston))
+  // ((texas houston)) --> ((lives_in sam texas))
+
+  cout << "\n\033[1;35m";
+  cout << "-- Result: --\n";
+  cout << "\033[1;32m";
+
+  for( auto s : KB.uniMap ) cout << s << EOL;
+
+  cout << "\033[0m\n";
   return( 0x5F3759DF );
 
 }

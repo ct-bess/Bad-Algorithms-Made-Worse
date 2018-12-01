@@ -30,19 +30,28 @@ void unify( string fact, vector<string> rule, KnowledgeBase &KB ) {
 
     const string currRule = rule.at(i);
 
+
     cout << "currRule: " << currRule << EOL;
 
     //if( regex_search( currRule, matches, varRE ) == true ) continue;
 
     regex ruleRE( currRule );
 
+    // Dont pull duplicate rules onto our unifier mapping!
+    //if( regex_search( KB.query, matches, ruleRE ) == true ) continue;
+    if( currRule == KB.query + " " ) continue;
+
     // Link rule to fact
     if( regex_search( fact, matches, ruleRE ) == true ) {
 
-      //cout << "Fact match: " << matches[0] << EOL;
       cout << "\033[1;32m";
       cout << "Unify: " << fact << " && " << KB.query;
       cout << "\033[0m\n";
+      
+      //fact = string( matches.suffix().str() );
+      //fact = string( matches[0] );
+      KB.uniMap.push_back( KB.query + " " + fact );
+
       return;
 
     }
@@ -50,8 +59,8 @@ void unify( string fact, vector<string> rule, KnowledgeBase &KB ) {
   }
 
   cout << "\033[1;31m";
-  cout << "Unification failed\n";
-  cout << "\033[0m";
+  cout << "Unification failed";
+  cout << "\033[0m\n";
 
   return;
 
@@ -123,24 +132,16 @@ void inferencer( string decisionQ, KnowledgeBase &KB ) {
     for( uint_fast16_t j = 0; j < ruleVV.size(); ++j ) {
 
       cout << ": " << i << " " << j << EOL;
+      cout << "Checking fact: " << factBinV.at(i);
+      cout << "|| With rule: ";
+      for( auto s : ruleVV.at(j) ) cout << s << " ";
+      cout << EOL;
+
       unify( factBinV.at(i), ruleVV.at(j), KB );
 
     }
 
   }
-
-  /* // Unifies every rule with every fact
-  for( uint_fast16_t i = 0; i < factBinV.size(); ++i ) {
-
-    for( uint_fast16_t j = 0; j < ruleBinV.size(); ++j ) {
-
-      cout << ": " << i << " " << j << EOL;
-      unify( factBinV.at(i), ruleBinV.at(j), KB );
-
-    }
-
-  }
-  */
 
   return;
 
