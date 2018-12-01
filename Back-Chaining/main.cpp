@@ -13,13 +13,25 @@ int main( int argc, char** argv ){
 
   string problemFile;
 
-  if( argc == 2 ) problemFile = string( argv[1] );
+  if( argc == 2 ) { 
+
+    problemFile = string( argv[1] );
+
+    cout << "\033[1;33m";
+    cout << "Program start:";
+    cout << "\033[1;36m";
+    cout << " -- input \"q\" to quit";
+    cout << "\033[0m\n";
+
+  }
 
   else {
 
     cout << "Availible problem files:\n";
     system( "ls problemSet/ | grep .kb" );
+    cout << "\033[7m";
     cout << "Input a file (don't include \".kb\"): ";
+    cout << "\033[0m";
     cin >> problemFile;
 
   }
@@ -40,10 +52,14 @@ int main( int argc, char** argv ){
     cout << v << EOL;
   }
 
-  // cin >> decision query
+  string input;
+  while( getline( cin, input ) ) {
 
-  //        ( decision query )
-  inferencer( "animal ?x", KB );
+    if( input == "q" || input == "YAMETE" ) break;
+
+    inferencer( input, KB );
+
+  }
 
   return( 0x5F3759DF );
 

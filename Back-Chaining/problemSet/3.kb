@@ -1,0 +1,45 @@
+# Problem 3:
+# Facts:
+((occupation joe hotel_manager))
+((lives_in joe pittsburgh))
+
+((occupation sam brain_surgeon))
+((lives_in sam houston))
+
+((occupation bill trial_lawyer))
+((lives_in bill los_angeles))
+
+((occupation cindy oral_surgeon))
+((lives_in cindy omaha))
+
+((occupation joan civil_lawyer))
+((lives_in joan chicago))
+
+((occupation len graphic_artist))
+((lives_in len austin))
+
+((occupation lance heart_surgeon))
+((lives_in lance dallas))
+
+((occupation frank patent_lawyer))
+((lives_in frank dallas))
+
+((occupation charlie plastic_surgeon))
+((lives_in charlie houston))
+
+((occupation lisa investment_banker))
+((lives_in lisa albuquerque))
+
+# Rules:
+((brain_surgeon ?x) (surgeon ?x))
+((oral_surgeon ?x) (surgeon ?x))
+((heart_surgeon ?x) (surgeon ?x))
+((plastic_surgeon ?x) (surgeon ?x))
+
+((trial_lawyer ?x) (lawyer ?x))
+((civil_lawyer ?x) (lawyer ?x))
+((patent_lawyer ?x) (lawyer ?x))
+
+((dallas ?x) (texas ?x))
+((houston ?x) (texas ?x))
+((austin ?x) (texas ?x))

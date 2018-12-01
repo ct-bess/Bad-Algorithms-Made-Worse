@@ -7,7 +7,7 @@
 
 using namespace std;
 
-void unify( string a, string b, KnowledgeBase &KB ) {
+void unify( string fact, vector<string> rule, KnowledgeBase &KB ) {
 
   // Given 2 expressions (a,b), return a substitution or nothing if they dont unify
   // -- from Figure 9.1 in text book
@@ -18,77 +18,40 @@ void unify( string a, string b, KnowledgeBase &KB ) {
   // b = "author ?a mark_twain"
   // unify(a,b) = "author huckleberry_finn mark_twain
 
-  cout << "a: " << a << EOL;
-  cout << "b: " << b << EOL;
+  const RuleV ruleBinV = KB.ruleBinV;
+  const FactV factBinV = KB.factBinV;
 
-  regex wordRE( "\\w+ " );
+  regex varRE( "[?]" );
   smatch matches;
 
-  FactV aTokens;
-  RuleV bTokens;
+  //for( auto v : rule ) cout << ": " << v << EOL;
 
-  while( regex_search( a, matches, wordRE ) ) {
+  for( uint_fast16_t i = 0; i < rule.size(); ++i ) {
 
-    aTokens.push_back( matches[0] );
-    a = matches.suffix().str();
+    const string currRule = rule.at(i);
 
-  }
-  while( regex_search( b, matches, wordRE ) ) {
+    cout << "currRule: " << currRule << EOL;
 
-    bTokens.push_back( matches[0] );
-    b = matches.suffix().str();
+    //if( regex_search( currRule, matches, varRE ) == true ) continue;
 
-  }
+    regex ruleRE( currRule );
 
-  string substitution;
-  int subsInd = -1;
-  char exprVar = '!';
+    // Link rule to fact
+    if( regex_search( fact, matches, ruleRE ) == true ) {
 
-  for( uint_fast16_t i = 0; i < aTokens.size(); ++i ) {
-
-    for( uint_fast16_t j = 0; j < bTokens.size(); ++j ) {
-
-      //cout << "subsInd: " << subsInd << ", exprVar: " << exprVar << EOL;
-      //cout << "LENGTH: " << bTokens.at(j).length() << EOL;
-
-      if( subsInd >= 0 and exprVar != '!' ) break;
-
-      if( aTokens.at(i) == bTokens.at(j) ) {
-
-        // FIXME NOT SAFE
-        subsInd = i + 1;
-
-      }
-
-      // variable
-      else if( bTokens.at(j).length() == 2 ) {
-
-        exprVar = bTokens.at(j).at(0);
-
-      }
+      //cout << "Fact match: " << matches[0] << EOL;
+      cout << "\033[1;32m";
+      cout << "Unify: " << fact << " && " << KB.query;
+      cout << "\033[0m\n";
+      return;
 
     }
 
   }
 
-  if( subsInd >= 0 and exprVar != '!' ) {
-
-    for( uint_fast16_t j = 0; j < bTokens.size(); ++j ) {
-
-      if( bTokens.at(j) == aTokens.at(subsInd - 1) ) continue;
-
-      else if( bTokens.at(j).length() == 2 ) continue;
-
-      else substitution += bTokens.at(j);
-
-    }
-
-    substitution += aTokens.at(subsInd);
-    cout << "Unification success: " << substitution << EOL;
-
-  }
-
-  else cout << "Unification failed\n";
+  cout << "\033[1;31m";
+  cout << "Unification failed\n";
+  cout << "\033[0m";
 
   return;
 
@@ -98,7 +61,7 @@ void unify( string a, string b, KnowledgeBase &KB ) {
 void inferencer( string decisionQ, KnowledgeBase &KB ) {
 
   // 1: loop thru factBinV (outer loop)
-  // 2: loop thru ruleBinV (inner loop)
+  // 2: loop thru ruleBinV (inner loop) --> use rules w.r.t decisionQuery
   //  : : attempt to unify our current fact with the current rule
   //  : : update map on success, do not map on failure
   // 3: Output the facts that lead to the decision
@@ -107,6 +70,66 @@ void inferencer( string decisionQ, KnowledgeBase &KB ) {
   const RuleV ruleBinV = KB.ruleBinV;
   const FactV factBinV = KB.factBinV;
 
+  // 1: Find relivant rules w.r.t the input query
+  smatch matches;
+  string query;
+  {
+    regex queryRE( "^\\w+" );
+
+    while( regex_search( decisionQ, matches, queryRE ) ) {
+
+      query += string( matches[0] );
+      decisionQ = matches.suffix().str();
+
+    }
+  }
+
+  cout << "\033[1;35m";
+  cout << "Query: " << query;
+  cout << "\033[0m\n";
+  KB.query = query;
+  
+  regex queryRE( query );
+  regex wordRE( "\\w+ " );
+
+  vector<vector<string>> ruleVV;
+  for( uint_fast16_t i = 0; i < ruleBinV.size(); ++i ) {
+
+    string rule = ruleBinV.at(i);
+
+    cout << "Rule in question: " << rule << EOL;
+
+    if( regex_search( rule, matches, queryRE ) == false ) continue;
+
+    cout << "Adding rule: " << rule << EOL;
+
+    vector<string> currRule;
+
+    // else:
+    while( regex_search( rule, matches, wordRE ) ) {
+
+      currRule.push_back( matches[0] );
+      rule = matches.suffix().str();
+
+    }
+
+    ruleVV.push_back( currRule );
+
+  }
+
+  // Unify all ruleVV with all facts in KB
+  for( uint_fast16_t i = 0; i < factBinV.size(); ++i ) {
+
+    for( uint_fast16_t j = 0; j < ruleVV.size(); ++j ) {
+
+      cout << ": " << i << " " << j << EOL;
+      unify( factBinV.at(i), ruleVV.at(j), KB );
+
+    }
+
+  }
+
+  /* // Unifies every rule with every fact
   for( uint_fast16_t i = 0; i < factBinV.size(); ++i ) {
 
     for( uint_fast16_t j = 0; j < ruleBinV.size(); ++j ) {
@@ -117,6 +140,7 @@ void inferencer( string decisionQ, KnowledgeBase &KB ) {
     }
 
   }
+  */
 
   return;
 

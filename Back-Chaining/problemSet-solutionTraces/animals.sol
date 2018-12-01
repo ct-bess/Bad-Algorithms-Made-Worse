@@ -1,3 +1,4 @@
+[1;33mProgram start:[1;36m -- input "q" to quit[0m
 # facts
 ((mammal dog))
 ((mammal dog))
@@ -14,36 +15,52 @@ car ford
 Parsed rules:
 mammal ?m animal ?m 
 bird ?m animal ?m 
+[1;35mQuery: animal[0m
+Rule in question: mammal ?m animal ?m 
+Adding rule: mammal ?m animal ?m 
+Rule in question: bird ?m animal ?m 
+Adding rule: bird ?m animal ?m 
 : 0 0
-a: mammal dog 
-b: mammal ?m animal ?m 
-Unification success: animal dog 
+currRule: mammal 
+[1;32mUnify: mammal dog  && animal[0m
 : 0 1
-a: mammal dog 
-b: bird ?m animal ?m 
-Unification failed
-: 1 0
-a: mammal dog 
-b: mammal ?m animal ?m 
-Unification success: animal dog 
+currRule: bird 
+currRule: m 
+currRule: animal 
+currRule: m 
+[1;31mUnification failed
+[0m: 1 0
+currRule: mammal 
+[1;32mUnify: mammal dog  && animal[0m
 : 1 1
-a: mammal dog 
-b: bird ?m animal ?m 
-Unification failed
-: 2 0
-a: bird penguin 
-b: mammal ?m animal ?m 
-Unification failed
-: 2 1
-a: bird penguin 
-b: bird ?m animal ?m 
-Unification success: animal penguin 
+currRule: bird 
+currRule: m 
+currRule: animal 
+currRule: m 
+[1;31mUnification failed
+[0m: 2 0
+currRule: mammal 
+currRule: m 
+currRule: animal 
+currRule: m 
+[1;31mUnification failed
+[0m: 2 1
+currRule: bird 
+[1;32mUnify: bird penguin  && animal[0m
 : 3 0
-a: car ford 
-b: mammal ?m animal ?m 
-Unification failed
-: 3 1
-a: car ford 
-b: bird ?m animal ?m 
-Unification failed
--- end of solution trace --
+currRule: mammal 
+currRule: m 
+currRule: animal 
+currRule: m 
+[1;31mUnification failed
+[0m: 3 1
+currRule: bird 
+currRule: m 
+currRule: animal 
+currRule: m 
+[1;31mUnification failed
+[0m[1;35mQuery: Mark[0m
+Rule in question: mammal ?m animal ?m 
+Rule in question: bird ?m animal ?m 
+
+--- End Of Solution Trace ---
