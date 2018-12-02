@@ -5,6 +5,7 @@
 #include <regex>
 #include <fstream>
 #include <cstdint>
+#include <queue>
 
 #define EOL '\n';
 

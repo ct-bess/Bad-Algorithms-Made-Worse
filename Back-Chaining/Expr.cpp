@@ -4,8 +4,53 @@
 //     : make a container to store unified facts and rules
 //
 // TODO: unify is probably not safe and not optimal
+//
+// TODO: dallas ?m and such wont work b/c of dupe logic
 
 using namespace std;
+
+void unionize( vector<string> uniMap ) {
+
+  smatch matches;
+  const RuleV ruleBinV = uniMap;
+  regex wordRE( "\\w+ " );
+
+  vector<vector<string>> ruleVV;
+  for( uint_fast16_t i = 0; i < ruleBinV.size(); ++i ) {
+
+    string rule = ruleBinV.at(i);
+
+    vector<string> currRule;
+
+    while( regex_search( rule, matches, wordRE ) ) {
+
+      currRule.push_back( matches[0] );
+      rule = matches.suffix().str();
+
+    }
+
+    ruleVV.push_back( currRule );
+
+  }
+
+  // FIXME this dont work dude, you gotta run down the middle and find dupes
+  for( uint_fast16_t i = 0; i < ruleVV.size(); ++i ) {
+
+    for( uint_fast16_t j = 1; j < ruleVV.at(i).size(); ++j ) {
+
+      if( ruleVV.at(i).at(1) == ruleVV.at(j).at(1) ) {
+        cout << "\033[1;31m";
+        cout << ruleVV.at(i).at(1);
+        cout << "\033[0m\n";
+      }
+
+    }
+
+  }
+
+  return;
+
+}
 
 void unify( string fact, vector<string> rule, KnowledgeBase &KB ) {
 
@@ -65,7 +110,7 @@ void unify( string fact, vector<string> rule, KnowledgeBase &KB ) {
       //else {
 
       fact = regex_replace( fact, ruleRE, "$2" );
-      KB.uniMap.push_back( fact + KB.query );
+      KB.uniMap.push_back( fact + KB.query + " " );
 
       //}
 
@@ -93,71 +138,90 @@ void inferencer( string decisionQ, KnowledgeBase &KB ) {
   // 3: Output the facts that lead to the decision
   //  : : this is simply the unifier mappings (in order preferably)
 
-  const RuleV ruleBinV = KB.ruleBinV;
+  RuleV ruleBinV = KB.ruleBinV;
   const FactV factBinV = KB.factBinV;
 
   // 1: Find relivant rules w.r.t the input query
   smatch matches;
   string query;
+  queue<string> queryQ;
   {
-    regex queryRE( "^\\w+" );
-    //regex queryRE( "[^? ]\\w+" ); TODO compound query
+    //regex queryRE( "^\\w+" );
+    regex queryRE( "[^? ]\\w+" ); 
 
     while( regex_search( decisionQ, matches, queryRE ) ) {
 
-      query += string( matches[0] );
+      //query += string( matches[0] );
+      queryQ.push( matches[0] );
       decisionQ = matches.suffix().str();
 
     }
   }
 
-  cout << "\033[1;35m";
-  cout << "Query: " << query;
-  cout << "\033[0m\n";
-  KB.query = query;
-  
-  regex queryRE( query );
-  regex wordRE( "\\w+ " );
+  int querySize = queryQ.size();
 
-  vector<vector<string>> ruleVV;
-  for( uint_fast16_t i = 0; i < ruleBinV.size(); ++i ) {
+  while( queryQ.empty() == false ) {
 
-    string rule = ruleBinV.at(i);
+    query = queryQ.front();
 
-    cout << "Rule in question: " << rule << EOL;
+    cout << "\033[1;35m";
+    cout << "Query: " << query;
+    cout << "\033[0m\n";
+    KB.query = query;
+    
+    regex queryRE( query );
+    regex wordRE( "\\w+ " );
 
-    if( regex_search( rule, matches, queryRE ) == false ) continue;
+    vector<vector<string>> ruleVV;
+    for( uint_fast16_t i = 0; i < ruleBinV.size(); ++i ) {
 
-    cout << "Adding rule: " << rule << EOL;
+      string rule = ruleBinV.at(i);
 
-    vector<string> currRule;
+      cout << "Rule in question: " << rule << EOL;
 
-    // else:
-    while( regex_search( rule, matches, wordRE ) ) {
+      if( regex_search( rule, matches, queryRE ) == false ) continue;
 
-      currRule.push_back( matches[0] );
-      rule = matches.suffix().str();
+      cout << "Adding rule: " << rule << EOL;
+
+      vector<string> currRule;
+
+      // else:
+      while( regex_search( rule, matches, wordRE ) ) {
+
+        currRule.push_back( matches[0] );
+        rule = matches.suffix().str();
+
+      }
+
+      ruleVV.push_back( currRule );
 
     }
 
-    ruleVV.push_back( currRule );
+    // Unify all ruleVV with all facts in KB
+    for( uint_fast16_t i = 0; i < factBinV.size(); ++i ) {
+
+      for( uint_fast16_t j = 0; j < ruleVV.size(); ++j ) {
+
+        cout << ": " << i << " " << j << EOL;
+        cout << "Checking fact: " << factBinV.at(i);
+        cout << "|| With rule: ";
+        for( auto s : ruleVV.at(j) ) cout << s << " ";
+        cout << EOL;
+
+        unify( factBinV.at(i), ruleVV.at(j), KB );
+
+      }
+
+    }
+
+    queryQ.pop();
 
   }
 
-  // Unify all ruleVV with all facts in KB
-  for( uint_fast16_t i = 0; i < factBinV.size(); ++i ) {
+  // Output the union from the compound query
+  if( querySize > 1 ) {
 
-    for( uint_fast16_t j = 0; j < ruleVV.size(); ++j ) {
-
-      cout << ": " << i << " " << j << EOL;
-      cout << "Checking fact: " << factBinV.at(i);
-      cout << "|| With rule: ";
-      for( auto s : ruleVV.at(j) ) cout << s << " ";
-      cout << EOL;
-
-      unify( factBinV.at(i), ruleVV.at(j), KB );
-
-    }
+    unionize( KB.uniMap );
 
   }
 
