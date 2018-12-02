@@ -19,6 +19,7 @@ struct KnowledgeBase {
   
   FactV uniMap;
   std::string query;
+  RuleV queryOG;
 
 };
 

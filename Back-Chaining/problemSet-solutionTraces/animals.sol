@@ -9,9 +9,9 @@
 ((man Mark_Wolf))
 # rules
 ((mammal ?m) (animal ?m)) # forall m mammal m  --> animal m
-((mammal ?m) (ape ?m)) 
-((mammal ?m) (man ?m)) 
+((ape ?m) (animal ?m)) 
 ((bird ?m) (animal ?m))
+((man ?m) (mammal ?m)) 
 ((car ?m) (vehicle ?m))
 Parsed facts:
 mammal dog 
@@ -23,213 +23,89 @@ ape gorilla
 man Mark_Wolf 
 Parsed rules:
 mammal ?m animal ?m 
-mammal ?m ape ?m 
-mammal ?m man ?m 
+ape ?m animal ?m 
 bird ?m animal ?m 
+man ?m mammal ?m 
 car ?m vehicle ?m 
 [1;35mQuery: animal[0m
 Rule in question: mammal ?m animal ?m 
 Adding rule: mammal ?m animal ?m 
-Rule in question: mammal ?m ape ?m 
-Rule in question: mammal ?m man ?m 
+Rule in question: ape ?m animal ?m 
+Adding rule: ape ?m animal ?m 
 Rule in question: bird ?m animal ?m 
 Adding rule: bird ?m animal ?m 
+Rule in question: man ?m mammal ?m 
 Rule in question: car ?m vehicle ?m 
 : 0 0
-currRule: mammal 
-[1;32mUnify: mammal dog  && animal[0m
+Checking fact: mammal dog || With rule: mammal  m  animal  m  
+[1;32mUnification Success: mammal dog  && animal[0m
 : 0 1
-currRule: bird 
-currRule: m 
-currRule: animal 
-currRule: m 
-[1;31mUnification failed
-[0m: 1 0
-currRule: mammal 
-[1;32mUnify: mammal cat  && animal[0m
-: 1 1
-currRule: bird 
-currRule: m 
-currRule: animal 
-currRule: m 
-[1;31mUnification failed
-[0m: 2 0
-currRule: mammal 
-currRule: m 
-currRule: animal 
-currRule: m 
-[1;31mUnification failed
-[0m: 2 1
-currRule: bird 
-[1;32mUnify: bird penguin  && animal[0m
-: 3 0
-currRule: mammal 
-currRule: m 
-currRule: animal 
-currRule: m 
-[1;31mUnification failed
-[0m: 3 1
-currRule: bird 
-currRule: m 
-currRule: animal 
-currRule: m 
-[1;31mUnification failed
-[0m: 4 0
-currRule: mammal 
-currRule: m 
-currRule: animal 
-currRule: m 
-[1;31mUnification failed
-[0m: 4 1
-currRule: bird 
-currRule: m 
-currRule: animal 
-currRule: m 
-[1;31mUnification failed
-[0m: 5 0
-currRule: mammal 
-currRule: m 
-currRule: animal 
-currRule: m 
-[1;31mUnification failed
-[0m: 5 1
-currRule: bird 
-currRule: m 
-currRule: animal 
-currRule: m 
-[1;31mUnification failed
-[0m: 6 0
-currRule: mammal 
-currRule: m 
-currRule: animal 
-currRule: m 
-[1;31mUnification failed
-[0m: 6 1
-currRule: bird 
-currRule: m 
-currRule: animal 
-currRule: m 
-[1;31mUnification failed
-[0m[1;35mQuery: mammal[0m
-Rule in question: mammal ?m animal ?m 
-Adding rule: mammal ?m animal ?m 
-Rule in question: mammal ?m ape ?m 
-Adding rule: mammal ?m ape ?m 
-Rule in question: mammal ?m man ?m 
-Adding rule: mammal ?m man ?m 
-Rule in question: bird ?m animal ?m 
-Rule in question: car ?m vehicle ?m 
-: 0 0
-currRule: mammal 
-[1;32mUnify: mammal dog  && mammal[0m
-: 0 1
-currRule: mammal 
-[1;32mUnify: mammal dog  && mammal[0m
+Checking fact: mammal dog || With rule: ape  m  animal  m  
+[1;31mUnification failed[0m
 : 0 2
-currRule: mammal 
-[1;32mUnify: mammal dog  && mammal[0m
+Checking fact: mammal dog || With rule: bird  m  animal  m  
+[1;31mUnification failed[0m
 : 1 0
-currRule: mammal 
-[1;32mUnify: mammal cat  && mammal[0m
+Checking fact: mammal cat || With rule: mammal  m  animal  m  
+[1;32mUnification Success: mammal cat  && animal[0m
 : 1 1
-currRule: mammal 
-[1;32mUnify: mammal cat  && mammal[0m
+Checking fact: mammal cat || With rule: ape  m  animal  m  
+[1;31mUnification failed[0m
 : 1 2
-currRule: mammal 
-[1;32mUnify: mammal cat  && mammal[0m
+Checking fact: mammal cat || With rule: bird  m  animal  m  
+[1;31mUnification failed[0m
 : 2 0
-currRule: mammal 
-currRule: m 
-currRule: animal 
-currRule: m 
-[1;31mUnification failed
-[0m: 2 1
-currRule: mammal 
-currRule: m 
-currRule: ape 
-currRule: m 
-[1;31mUnification failed
-[0m: 2 2
-currRule: mammal 
-currRule: m 
-currRule: man 
-currRule: m 
-[1;31mUnification failed
-[0m: 3 0
-currRule: mammal 
-currRule: m 
-currRule: animal 
-currRule: m 
-[1;31mUnification failed
-[0m: 3 1
-currRule: mammal 
-currRule: m 
-currRule: ape 
-currRule: m 
-[1;31mUnification failed
-[0m: 3 2
-currRule: mammal 
-currRule: m 
-currRule: man 
-currRule: m 
-[1;31mUnification failed
-[0m: 4 0
-currRule: mammal 
-currRule: m 
-currRule: animal 
-currRule: m 
-[1;31mUnification failed
-[0m: 4 1
-currRule: mammal 
-currRule: m 
-currRule: ape 
-currRule: m 
-[1;31mUnification failed
-[0m: 4 2
-currRule: mammal 
-currRule: m 
-currRule: man 
-currRule: m 
-[1;31mUnification failed
-[0m: 5 0
-currRule: mammal 
-currRule: m 
-currRule: animal 
-currRule: m 
-[1;31mUnification failed
-[0m: 5 1
-currRule: mammal 
-currRule: m 
-currRule: ape 
-[1;32mUnify: ape gorilla  && mammal[0m
+Checking fact: bird penguin || With rule: mammal  m  animal  m  
+[1;31mUnification failed[0m
+: 2 1
+Checking fact: bird penguin || With rule: ape  m  animal  m  
+[1;31mUnification failed[0m
+: 2 2
+Checking fact: bird penguin || With rule: bird  m  animal  m  
+[1;32mUnification Success: bird penguin  && animal[0m
+: 3 0
+Checking fact: car Ford || With rule: mammal  m  animal  m  
+[1;31mUnification failed[0m
+: 3 1
+Checking fact: car Ford || With rule: ape  m  animal  m  
+[1;31mUnification failed[0m
+: 3 2
+Checking fact: car Ford || With rule: bird  m  animal  m  
+[1;31mUnification failed[0m
+: 4 0
+Checking fact: car Tesla || With rule: mammal  m  animal  m  
+[1;31mUnification failed[0m
+: 4 1
+Checking fact: car Tesla || With rule: ape  m  animal  m  
+[1;31mUnification failed[0m
+: 4 2
+Checking fact: car Tesla || With rule: bird  m  animal  m  
+[1;31mUnification failed[0m
+: 5 0
+Checking fact: ape gorilla || With rule: mammal  m  animal  m  
+[1;31mUnification failed[0m
+: 5 1
+Checking fact: ape gorilla || With rule: ape  m  animal  m  
+[1;32mUnification Success: ape gorilla  && animal[0m
 : 5 2
-currRule: mammal 
-currRule: m 
-currRule: man 
-currRule: m 
-[1;31mUnification failed
-[0m: 6 0
-currRule: mammal 
-currRule: m 
-currRule: animal 
-currRule: m 
-[1;31mUnification failed
-[0m: 6 1
-currRule: mammal 
-currRule: m 
-currRule: ape 
-currRule: m 
-[1;31mUnification failed
-[0m: 6 2
-currRule: mammal 
-currRule: m 
-currRule: man 
-[1;32mUnify: man Mark_Wolf  && mammal[0m
-[1;35mQuery: fukc[0m
-Rule in question: mammal ?m animal ?m 
-Rule in question: mammal ?m ape ?m 
-Rule in question: mammal ?m man ?m 
-Rule in question: bird ?m animal ?m 
-Rule in question: car ?m vehicle ?m 
+Checking fact: ape gorilla || With rule: bird  m  animal  m  
+[1;31mUnification failed[0m
+: 6 0
+Checking fact: man Mark_Wolf || With rule: mammal  m  animal  m  
+[1;31mUnification failed[0m
+: 6 1
+Checking fact: man Mark_Wolf || With rule: ape  m  animal  m  
+[1;31mUnification failed[0m
+: 6 2
+Checking fact: man Mark_Wolf || With rule: bird  m  animal  m  
+[1;31mUnification failed[0m
+[1;36m
+Original Query: animal 
+[1;35m-- Result: --
+[1;32mdog animal 
+cat animal 
+penguin animal 
+gorilla animal 
+[0m
 
 --- End Of Solution Trace ---

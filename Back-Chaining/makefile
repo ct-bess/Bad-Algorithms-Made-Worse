@@ -12,4 +12,4 @@ stdoutToFile:
 	g++ -o b stdoutToFile.cpp $(CFLAGS)
 
 clean:
-	rm a *.o && wall -t 5 YEET
+	rm a b *.o && wall -t 5 YEET

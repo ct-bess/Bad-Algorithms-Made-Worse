@@ -1,25 +1,28 @@
 #include "Expr.hpp"
 
-// TODO: make unify return a string
-//     : make a container to store unified facts and rules
-//
-// TODO: unify is probably not safe and not optimal
-//
-// TODO: dallas ?m and such wont work b/c of dupe logic
+// TODO: make unify return a string rather than being a pass by reference savage
+// TODO: can only query the RHS of rules
 
 using namespace std;
 
-void unionize( vector<string> uniMap ) {
+// finds the intersection b/t a compound query input
+void unionize( KnowledgeBase &KB ) {
 
   smatch matches;
-  const RuleV ruleBinV = uniMap;
+  const RuleV uniMap = KB.uniMap;
+  const RuleV queryOG = KB.queryOG;
   regex wordRE( "\\w+ " );
 
+  // Split the facts in uniMap into a vv string for ease of use
+  // Perform a regex using each string
+  // BUT: do a regex_replace on each match
+  // The result will be the negated set --> the opposite of what the query wants
+  // Then use that negated set to create the real set
+
   vector<vector<string>> ruleVV;
-  for( uint_fast16_t i = 0; i < ruleBinV.size(); ++i ) {
+  for( uint_fast16_t i = 0; i < uniMap.size(); ++i ) {
 
-    string rule = ruleBinV.at(i);
-
+    string rule = uniMap.at(i);
     vector<string> currRule;
 
     while( regex_search( rule, matches, wordRE ) ) {
@@ -33,19 +36,54 @@ void unionize( vector<string> uniMap ) {
 
   }
 
-  // FIXME this dont work dude, you gotta run down the middle and find dupes
-  for( uint_fast16_t i = 0; i < ruleVV.size(); ++i ) {
+  // I have no excuse...
+  vector<vector<string>> uniMapMaster = ruleVV;
+  for( uint_fast16_t i = 0; i < uniMapMaster.size(); ++i ) {
+    for( uint_fast16_t j = 0; j < uniMapMaster.at(i).size(); ++j ) {
 
-    for( uint_fast16_t j = 1; j < ruleVV.at(i).size(); ++j ) {
+      regex negationRE( uniMapMaster.at(i).at(j) );
 
-      if( ruleVV.at(i).at(1) == ruleVV.at(j).at(1) ) {
-        cout << "\033[1;31m";
-        cout << ruleVV.at(i).at(1);
-        cout << "\033[0m\n";
+      for( uint_fast16_t n = 0; n < ruleVV.size(); ++n ) {
+
+        if( i != n ) {
+          for( uint_fast16_t m = 0; m < ruleVV.at(m).size(); ++m ) {
+
+            ruleVV.at(n).at(m) = regex_replace( ruleVV.at(n).at(m), negationRE, "$2" );
+
+          }
+        }
       }
+    }
+  }
+
+  // Standardize:
+  vector<string> negatedUniMap;
+  for( uint_fast16_t i = 0; i < ruleVV.size(); ++i ) {
+    for( uint_fast16_t j = 0; j < ruleVV.at(i).size(); ++j ) {
+      while( regex_search( ruleVV.at(i).at(j), matches, wordRE ) ) {
+        negatedUniMap.push_back( matches[0] );
+        ruleVV.at(i).at(j) = matches.suffix().str();
+      }
+    }
+  }
+
+  for( uint_fast16_t i = 0; i < negatedUniMap.size(); ++i ) {
+
+    const string negatedMem = negatedUniMap.at(i);
+    regex unionRE( negatedMem );
+
+    for( uint_fast16_t k = 0; k < KB.uniMap.size(); ++k ) {
+
+      // negatedMember match --> does not intersect original set
+      if( regex_search( KB.uniMap.at(k), matches, unionRE ) == true ) {
+
+        //cout << "Erasing: " << KB.uniMap.at(k) << EOL;
+        KB.uniMap.erase( KB.uniMap.begin() + k );
+
+      }
+      // else: do not remove
 
     }
-
   }
 
   return;
@@ -70,22 +108,10 @@ void unify( string fact, vector<string> rule, KnowledgeBase &KB ) {
   //regex wordRE( "\\w+" );
   smatch matches;
 
-  /*int factSize;
-  string subFact = fact;
-  while( regex_search( subFact, matches, wordRE ) ) {
-    ++factSize;
-    subFact = matches.suffix().str();
-  }*/
-
   for( uint_fast16_t i = 0; i < rule.size(); ++i ) {
 
     const string currRule = rule.at(i);
-
-
-    cout << "currRule: " << currRule << EOL;
-
-    //if( regex_search( currRule, matches, varRE ) == true ) continue;
-
+    //cout << "currRule: " << currRule << EOL;
     regex ruleRE( currRule );
 
     // Dont pull duplicate rules onto our unifier mapping!
@@ -93,26 +119,15 @@ void unify( string fact, vector<string> rule, KnowledgeBase &KB ) {
     //if( regex_search( KB.query, matches, queryRE ) == true ) continue;
     if( currRule == KB.query + " " ) continue;
 
-    // Link rule to fact
+    // Link rule to fact: this is generalized and works for all fact sizes
     if( regex_search( fact, matches, ruleRE ) == true ) {
 
       cout << "\033[1;32m";
-      cout << "Unify: " << fact << " && " << KB.query;
+      cout << "Unification Success: " << fact << " && " << KB.query;
       cout << "\033[0m\n";
-
-      /*if( factSize < 3 ) {
-
-        fact = string( matches.suffix().str() );
-        KB.uniMap.push_back( KB.query + " " + fact );
-
-      }*/
-
-      //else {
 
       fact = regex_replace( fact, ruleRE, "$2" );
       KB.uniMap.push_back( fact + KB.query + " " );
-
-      //}
 
       return;
 
@@ -131,13 +146,6 @@ void unify( string fact, vector<string> rule, KnowledgeBase &KB ) {
 // -- Back-Chaining brains: Figure 9.6 in text book
 void inferencer( string decisionQ, KnowledgeBase &KB ) {
 
-  // 1: loop thru factBinV (outer loop)
-  // 2: loop thru ruleBinV (inner loop) --> use rules w.r.t decisionQuery
-  //  : : attempt to unify our current fact with the current rule
-  //  : : update map on success, do not map on failure
-  // 3: Output the facts that lead to the decision
-  //  : : this is simply the unifier mappings (in order preferably)
-
   RuleV ruleBinV = KB.ruleBinV;
   const FactV factBinV = KB.factBinV;
 
@@ -146,13 +154,12 @@ void inferencer( string decisionQ, KnowledgeBase &KB ) {
   string query;
   queue<string> queryQ;
   {
-    //regex queryRE( "^\\w+" );
     regex queryRE( "[^? ]\\w+" ); 
 
     while( regex_search( decisionQ, matches, queryRE ) ) {
 
-      //query += string( matches[0] );
       queryQ.push( matches[0] );
+      KB.queryOG.push_back( matches[0] );
       decisionQ = matches.suffix().str();
 
     }
@@ -197,7 +204,6 @@ void inferencer( string decisionQ, KnowledgeBase &KB ) {
 
     }
 
-    // Unify all ruleVV with all facts in KB
     for( uint_fast16_t i = 0; i < factBinV.size(); ++i ) {
 
       for( uint_fast16_t j = 0; j < ruleVV.size(); ++j ) {
@@ -221,7 +227,7 @@ void inferencer( string decisionQ, KnowledgeBase &KB ) {
   // Output the union from the compound query
   if( querySize > 1 ) {
 
-    unionize( KB.uniMap );
+    unionize( KB );
 
   }
 
@@ -290,6 +296,7 @@ void readFile( string &fileName, KnowledgeBase &KB, bool verbose ) {
 
 }
 
+// Just to be safe... you never know
 float Q_rsqrt( float number ) {
 
   long i;
@@ -299,7 +306,7 @@ float Q_rsqrt( float number ) {
   x2 = number * 0.5f;
   y = number;
   i = *( long* ) &y;                          // evil floating point bit level hacking
-  i = 0x5f3759df - ( i >> 1 );                // what the fuck?
+  i = 0x5f3759df - ( i >> 1 );                // what the f?ck?
   y = *( float* ) &i;
   y = y * ( threehalfs - ( x2 * y * y ) );    // 1st iteration
   //y = y * ( threehalfs - ( x2 * y * y ) );  // 2nd iteration, this can be removed
