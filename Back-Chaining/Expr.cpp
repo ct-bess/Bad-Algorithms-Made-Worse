@@ -21,10 +21,16 @@ void unify( string fact, vector<string> rule, KnowledgeBase &KB ) {
   const RuleV ruleBinV = KB.ruleBinV;
   const FactV factBinV = KB.factBinV;
 
-  regex varRE( "[?]" );
+  //regex varRE( "[?]" );
+  //regex wordRE( "\\w+" );
   smatch matches;
 
-  //for( auto v : rule ) cout << ": " << v << EOL;
+  /*int factSize;
+  string subFact = fact;
+  while( regex_search( subFact, matches, wordRE ) ) {
+    ++factSize;
+    subFact = matches.suffix().str();
+  }*/
 
   for( uint_fast16_t i = 0; i < rule.size(); ++i ) {
 
@@ -38,7 +44,8 @@ void unify( string fact, vector<string> rule, KnowledgeBase &KB ) {
     regex ruleRE( currRule );
 
     // Dont pull duplicate rules onto our unifier mapping!
-    //if( regex_search( KB.query, matches, ruleRE ) == true ) continue;
+    //regex queryRE( "\\b" + currRule );
+    //if( regex_search( KB.query, matches, queryRE ) == true ) continue;
     if( currRule == KB.query + " " ) continue;
 
     // Link rule to fact
@@ -47,10 +54,20 @@ void unify( string fact, vector<string> rule, KnowledgeBase &KB ) {
       cout << "\033[1;32m";
       cout << "Unify: " << fact << " && " << KB.query;
       cout << "\033[0m\n";
-      
-      //fact = string( matches.suffix().str() );
-      //fact = string( matches[0] );
-      KB.uniMap.push_back( KB.query + " " + fact );
+
+      /*if( factSize < 3 ) {
+
+        fact = string( matches.suffix().str() );
+        KB.uniMap.push_back( KB.query + " " + fact );
+
+      }*/
+
+      //else {
+
+      fact = regex_replace( fact, ruleRE, "$2" );
+      KB.uniMap.push_back( fact + KB.query );
+
+      //}
 
       return;
 
@@ -84,6 +101,7 @@ void inferencer( string decisionQ, KnowledgeBase &KB ) {
   string query;
   {
     regex queryRE( "^\\w+" );
+    //regex queryRE( "[^? ]\\w+" ); TODO compound query
 
     while( regex_search( decisionQ, matches, queryRE ) ) {
 
