@@ -22,8 +22,8 @@ $ make
 ```
 
 2 executables will be generated: `a` and `b`
-> `a` is the Back-Chaining binaries  
-> `b` is a helper to convert stdout to a file
+> `a` is the Back-Chaining binaries.  
+> `b` is a helper for piping stdout from `a` into a file.
 
 ## Running:
 
@@ -68,7 +68,46 @@ You will find an output file in `problemSet-SolutionTraces/` if you chose to pip
 
 Else, the output will be sent straight to the terminal.
 
-## Tic-Tac-Toe: Strategy (4)
+## :one: Nono
+
+Proving Colonel West is a criminal, checkout `1.sol` or run `./a 1` and query 
+`criminal`
+
+The knowledgebase for this problem (and all problems) is found in `problemSet/*.kb`
+> This specific problem is `1.kb`
+
+## :two: Wumpus World
+
+This knowledgebase only contains info knowing details on rooms (1,1), (1,2), and (2,1). 
+
+- (1,1) is safe and the starting point for the agent. 
+
+- (1,2) is safe but has a breeze
+
+- (2,1) is safe but has a stentch
+
+The goal is to create a knowledgebase to infer that room (2,2) is safe. 
+
+The solution is found in `2.sol`, and can be run with `./a 2` and querying `safe`
+
+## :three: Datalog Emulation
+
+This knowledgebase contains a list of people, their occupation, and where they live. 
+We can query the knowledgebase for lawyers, surgeons, and texans. In addition, we can 
+use compound queries to generate a list of all surgeons that live in texas. 
+
+We can view this in `3.sol`, or run `./a 3` using query `surgeon texas`
+
+We could also query `lawyer texas` to return a list of lawyers living in texas. 
+
+New rules would need to be created to query other states, try adding 
+`((omaha ?x) (nebraska ?x))` into the rule section and query `surgeon nebraska`
+
+## :four: Tic-Tac-Toe: Strategy
+
+I have generated 3 board knowledgebases for this problem: `4-board1.kb`, `4-board2.kb`, 
+and `4-board3.kb`. The optimal move for each board is in their corresponding `.sol` file. 
+Query `best move` to generate the best move given the board state. 
 
 The implementation of the facts and rules for tic-tac-toe are as follows:
 
@@ -92,7 +131,7 @@ for the best move.
 
 Other KB considerations: 
 
-- LUT of winning states
+- a LUT of winning states
 
 ### Tic-Tac-Toe: Sample Trace: 
 
@@ -258,127 +297,34 @@ Original Query: best move
 
 ```
 
-## Example Trace: 
+## Misc. Examples: 
 
-From `animals.sol`
-> This is the output from a text editor, notice the ESC characters. 
+### animals.kb
 
-The input query was `animal ?m`
+View `animals.sol`, the input query was `animal ?m`
 
 The program will infer that facts defined as mammals, birds, apes, etc 
 are animals by the rules. 
 
-``` console
-[1;33mProgram start:[1;36m -- input "q" to quit[0m
-# facts
-((mammal dog))
-((mammal cat))
-((bird penguin))
-((car Ford))
-((car Tesla))
-((ape gorilla))
-((man Mark_Wolf))
-# rules
-((mammal ?m) (animal ?m)) # forall m mammal m  --> animal m
-((ape ?m) (animal ?m)) 
-((bird ?m) (animal ?m))
-((man ?m) (mammal ?m)) 
-((car ?m) (vehicle ?m))
-Parsed facts:
-mammal dog 
-mammal cat 
-bird penguin 
-car Ford 
-car Tesla 
-ape gorilla 
-man Mark_Wolf 
-Parsed rules:
-mammal ?m animal ?m 
-ape ?m animal ?m 
-bird ?m animal ?m 
-man ?m mammal ?m 
-car ?m vehicle ?m 
-[1;35mQuery: animal[0m
-Rule in question: mammal ?m animal ?m 
-Adding rule: mammal ?m animal ?m 
-Rule in question: ape ?m animal ?m 
-Adding rule: ape ?m animal ?m 
-Rule in question: bird ?m animal ?m 
-Adding rule: bird ?m animal ?m 
-Rule in question: man ?m mammal ?m 
-Rule in question: car ?m vehicle ?m 
-: 0 0
-Checking fact: mammal dog || With rule: mammal  m  animal  m  
-[1;32mUnification Success: mammal dog  && animal[0m
-: 0 1
-Checking fact: mammal dog || With rule: ape  m  animal  m  
-[1;31mUnification failed[0m
-: 0 2
-Checking fact: mammal dog || With rule: bird  m  animal  m  
-[1;31mUnification failed[0m
-: 1 0
-Checking fact: mammal cat || With rule: mammal  m  animal  m  
-[1;32mUnification Success: mammal cat  && animal[0m
-: 1 1
-Checking fact: mammal cat || With rule: ape  m  animal  m  
-[1;31mUnification failed[0m
-: 1 2
-Checking fact: mammal cat || With rule: bird  m  animal  m  
-[1;31mUnification failed[0m
-: 2 0
-Checking fact: bird penguin || With rule: mammal  m  animal  m  
-[1;31mUnification failed[0m
-: 2 1
-Checking fact: bird penguin || With rule: ape  m  animal  m  
-[1;31mUnification failed[0m
-: 2 2
-Checking fact: bird penguin || With rule: bird  m  animal  m  
-[1;32mUnification Success: bird penguin  && animal[0m
-: 3 0
-Checking fact: car Ford || With rule: mammal  m  animal  m  
-[1;31mUnification failed[0m
-: 3 1
-Checking fact: car Ford || With rule: ape  m  animal  m  
-[1;31mUnification failed[0m
-: 3 2
-Checking fact: car Ford || With rule: bird  m  animal  m  
-[1;31mUnification failed[0m
-: 4 0
-Checking fact: car Tesla || With rule: mammal  m  animal  m  
-[1;31mUnification failed[0m
-: 4 1
-Checking fact: car Tesla || With rule: ape  m  animal  m  
-[1;31mUnification failed[0m
-: 4 2
-Checking fact: car Tesla || With rule: bird  m  animal  m  
-[1;31mUnification failed[0m
-: 5 0
-Checking fact: ape gorilla || With rule: mammal  m  animal  m  
-[1;31mUnification failed[0m
-: 5 1
-Checking fact: ape gorilla || With rule: ape  m  animal  m  
-[1;32mUnification Success: ape gorilla  && animal[0m
-: 5 2
-Checking fact: ape gorilla || With rule: bird  m  animal  m  
-[1;31mUnification failed[0m
-: 6 0
-Checking fact: man Mark_Wolf || With rule: mammal  m  animal  m  
-[1;31mUnification failed[0m
-: 6 1
-Checking fact: man Mark_Wolf || With rule: ape  m  animal  m  
-[1;31mUnification failed[0m
-: 6 2
-Checking fact: man Mark_Wolf || With rule: bird  m  animal  m  
-[1;31mUnification failed[0m
-[1;36m
-Original Query: animal 
-[1;35m-- Result: --
-[1;32mdog animal 
-cat animal 
-penguin animal 
-gorilla animal 
-[0m
+You may also want to run `./a animals` and query `vehicle`. The expected inference 
+should be that a Ford and Tesla are vehicles. 
 
---- End Of Solution Trace ---
+### classic.kb
 
-```
+View `classic.sol`, the input query was `mortal ?m`
+
+This is the classic Modus Ponens example: 
+
+1. fact: Socrates is a man
+
+   `((man socrates))`
+
+2. rule: all men are mortal
+
+   `((man ?m) (mortal ?m))`
+
+3. Therefore Socrates is mortal
+
+   This result is generated by the inferencer with query `mortal`
+
+As a bonus, I added a rule stating all wrestlers are legends. 

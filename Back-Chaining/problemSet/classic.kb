@@ -1,8 +1,8 @@
 # Try query: "mortal legend" --> I miss billy :'(
 # facts:
-((aniki Billy_Herrington))
+((wrestler Billy_Herrington))
 ((man Billy_Herrington))
 ((man socrates))
 # rules:
 ((man ?m) (mortal ?m))
-((aniki ?m) (legend ?m))
+((wrestler ?m) (legend ?m))
