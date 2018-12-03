@@ -1,0 +1,20 @@
+# Problem 1: Prove Colonel West is a criminal
+# ... is a crime for an American to sell weapons to hostile nations
+# Nono ... has some missiles
+# Colonel West sold Nono missels
+# A missile is a weapon
+# An enemy of America is hostile
+# Colonel West is American
+# Nono is an enemy of America
+# facts
+((owns nono missile))
+((weapon missile))
+((enemy america nono))
+((hostile nono))
+((american west))
+((sells_weapons west nono))
+# rules
+((sells_weapons ?x) (criminal ?x))
+((hostile ?x) (criminal ?x))
+((enemy ?x) (hostile ?x))
+((missile ?x) (weapon ?x))

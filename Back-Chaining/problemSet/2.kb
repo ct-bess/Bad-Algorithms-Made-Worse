@@ -1,0 +1,30 @@
+# Problem 2: Wumpus World
+# Show room (2,2) can be inferred safe after our brave warrior has visited 
+# rooms (1,1) (1,2) and (2,1)
+# --> The agent only has knowledge from those rooms
+# Layout:
+# 4: Stentch |                       | breeze | pit    |
+# 3: WUMPUS  | Gold, breeze, stentch |   pit  | breeze |
+# 2: Stentch |                       | breeze |        |
+# 1: Warrior |        breeze         |  pit   | breeze |
+# 
+# I am using fragrant as no stentch
+#            calm_winds as no breeze
+# facts
+((safe 11))
+((safe 12))
+((safe 21))
+((breeze 12))
+((fragrant 12))
+((stentch 21))
+((calm_winds 21))
+((adjacent 12 22))
+((adjacent 21 22))
+((fragrant 22))
+((calm_winds 22))
+# rules
+((unsafe ?r) (pit ?r))
+((unsafe ?r) (wumpus ?r))
+((calm_winds ?r) (no_adjacent_pit ?r))
+((fragrant ?r) (no_adjacent_wumpus ?r))
+((calm_winds ?r) (fragrant ?r) (safe ?r))

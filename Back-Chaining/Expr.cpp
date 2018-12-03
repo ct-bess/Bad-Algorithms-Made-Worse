@@ -1,7 +1,8 @@
 #include "Expr.hpp"
 
 // TODO: make unify return a string rather than being a pass by reference savage
-// TODO: can only query the RHS of rules
+// TODO: regex might pull query "breeze" from "breezeless"
+//     : : but this is not a problem for standardized KBs
 
 using namespace std;
 
@@ -230,6 +231,10 @@ void inferencer( string decisionQ, KnowledgeBase &KB ) {
     unionize( KB );
 
   }
+
+  cout << "\033[7m";
+  cout << "Input a Query (\"q\" to quit):";
+  cout << "\033[0m ";
 
   return;
 

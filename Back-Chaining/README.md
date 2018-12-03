@@ -1,5 +1,9 @@
 # Back-Chaining Readme
 
+This program takes a decision (query) and finds supporting facts. Though, don't use 
+my program to solve life-changing problems; I can't guarentee the solution will be 
+optimal.
+
 ## Compiling:
 
 This program was developed on a machine running Ubuntu 16.04 (xenial) 
@@ -40,10 +44,19 @@ $ ./a FILENAME
 ```
 
 If you want to save to a file, pipe stdout as stdin to the helper program: 
+> **Note:** You will still input queries normally. There will not be any visual 
+> feedback until you input \"q\". 
 
 ``` console
 $ ./a FILENAME | ./b FILENAME
 ```
+
+During runtime, input queries through stdin. Input \"q\" to quit. 
+> The queries must be *decisions* since this is back-chaining. 
+> To get an idea of queries you can ask, query a **rule** from the `.kb` file. 
+
+You can input compound queries like `surgeon texas` to pull a list of surgeons 
+that live in texas in `3.kb` 
 
 ## Output:
 
@@ -55,10 +68,205 @@ You will find an output file in `problemSet-SolutionTraces/` if you chose to pip
 
 Else, the output will be sent straight to the terminal.
 
+## Tic-Tac-Toe: Strategy (4)
+
+The implementation of the facts and rules for tic-tac-toe are as follows:
+
+Facts: 
+
+- blank spaces
+
+- occupied spaces
+
+- optimal spaces
+
+Rules: 
+
+- moving into a blank space
+
+- moving into the optimal space (best space)
+
+I defined the general board state within the facts. Then I defined rules for making 
+a move, and if that particular move was optimal. I am able to query this KB 
+for the best move. 
+
+Other KB considerations: 
+
+- LUT of winning states
+
+### Tic-Tac-Toe: Sample Trace: 
+
+From `4-board2.sol`
+
+Input query was `best ?m ?p move ?m ?p`
+
+``` console
+[1;33mProgram start:[1;36m -- input "q" to quit[0m
+# Problem 4: board 2
+# | | |o|
+# | |x| |
+# |x| | |
+# KB for a particular tic tac toe board
+# The query will output the *optimal* move the next player can make
+# occ = occupied
+# facts:
+((blank 11))
+((blank 12))
+((occ o 13))
+((blank 21))
+((occ x 22))
+((blank 23))
+((occ x 31))
+((blank 32))
+((blank 33))
+# best move facts:
+((move x 32))
+((move o 13))
+# rules:
+((move ?m ?p) (blank ?m))
+((best ?m ?p) (move ?m ?p))
+Parsed facts:
+blank 11 
+blank 12 
+occ o 13 
+blank 21 
+occ x 22 
+blank 23 
+occ x 31 
+blank 32 
+blank 33 
+move x 32 
+move o 13 
+Parsed rules:
+move ?m ?p blank ?m 
+best ?m ?p move ?m ?p 
+[7mInput Query("q" to quit): [0m[1;35mQuery: best[0m
+Rule in question: move ?m ?p blank ?m 
+Rule in question: best ?m ?p move ?m ?p 
+Adding rule: best ?m ?p move ?m ?p 
+: 0 0
+Checking fact: blank 11 || With rule: best  m  p  move  m  p  
+[1;31mUnification failed[0m
+: 1 0
+Checking fact: blank 12 || With rule: best  m  p  move  m  p  
+[1;31mUnification failed[0m
+: 2 0
+Checking fact: occ o 13 || With rule: best  m  p  move  m  p  
+[1;31mUnification failed[0m
+: 3 0
+Checking fact: blank 21 || With rule: best  m  p  move  m  p  
+[1;31mUnification failed[0m
+: 4 0
+Checking fact: occ x 22 || With rule: best  m  p  move  m  p  
+[1;31mUnification failed[0m
+: 5 0
+Checking fact: blank 23 || With rule: best  m  p  move  m  p  
+[1;31mUnification failed[0m
+: 6 0
+Checking fact: occ x 31 || With rule: best  m  p  move  m  p  
+[1;31mUnification failed[0m
+: 7 0
+Checking fact: blank 32 || With rule: best  m  p  move  m  p  
+[1;31mUnification failed[0m
+: 8 0
+Checking fact: blank 33 || With rule: best  m  p  move  m  p  
+[1;31mUnification failed[0m
+: 9 0
+Checking fact: move x 32 || With rule: best  m  p  move  m  p  
+[1;32mUnification Success: move x 32  && best[0m
+: 10 0
+Checking fact: move o 13 || With rule: best  m  p  move  m  p  
+[1;32mUnification Success: move o 13  && best[0m
+[1;35mQuery: move[0m
+Rule in question: move ?m ?p blank ?m 
+Adding rule: move ?m ?p blank ?m 
+Rule in question: best ?m ?p move ?m ?p 
+Adding rule: best ?m ?p move ?m ?p 
+: 0 0
+Checking fact: blank 11 || With rule: move  m  p  blank  m  
+[1;32mUnification Success: blank 11  && move[0m
+: 0 1
+Checking fact: blank 11 || With rule: best  m  p  move  m  p  
+[1;31mUnification failed[0m
+: 1 0
+Checking fact: blank 12 || With rule: move  m  p  blank  m  
+[1;32mUnification Success: blank 12  && move[0m
+: 1 1
+Checking fact: blank 12 || With rule: best  m  p  move  m  p  
+[1;31mUnification failed[0m
+: 2 0
+Checking fact: occ o 13 || With rule: move  m  p  blank  m  
+[1;31mUnification failed[0m
+: 2 1
+Checking fact: occ o 13 || With rule: best  m  p  move  m  p  
+[1;31mUnification failed[0m
+: 3 0
+Checking fact: blank 21 || With rule: move  m  p  blank  m  
+[1;32mUnification Success: blank 21  && move[0m
+: 3 1
+Checking fact: blank 21 || With rule: best  m  p  move  m  p  
+[1;31mUnification failed[0m
+: 4 0
+Checking fact: occ x 22 || With rule: move  m  p  blank  m  
+[1;31mUnification failed[0m
+: 4 1
+Checking fact: occ x 22 || With rule: best  m  p  move  m  p  
+[1;31mUnification failed[0m
+: 5 0
+Checking fact: blank 23 || With rule: move  m  p  blank  m  
+[1;32mUnification Success: blank 23  && move[0m
+: 5 1
+Checking fact: blank 23 || With rule: best  m  p  move  m  p  
+[1;31mUnification failed[0m
+: 6 0
+Checking fact: occ x 31 || With rule: move  m  p  blank  m  
+[1;31mUnification failed[0m
+: 6 1
+Checking fact: occ x 31 || With rule: best  m  p  move  m  p  
+[1;31mUnification failed[0m
+: 7 0
+Checking fact: blank 32 || With rule: move  m  p  blank  m  
+[1;32mUnification Success: blank 32  && move[0m
+: 7 1
+Checking fact: blank 32 || With rule: best  m  p  move  m  p  
+[1;31mUnification failed[0m
+: 8 0
+Checking fact: blank 33 || With rule: move  m  p  blank  m  
+[1;32mUnification Success: blank 33  && move[0m
+: 8 1
+Checking fact: blank 33 || With rule: best  m  p  move  m  p  
+[1;31mUnification failed[0m
+: 9 0
+Checking fact: move x 32 || With rule: move  m  p  blank  m  
+[1;31mUnification failed[0m
+: 9 1
+Checking fact: move x 32 || With rule: best  m  p  move  m  p  
+[1;31mUnification failed[0m
+: 10 0
+Checking fact: move o 13 || With rule: move  m  p  blank  m  
+[1;31mUnification failed[0m
+: 10 1
+Checking fact: move o 13 || With rule: best  m  p  move  m  p  
+[1;31mUnification failed[0m
+[1;36m
+Original Query: best move 
+[1;35m-- Result: --
+[1;32m32 move 
+[0m
+
+--- End Of Solution Trace ---
+
+```
+
 ## Example Trace: 
 
-From `animals.kb`
+From `animals.sol`
 > This is the output from a text editor, notice the ESC characters. 
+
+The input query was `animal ?m`
+
+The program will infer that facts defined as mammals, birds, apes, etc 
+are animals by the rules. 
 
 ``` console
 [1;33mProgram start:[1;36m -- input "q" to quit[0m

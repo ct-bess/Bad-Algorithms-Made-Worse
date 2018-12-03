@@ -1,0 +1,23 @@
+# Problem 4: board 1
+# |x|x| |
+# | |o| |
+# | | | |
+# KB for a particular tic tac toe board
+# The query will output the *optimal* move the next player can make
+# occ = occupied
+# facts:
+((occ x 11))
+((occ x 12))
+((blank 13))
+((blank 21))
+((occ o 22))
+((blank 23))
+((blank 31))
+((blank 32))
+((blank 33))
+# best move facts:
+((move x 13))
+((move o 13))
+# rules:
+((move ?m ?p) (blank ?m))
+((best ?m ?p) (move ?m ?p))
