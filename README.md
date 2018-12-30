@@ -22,3 +22,7 @@
 
    Mega garbage
 
+- Baby-step-Giant-step
+
+   Elgamal cryptography scheme using GMP
+
