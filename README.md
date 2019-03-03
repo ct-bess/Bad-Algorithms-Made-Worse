@@ -26,3 +26,6 @@
 
    Elgamal cryptography scheme using GMP
 
+- DES
+
+   Only 1 round of DES. In c++
