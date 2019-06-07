@@ -1,4 +1,6 @@
-# :b:ad Algorithms Made Worse
+# Bad Algorithms Made Worse
+
+This is a collection of college work and small personal projects that should not be taken very seriously.
 
 ## Contents
 
